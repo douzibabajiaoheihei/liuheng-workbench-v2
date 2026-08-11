@@ -3530,8 +3530,18 @@ function renderNav(){
   });
   $('navList').innerHTML=h;
 }
+function refreshEngStatusOptions(selected){
+  var sel=$('fEngStatus'); if(!sel) return;
+  var states=['许可办理中','施工中','已完工','已过期'];
+  var count={}; states.forEach(function(s){count[s]=0;});
+  (DB.eng||[]).forEach(function(item){ if(Object.prototype.hasOwnProperty.call(count,item.status)) count[item.status]++; });
+  var current=selected===undefined?sel.value:selected;
+  sel.innerHTML='<option value="">全部状态（'+(DB.eng||[]).length+'）</option>'+states.map(function(s){return '<option value="'+s+'">'+s+'（'+count[s]+'）</option>';}).join('');
+  sel.value=current;
+}
 function renderEng(){
   var fs=$('fEngStatus').value, kw=$('fEngKw').value.trim();
+  refreshEngStatusOptions(fs);
   var list = DB.eng.filter(function(i){
     if(fs && i.status!==fs) return false;
     if(kw){
