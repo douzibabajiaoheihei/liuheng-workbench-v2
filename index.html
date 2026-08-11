@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 51285)
-Total output lines: 4473
+Warning: truncated output (original token count: 51353)
+Total output lines: 4480
 
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -323,6 +323,13 @@ main{max-width:1180px;margin:0 auto;padding:14px 16px 0}
 <div class="app-loading" id="appLoading" role="status" aria-live="polite">
   <div class="app-loading-box"><i class="app-loading-spin"></i><span>正在从云端加载台账…</span></div>
 </div>
+<script>
+/* 最早执行的页面解锁：后续任何同步或图表脚本异常都不得让工作台永久停在加载层。 */
+setTimeout(function(){
+  var loading=document.getElementById('appLoading');
+  if(loading) loading.classList.add('hide');
+}, 1800);
+</script>
 
 <header class="hdr">
   <div class="hdr-in">
@@ -1202,19 +1209,7 @@ var NAV_SEED = [
   "status": "在册",
   "waters": "六横",
   "updated": "2026-08-08",
-  "id": "n-码头-021"
- },
- {
-  "type": "码头",
-  "name": "六横砚瓦岛假日岛码头",
-  "berth": "",
-  "dtype": "石砌码头",
-  "loc": "122°14′12″E ，29°40′30″N",
-  "scale": "47.8米",
-  "ton": "300",
-  "aside": "",
-  "use": "客运",
-  "dDesign": "…21285 tokens truncated….style.display = '';
+  "id": "n-…21353 tokens truncated….style.display = '';
   $('navAddBtn').style.display = '';
   $('navMainT').textContent = cur+' 要素';
   $('navMainS').textContent = (counts[cur]||0)+' 条';
