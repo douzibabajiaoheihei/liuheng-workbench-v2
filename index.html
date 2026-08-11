@@ -3372,6 +3372,14 @@ function renderTide(force) {
   fetchTide(t).then(function(o){ if(seq!==_s1RequestSeq) return; if(o && o.error) throw new Error(o.error); if(o.date!==t) throw new Error('返回日期与请求日期不一致'); _tideCache.date=t; _tideCache.data=o; _paintTide(); }).catch(function(e){ if(seq===_s1RequestSeq&&tables) tables.innerHTML='<div class="empty">'+esc(t)+' 暂无可用潮汐数据（'+esc(e && e.message ? e.message : '网络错误')+'）。可切换其它日期或稍后重试。</div>'; });
 }
 function initTideDatePicker() {}
+// 潮汐图由动态 HTML 生成，以下函数需暴露给按钮与 SVG 的内联事件处理器。
+window.renderTide = renderTide;
+window.s1ShiftDay = s1ShiftDay;
+window.s1GoToday = s1GoToday;
+window.s1OpenTable = s1OpenTable;
+window.s1CloseTable = s1CloseTable;
+window.s1FlowTip = s1FlowTip;
+window.s1HideTip = s1HideTip;
 
 /* ================= 内联 SVG 图表 ================= */
 function donut(pct, label, color){
