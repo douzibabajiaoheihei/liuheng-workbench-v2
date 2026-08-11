@@ -1,0 +1,4403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="閫氳埅鐩戠鍙?>
+<title>鍏í娴蜂簨閫氳埅鐩戠宸ヤ綔鍙?/title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#0b5394;--brand2:#1668c1;--brand-soft:#e8f1fb;
+  --bg:#f2f6fa;--card:#ffffff;--line:#e2e9f1;
+  --text:#1c2733;--muted:#6d7d8f;
+  --danger:#d93025;--danger-soft:#fdecea;
+  --warn:#e07b00;--warn-soft:#fff4e3;
+  --ok:#12855a;--ok-soft:#e6f5ee;
+  --r:14px;
+}
+html,body{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--text);font-size:15px;line-height:1.55;
+  padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+svg{display:block}
+button{font-family:inherit;font-size:15px;cursor:pointer;border:0;background:none;color:inherit}
+input,select,textarea{font-family:inherit;font-size:16px;color:var(--text)}
+
+/* ---------- header ---------- */
+.hdr{background:linear-gradient(135deg,#0b5394,#1668c1);color:#fff;position:sticky;top:0;z-index:40;box-shadow:0 2px 10px rgba(11,83,148,.18)}
+.hdr-in{max-width:1180px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;flex:1;min-width:220px}
+.brand-ic{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;flex:none}
+.brand h1{font-size:18px;font-weight:700;letter-spacing:.5px}
+.brand p{font-size:12px;opacity:.82;margin-top:1px}
+.hdr-lunar{margin-left:auto;margin-right:auto;padding:6px 14px;border-radius:20px;background:rgba(255,255,255,.12);color:#fff;font-size:13px;font-weight:500;letter-spacing:.5px;white-space:nowrap}
+.hdr-actions{display:flex;gap:8px;flex-wrap:wrap}
+.hbtn{min-height:40px;padding:0 12px;border-radius:9px;background:rgba(255,255,255,.15);color:#fff;font-size:13.5px;
+  display:inline-flex;align-items:center;gap:6px;transition:background .15s}
+.hbtn:hover{background:rgba(255,255,255,.28)}
+.hbtn.danger{background:rgba(255,255,255,.12)}
+
+/* ---------- layout ---------- */
+main{max-width:1180px;margin:0 auto;padding:14px 16px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 1px 3px rgba(28,39,51,.05)}
+.sec-title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;margin-bottom:2px}
+.sec-sub{font-size:12.5px;color:var(--muted)}
+
+/* ---------- tip ---------- */
+.tip{max-width:1180px;margin:12px auto 0;padding:10px 14px;background:var(--warn-soft);border:1px solid #f5d9ab;
+  border-radius:10px;color:#8a5200;font-size:13.5px;display:none;align-items:center;gap:8px}
+.tip.show{display:flex}
+.tip button{margin-left:auto;color:#8a5200;text-decoration:underline;font-size:13px}
+
+/* ---------- today ---------- */
+.today{padding:14px 16px;margin-bottom:14px;border-top:3px solid var(--brand)}
+.today-hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.today-hd .cnt{margin-left:auto;font-size:12.5px;color:var(--muted)}
+.tide{padding:16px;margin-bottom:14px;border-top:3px solid #2a8fbf}
+.tide-hd{text-align:center;margin-bottom:14px}
+.tide-hd h2{font-size:22px;font-weight:700;color:#1c2733;margin-bottom:10px;letter-spacing:1px}
+.tide-date{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;font-size:14px}
+.tide-date .d{color:#0000ff;font-weight:700}
+.tide-date .l{color:#333}
+.tide-date .tag{padding:2px 8px;border-radius:4px;background:#009688;color:#fff;font-size:12px;font-weight:600}
+.tide-date .tag.small{background:#5B8FF9}
+.tide-date .btn-change{padding:3px 10px;border:1px solid #999;border-radius:4px;background:#fff;color:#333;font-size:13px;cursor:pointer}
+.tide-date .btn-change:hover{background:#f2f2f2}
+.tide-date input[type=date]{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.tide-tables{margin-top:10px}
+.tide-tables table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:12px;background:#dbe9f7;border:1px solid #b8d4f0}
+.tide-tables th,.tide-tables td{padding:9px 8px;border:1px solid #b8d4f0;text-align:center;color:#1c2733}
+.tide-tables th{background:#cfe2f3;font-weight:600}
+.tide-tables td{background:#dbe9f7}
+.tide-tables .col-label{width:140px;background:#cfe2f3;font-weight:600}
+.tide-tables .tide-note{text-align:center;color:#666;font-size:12px;margin:8px 0 4px;line-height:1.6}
+.tide-tables .tide-base{text-align:center;color:#2a8fbf;font-weight:600;margin-bottom:4px;font-size:13px}
+.tide-tables .tide-base-note{text-align:center;color:#888;font-size:12px;margin-bottom:10px}
+.tide-live{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 12px}.tide-live-item{background:#f3f9fc;border:1px solid #d5e9f3;border-radius:8px;padding:10px 12px}.tide-live-item .tl-label{display:block;color:#67808f;font-size:12px;margin-bottom:4px}.tide-live-item strong{font-size:20px;color:#176d99;letter-spacing:.2px}.tide-live-item .tl-sub{display:block;color:#607887;font-size:12px;margin-top:3px}.tide-chart{margin:0 0 12px;padding:12px;border:1px solid #d5e9f3;border-radius:8px;background:#fff}.tide-chart-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.tide-chart-hd strong{font-size:14px;color:#28566e}.tide-chart-hd span{font-size:12px;color:#78909d}.tide-chart svg{display:block;width:100%;height:178px}.tide-chart .grid{stroke:#e5eff4;stroke-width:1}.tide-chart .area{fill:rgba(42,143,191,.12)}.tide-chart .line{fill:none;stroke:#2a8fbf;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}.tide-chart .dot{fill:#f28a31;stroke:#fff;stroke-width:2}.tide-chart text{font-size:10px;fill:#78909d}@media(max-width:640px){.tide-live{grid-template-columns:1fr}.tide-chart svg{height:155px}}
+.tide-chart .now-guide{stroke:#f28a31;stroke-width:1;stroke-dasharray:3 3;opacity:.8}.tide-chart .now-ring{fill:#f28a31;stroke:#fff;stroke-width:3}.tide-chart .now-label{fill:#b55a14;font-size:11px;font-weight:600}.tide-chart .tide-hit{cursor:crosshair}.tide-chart .pick-guide{stroke:#246b97;stroke-width:1;stroke-dasharray:3 3}.tide-chart .pick-dot{fill:#246b97;stroke:#fff;stroke-width:2.5}.tide-chart .pick-label{fill:#173f58;font-size:11px;font-weight:600}
+.trow{display:flex;gap:10px;padding:10px;border-radius:11px;background:#f8fafc;border:1px solid var(--line);margin-bottom:8px;align-items:flex-start;flex-wrap:wrap}
+.trow.od{background:var(--danger-soft);border-color:#f6c9c4}
+.trow.soon{background:var(--warn-soft);border-color:#f5dcb4}
+.trow.urgent{position:relative;background:linear-gradient(90deg,#fff1f0 0%,#fff8f7 100%);border:1px solid #ef8d85;border-left:5px solid #d93025;box-shadow:0 3px 12px rgba(217,48,37,.12)}
+.trow.urgent .ttitle{color:#9f211a}.urgent-flag{display:inline-flex;align-items:center;gap:3px;margin-right:6px;padding:2px 7px;border-radius:10px;background:#d93025;color:#fff;font-size:11px;font-weight:700;letter-spacing:.5px}.urgent-flag:before{content:'!';display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;background:#fff;color:#d93025;font-weight:800}.trow.urgent .tmeta{color:#82433e}
+.trow .tmain{flex:1;min-width:210px}
+.trow .ttitle{font-weight:600;font-size:14.5px}
+.trow .tmeta{font-size:12.5px;color:var(--muted);margin-top:2px}
+.trow .tacts{display:flex;gap:6px;flex-wrap:wrap}
+.empty{padding:18px;text-align:center;color:var(--muted);font-size:14px}
+.empty strong{color:var(--ok)}
+
+/* ---------- stat cards ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 12px}
+.stat .n{font-size:23px;font-weight:700;line-height:1.2}
+.stat .l{font-size:12.5px;color:var(--muted)}
+.stat.r .n{color:var(--danger)}
+.stat.w .n{color:var(--warn)}
+.stat.g .n{color:var(--ok)}
+.stat.b .n{color:var(--brand)}
+
+/* ---------- panes ---------- */
+.pane{display:none}
+.pane.on{display:block}
+
+/* ---------- panel ---------- */
+.panel{padding:14px 16px;margin-bottom:14px}
+.panel-hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.panel-hd .grow{flex:1;min-width:180px}
+.btn{min-height:44px;padding:0 14px;border-radius:10px;background:var(--brand);color:#fff;font-weight:600;font-size:14.5px;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:hover{background:var(--brand2)}
+.btn.warn{background:var(--warn);color:#fff}
+.btn.warn:hover{background:#c76a00}
+.btn.ghost{background:#fff;color:var(--brand);border:1px solid #c3d8ee}
+.btn.ghost:hover{background:var(--brand-soft)}
+.btn.sm{min-height:34px;padding:0 11px;font-size:13px;border-radius:8px}
+.btn.sm.ok{background:var(--ok)}
+.btn.sm.warn{background:var(--warn)}
+.btn.sm.gray{background:#fff;color:var(--muted);border:1px solid var(--line)}
+.btn.sm.red{background:#fff;color:var(--danger);border:1px solid #f0c2bd}
+
+/* ---------- filters ---------- */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.filters select,.filters input{min-height:40px;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:#fff;font-size:15px}
+.filters input{flex:1;min-width:150px}
+
+/* ---------- item ---------- */
+.item{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:#fff;transition:box-shadow .2s}
+.item.od{border-left:4px solid var(--danger)}
+.item.soon{border-left:4px solid var(--warn)}
+.item.done{opacity:.62;border-left:4px solid var(--ok)}
+.item.flash{box-shadow:0 0 0 3px rgba(22,104,193,.35)}
+.item-hd{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap}
+.item-hd h4{font-size:15.5px;font-weight:700;flex:1;min-width:170px}
+.item-hd h4.strike{text-decoration:line-through}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:4px 14px;margin-top:8px}
+.kv div{font-size:13px;color:var(--muted)}
+.kv b{color:var(--text);font-weight:600}
+.desc{font-size:13.5px;color:#3c4a59;margin-top:7px;background:#f8fafc;border-radius:8px;padding:8px 10px;white-space:pre-wrap;word-break:break-word}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.badge{font-size:11.5px;padding:3px 8px;border-radius:20px;font-weight:600;white-space:nowrap}
+.b-blue{background:var(--brand-soft);color:var(--brand)}
+.b-red{background:var(--danger-soft);color:var(--danger)}
+.b-warn{background:var(--warn-soft);color:#a35a00}
+.b-ok{background:var(--ok-soft);color:var(--ok)}
+.b-gray{background:#eef2f6;color:var(--muted)}
+
+/* ---------- 閫氳埅鐜锛氱被鍒笅鎷?+ 鍙充晶鏄庣粏 ---------- */
+.navwrap{display:flex;gap:14px;align-items:flex-start}
+.navside{flex:0 0 220px;position:relative;padding-right:2px}
+.navmain{flex:1;min-width:0}
+.navmain-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.navmain-t{font-size:16px;font-weight:700}
+.navmain-s{font-size:12.5px;color:var(--muted)}
+.navmain .filters input{flex:1;min-width:160px}
+/* 绫诲埆涓嬫媺 */
+.cat-dropdown{position:relative;width:100%}
+.cat-dropbtn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;
+  border:1px solid var(--line);border-radius:10px;background:#fff;font-size:14.5px;font-weight:600;color:var(--text);
+  cursor:pointer;transition:background .15s,border-color .15s}
+.cat-dropbtn:hover{background:var(--brand-soft);border-color:var(--brand)}
+.cat-dropbtn .cnt{font-size:12px;font-weight:600;min-width:24px;height:22px;padding:0 7px;border-radius:11px;
+  background:#eef2f6;color:var(--muted);display:inline-flex;align-items:center;justify-content:center}
+.cat-dropbtn .arrow{font-size:11px;color:var(--muted);transition:transform .15s}
+.cat-dropdown.open .cat-dropbtn{border-color:var(--brand)}
+.cat-dropdown.open .arrow{transform:rotate(180deg)}
+.cat-droplist{position:absolute;top:calc(100% + 6px);left:0;right:0;max-height:60vh;overflow:auto;background:#fff;
+  border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.12);z-index:20;display:none;padding:6px}
+.cat-dropdown.open .cat-droplist{display:block}
+.cat-ditem{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:8px;
+  cursor:pointer;font-size:14px;color:var(--text);transition:background .12s}
+.cat-ditem:hover{background:var(--brand-soft)}
+.cat-ditem.on{background:var(--brand);color:#fff}
+.cat-ditem.on .cnt{background:rgba(255,255,255,.22);color:#fff}
+.cat-ditem .cnt{font-size:12px;font-weight:600;min-width:22px;height:20px;padding:0 6px;border-radius:10px;
+  background:#eef2f6;color:var(--muted);display:inline-flex;align-items:center;justify-content:center}
+@media(max-width:768px){
+  .navwrap{flex-direction:column}
+  .navside{flex:none;width:100%;padding-bottom:4px}
+  .cat-droplist{position:static;box-shadow:none;border:none;background:#f8fafc;max-height:none;margin-top:6px}
+}
+
+/* ---------- checklist ---------- */
+.checks{margin-top:9px;display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:4px}
+.chk{display:flex;align-items:center;gap:8px;padding:8px 9px;border-radius:9px;background:#f8fafc;font-size:13.5px;cursor:pointer;min-height:40px}
+.chk input{width:19px;height:19px;flex:none;accent-color:var(--brand)}
+.chk.done{background:var(--ok-soft);color:var(--ok);text-decoration:line-through}
+.pbar{height:8px;border-radius:6px;background:#e9eef4;overflow:hidden;margin-top:9px}
+.pbar i{display:block;height:100%;background:var(--brand);border-radius:6px}
+
+/* ---------- chart ---------- */
+.charts{display:grid;grid-template-columns:180px 1fr;gap:14px;margin-bottom:14px;align-items:center}
+.chartbox{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.chart-t{font-size:12.5px;color:var(--muted);margin-bottom:6px;font-weight:600}
+
+/* ---------- modal ---------- */
+.mask{position:fixed;inset:0;background:rgba(16,28,40,.5);z-index:60;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px 12px}
+.mask.on{display:flex}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:620px;padding:18px;margin:auto}
+.modal h3{font-size:17px;font-weight:700;margin-bottom:14px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.fld{display:flex;flex-direction:column;gap:5px}
+.fld.full{grid-column:1/-1}
+.fld label{font-size:13px;color:var(--muted);font-weight:600}
+.fld input,.fld select,.fld textarea{min-height:44px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;width:100%}
+.fld textarea{min-height:74px;resize:vertical;line-height:1.5}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:2px solid var(--brand2);outline-offset:-1px}
+.chk-row{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 11px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-size:15px}
+.chk-row input{width:20px;height:20px;flex:none;accent-color:var(--brand)}
+.modal-acts{display:flex;gap:9px;margin-top:16px}
+.modal-acts .btn{flex:1}
+.exp-tip{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.lnk{width:100%;min-height:66px;font-size:14px;line-height:1.5;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:#f7f9fc;color:#333;resize:vertical;font-family:ui-monospace,Menlo,Consolas,monospace;box-sizing:border-box;word-break:break-all}
+#expText{width:100%;min-height:220px;font-size:16px;line-height:1.5;padding:10px;border:1px solid var(--line);border-radius:10px;background:#f7f9fc;color:#333;resize:vertical;font-family:ui-monospace,Menlo,Consolas,monospace;box-sizing:border-box}
+
+.foot{max-width:1180px;margin:6px auto 0;padding:14px 16px 0;font-size:12px;color:var(--muted);text-align:center;line-height:1.7}
+
+/* ---------- 鏌ョ湅澶╂皵澶栭摼 ---------- */
+.wl-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.wl-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:10px;
+  background:var(--brand);color:#fff;font-weight:600;font-size:14.5px;text-decoration:none;transition:background .15s}
+.wl-btn:hover{background:var(--brand2)}
+.wl-btn svg{stroke:#fff;flex:none}
+.wl-note{font-size:12.5px;color:var(--muted);margin:-8px 0 14px}
+.wx-live{margin-bottom:14px}
+.wx-card{border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,#f5f9ff,#fff);padding:14px}
+.wx-status{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--muted)}
+.wx-status .dot{width:9px;height:9px;border-radius:50%;background:var(--brand);flex:none}
+.wx-status .dot.loading{background:#f0a020;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.wx-main{background:#fff;border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:10px;padding:12px 14px}
+.wx-area{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:6px}
+.wx-text{font-size:15px;line-height:1.85;color:#1c2733}
+.wx-time{margin-top:8px;font-size:12px;color:var(--muted)}
+.wx-more{margin-top:10px;font-size:13px;color:var(--muted)}
+.wx-more summary{cursor:pointer;user-select:none}
+.wx-sub{margin-top:8px;font-size:13.5px;line-height:1.8;color:#33414f}
+.wx-sub b{color:var(--text)}
+.wx-err{font-size:13px;line-height:1.7;color:#c0392b;background:#fdecea;border:1px solid #f5c6c0;border-radius:10px;padding:10px 12px}
+.wx-live .acts{margin-top:10px}
+.wx-warn{display:flex;gap:10px;align-items:flex-start;background:#fff7e6;border:1px solid #ffd591;border-left:4px solid #fa8c16;border-radius:10px;padding:11px 13px;margin-bottom:12px}
+.wx-warn-ic{color:#fa8c16;flex:0 0 auto;margin-top:1px}
+.wx-warn-body{flex:1;min-width:0}
+.wx-warn-info{font-size:13.5px;line-height:1.6;color:#874d00;font-weight:600}
+.wx-warn-acts{display:flex;gap:8px;margin-top:9px;flex-wrap:wrap}
+
+/* ---------- 搴曢儴涓夋ā鍧楀浐瀹氬鑸紙PC + 鎵嬫満甯搁┗锛?---------- */
+.mtabs{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -3px 16px rgba(28,39,51,.10)}
+.mtabs-in{display:flex;max-width:1180px;margin:0 auto}
+.mtab{flex:1;min-height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  font-size:13px;font-weight:600;color:var(--muted);position:relative;transition:color .15s,background .15s;
+  border-top:3px solid transparent;margin-top:-1px}
+.mtab:hover{background:#f6f9fc;color:var(--brand)}
+.mtab.on{color:var(--brand);background:var(--brand-soft);border-top-color:var(--brand)}
+.mtab svg{stroke:currentColor}
+.mtab .ic{position:relative;display:block}
+.mtab .dot{position:absolute;top:-5px;right:-11px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;
+  background:var(--danger);color:#fff;font-size:11px;font-weight:700;line-height:18px;text-align:center;display:none}
+.mtab .dot.warn{background:var(--warn)}
+.mtab .dot.show{display:block}
+
+/* ---------- 鎮诞鍥為《锛堝洖鍒?浠婂ぉ瑕佸鐞?锛?---------- */
+.fab{position:fixed;right:16px;bottom:calc(74px + env(safe-area-inset-bottom));z-index:51;
+  width:50px;height:50px;border-radius:25px;background:var(--brand);color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  box-shadow:0 4px 14px rgba(11,83,148,.35);font-size:10px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s}
+.fab.show{opacity:1;pointer-events:auto}
+.fab:hover{background:var(--brand2)}
+
+@media(max-width:860px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .charts{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  body{font-size:15px}
+  .hdr-in{padding:10px 12px}
+  .brand h1{font-size:16.5px}
+  .hbtn{flex:1;justify-content:center;font-size:13px;min-height:42px}
+  main{padding:12px 12px 0}
+  .mtab{font-size:12px;min-height:58px}
+  .form{grid-template-columns:1fr}
+  .panel,.today{padding:12px}
+  .kv{grid-template-columns:1fr 1fr}
+  .checks{grid-template-columns:1fr}
+  .modal{max-width:none;border-radius:14px;padding:15px}
+}
+@media(max-width:380px){.kv{grid-template-columns:1fr}.mtab{font-size:11px}}
+.ship-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px}
+.ship-row input,.ship-row select{min-height:42px}
+.ship-row .btn-del{color:var(--danger);font-size:13px;padding:0 8px;min-height:42px;border:1px solid #f0c2bd;border-radius:9px;background:#fff}
+@media(max-width:768px){.ship-row{grid-template-columns:1fr 1fr auto}}
+/* 鎶ュ憡绾垮潗鏍囩偣鍔ㄦ€佽 */
+.pt-row{display:grid;grid-template-columns:28px 1.2fr 1fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px}
+.pt-row input{min-height:42px}
+.pt-row .pt-idx{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#eaf1fb;color:#0b5394;font-size:13px;font-weight:700}
+.pt-row .btn-del{color:var(--danger);font-size:13px;padding:0 8px;min-height:42px;border:1px solid #f0c2bd;border-radius:9px;background:#fff}
+.pt-tip{font-size:12px;color:#6d7d8f;margin-top:6px;line-height:1.6}
+/* 閿氬湴锛氳寖鍥撮《鐐癸紙4鍒楋級涓庨敋娉婄偣锛?鍒楋級鍚勮嚜鐨勬爡鏍?*/
+#rangeBox .pt-row{grid-template-columns:24px 1fr 1fr auto}
+#anchorBox .pt-row{grid-template-columns:1fr 1fr 1fr 0.9fr 1fr auto}
+@media(max-width:768px){#rangeBox .pt-row{grid-template-columns:20px 1fr auto;grid-auto-rows:auto}#anchorBox .pt-row{grid-template-columns:1fr 1fr auto;grid-auto-rows:auto}#anchorBox .pt-row .pt-lat,#anchorBox .pt-row .pt-lng{grid-column:auto}}
+.last-edit{font-size:12px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);text-align:right}
+.snap-box{margin-top:14px;padding:14px;background:#f8fafc;border:1px solid var(--line);border-radius:12px}
+.snap-box .snap-hd{font-size:14px;font-weight:700;margin-bottom:10px;color:var(--text)}
+.snap-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.snap-row select{min-height:40px;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:#fff;font-size:15px;flex:1;min-width:160px}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="brand">
+      <div class="brand-ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v18"/><circle cx="12" cy="5" r="2"/><path d="M8 8h8"/>
+          <path d="M4 14a8 8 0 0 0 16 0"/><path d="M4 14H2"/><path d="M20 14h2"/>
+        </svg>
+      </div>
+      <div>
+        <h1>閫氳埅鐩戠宸ヤ綔鍙?/h1>
+        <p>鑸熷北娴蜂簨灞€鍏í娴蜂簨澶?路 鐩戠绉?/p>
+      </div>
+    </div>
+    <div class="hdr-lunar" id="hdrLunar"></div>
+    <div class="hdr-actions">
+      <button class="hbtn" id="btnExport">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        瀵煎嚭澶囦唤
+      </button>
+      <button class="hbtn" id="btnImport">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 8l5-5 5 5"/><path d="M12 3v12"/></svg>
+        瀵煎叆鎭㈠
+      </button>
+      <button class="hbtn" id="btnCsv">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>
+        瀵煎嚭鍙拌处
+      </button>
+      <button class="hbtn" id="btnUpload">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+        涓婁紶
+      </button>
+      <button class="hbtn" id="btnDownload">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        涓嬭浇
+      </button>
+      <button class="hbtn" id="syncBtn" title="鍚屾璁剧疆 / 鍒嗕韩閾炬帴">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        璁剧疆
+      </button>
+      <button class="hbtn danger" id="btnClear">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>
+        娓呯┖鏁版嵁
+      </button>
+      <input type="file" id="fileInput" accept="application/json,.json" hidden>
+    </div>
+  </div>
+</header>
+
+<div class="tip" id="tipBackup">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a5200" stroke-width="2" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+  <span id="tipText"></span>
+  <button id="tipClose">鎴戠煡閬撲簡</button>
+</div>
+
+<main>
+  <!-- 寰呭姙 -->
+  <section class="pane on" id="pane-today">
+  <section class="card today" id="todayCard">
+    <div class="today-hd">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0b5394" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="M12 14v4"/><path d="M10 16h4"/></svg>
+      <div>
+        <div class="sec-title" style="margin:0">寰呭姙</div>
+        <div class="sec-sub" id="todayDate"></div>
+      </div>
+      <button class="btn sm" data-add="todo">+ 娣诲姞浜嬮」</button>
+      <div class="cnt" id="todayCnt"></div>
+    </div>
+    <div id="todayList"></div>
+  </section>
+  <div class="stats" id="statsRow"></div>
+  </section>
+
+  <!-- 閫氳埅鐜 -->
+  <section class="pane" id="pane-nav">
+    <section class="card tide" id="tideCard">
+      <div class="tide-hd">
+        <h2>鍏í宀涙疆姹愯〃</h2>
+        <div class="tide-date" id="tideDateLine">
+          <span class="d" id="tideDate">--</span>
+          <span class="l" id="tideLunar">鍐滃巻--</span>
+          <span class="tag" id="tideType">--</span>
+          <button class="btn-change" id="tideChangeBtn">鍒囨崲鏃ユ湡</button>
+          <input type="date" id="tideDateInput" min="2024-01-01" max="2030-12-31">
+        </div>
+      </div>
+      <div id="tideTables" class="tide-tables"></div>
+    </section>
+    <div class="card panel">
+      <div class="panel-hd">
+        <div class="grow">
+          <div class="sec-title">閫氳埅鐜瑕佺礌鍙拌处</div>
+          <div class="sec-sub">鐐瑰嚮涓嬫媺鎸夐挳閫夋嫨绫诲埆锛屾煡鐪嬭绫昏绱狅紙鍏?13 绫伙級</div>
+        </div>
+      </div>
+      <div class="navwrap">
+        <div class="navside" id="navSide"></div>
+        <div class="navmain">
+          <div class="navmain-hd">
+            <div class="grow">
+              <div class="navmain-t" id="navMainT">鍏ㄩ儴瑕佺礌</div>
+              <div class="navmain-s" id="navMainS"></div>
+            </div>
+            <button class="btn sm" data-add="nav" id="navAddBtn">+ 鏂板</button>
+          </div>
+          <div class="filters">
+            <input id="fNavKw" placeholder="鎼滅储瑕佺礌鍚嶇О / 姘村煙 / 鍗曚綅 / 鍧愭爣">
+          </div>
+          <div id="navList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 姘村伐鐩戠 -->
+  <section class="pane" id="pane-eng">
+    <div class="card panel">
+      <div class="panel-hd">
+        <div class="grow">
+          <div class="sec-title">姘翠笂姘翠笅娲诲姩椤圭洰鐩戠</div>
+          <div class="sec-sub">璁稿彲鏈熼檺銆佺幇鍦烘鏌ャ€佸畨鍏ㄦ帾鏂借惤瀹炶窡韪?/div>
+        </div>
+        <button class="btn" data-add="eng">+ 鏂板椤圭洰</button>
+      </div>
+      <div class="charts">
+        <div class="chartbox"><div class="chart-t">鍦ㄧ洃椤圭洰鐘舵€?/div><div id="engDonut"></div></div>
+        <div class="chartbox"><div class="chart-t">椤圭洰璁稿彲鍓╀綑澶╂暟</div><div id="engBars"></div></div>
+      </div>
+      <div class="filters">
+        <select id="fEngStatus"><option value="">鍏ㄩ儴鐘舵€?/option><option>璁稿彲鍔炵悊涓?/option><option selected>鏂藉伐涓?/option><option>宸插畬宸?/option><option>宸茶繃鏈?/option></select>
+        <input id="fEngKw" placeholder="鎼滅储椤圭洰 / 鍗曚綅 / 璁稿彲璇佸彿 / 鏂藉伐鑸瑰悕 / 鑸瑰瀷">
+      </div>
+      <div id="engList"></div>
+    </div>
+  </section>
+
+  <!-- 鎭跺姡澶╂皵 -->
+  <section class="pane" id="pane-wx">
+    <div class="card panel">
+      <div class="panel-hd">
+        <div class="grow">
+          <div class="sec-title">鎭跺姡澶╂皵闃叉姉杩囩▼绠＄悊</div>
+          <div class="sec-sub">鍙伴銆佸ぇ椋庛€佸ぇ闆俱€佸瘨娼殑鍝嶅簲鎺柦钀藉疄闂幆</div>
+        </div>
+        <button class="btn" data-add="wx">+ 鏂板棰勮杩囩▼</button>
+      </div>
+      <div class="wl-row">
+        <a class="wl-btn" href="https://www.zs121.com.cn/forecast/publicWeather" target="_blank" rel="noopener noreferrer">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
+          鑸熷北姘旇薄鍙伴鎶?
+        </a>
+        <a class="wl-btn" href="https://www.wztf121.com/" target="_blank" rel="noopener noreferrer">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9h-1A7 7 0 1 0 5 17"/><path d="M12 12v6"/><path d="M9 15l3-3 3 3"/></svg>
+          娓╁窞鍙伴缃?
+        </a>
+      </div>
+      <div class="wl-note">鐐瑰嚮鍦ㄦ柊鏍囩椤垫墦寮€瀹樻柟姘旇薄 / 鍙伴缃戠珯锛屼究浜庢牳瀵归璀︿俊鎭拰鍙伴璺緞銆?/div>
+      <div class="wx-live">
+        <div class="sec-title">涓タ閮ㄦ捣鍩熷ぉ姘旈鎶ワ紙瀹炴椂锛?/div>
+        <div class="sec-sub">鏁版嵁鏉ユ簮锛氳垷灞辨皵璞″彴 路 鑷姩鎶撳彇骞惰В瀵嗭紝鍙樉绀轰腑瑗块儴娴峰煙</div>
+        <div class="wx-warn" id="wxWarn" style="display:none">
+          <div class="wx-warn-ic">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          </div>
+          <div class="wx-warn-body">
+            <div class="wx-warn-info"></div>
+            <div class="wx-warn-acts">
+              <button class="btn sm warn" id="wxWarnGen">鐢熸垚棰勮</button>
+              <button class="btn sm ghost" id="wxWarnIgn">蹇界暐</button>
+            </div>
+          </div>
+        </div>
+        <div class="wx-card">
+          <div class="wx-status" id="wxStatus"><span class="dot loading"></span><span id="wxStatusText">姝ｅ湪鑾峰彇棰勬姤鈥?/span></div>
+          <div class="wx-body" id="wxBody" style="display:none">
+            <div class="wx-main">
+              <div class="wx-area">涓タ閮ㄦ捣鍩?路 椋庡姏棰勬姤</div>
+              <div class="wx-text" id="wxMidwest"></div>
+              <div class="wx-time" id="wxTime"></div>
+            </div>
+            <details class="wx-more">
+              <summary>鏌ョ湅鍏朵粬娴峰煙锛堝寳閮?/ 涓滈儴锛?/summary>
+              <div class="wx-sub"><b>鍖楅儴娴峰煙锛?/b><span id="wxNorth"></span></div>
+              <div class="wx-sub"><b>涓滈儴娴峰煙锛?/b><span id="wxEast"></span></div>
+            </details>
+          </div>
+          <div class="wx-err" id="wxErr" style="display:none"></div>
+        </div>
+        <div class="acts">
+          <button class="btn sm ghost" id="wxRefresh">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+            鍒锋柊
+          </button>
+          <a class="btn sm gray" href="https://www.zs121.com.cn/forecast/publicWeather" target="_blank" rel="noopener noreferrer">鍘熺珯瀹屾暣椤?/a>
+        </div>
+      </div>
+      <div class="charts">
+        <div class="chartbox"><div class="chart-t">鎺柦鎬昏惤瀹炵巼</div><div id="wxDonut"></div></div>
+        <div class="chartbox"><div class="chart-t">鍚勮繃绋嬫帾鏂借惤瀹炶繘搴?/div><div id="wxBars"></div></div>
+      </div>
+      <div class="filters">
+        <select id="fWxStatus"><option value="">鍏ㄩ儴鐘舵€?/option><option>鐢熸晥涓?/option><option>宸茶В闄?/option></select>
+        <input id="fWxKw" placeholder="鎼滅储棰勮绫诲瀷 / 澶囨敞">
+      </div>
+      <div id="wxList"></div>
+    </div>
+  <div class="foot">
+    鏁版嵁浠ヤ簯绔负鍑嗭細鎵撳紑鑷姩浠庝簯绔笅杞斤紝鐐广€屼笂浼犮€嶈鐩栦簯绔紝<b>鏈湴涓嶄繚瀛樹换浣曟暟鎹?/b> 路 寤鸿鐢ㄣ€屽鍑哄彴璐︺€嶅仛绂荤嚎澶囦唤<br>
+    鏈伐浣滃彴浠呯敤浜庢棩甯稿伐浣滄彁閱掍笌鍙拌处鏁寸悊锛屼笉鏇夸唬娴蜂簨鏀垮姟绯荤粺涓庢寮忚褰?
+  </div>
+</main>
+
+<button class="fab" id="fabTop" title="鍥炲埌浠婂ぉ瑕佸鐞?>
+  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+  寰呭姙
+</button>
+
+<nav class="mtabs">
+  <div class="mtabs-in">
+    <button class="mtab on" data-tab="today">
+      <span class="ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="M12 14v4"/><path d="M10 16h4"/></svg>
+        <span class="dot" id="dotToday"></span>
+      </span>
+      寰呭姙
+    </button>
+    <button class="mtab" data-tab="nav">
+      <span class="ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5.5-5.5 2 2-5.5z"/></svg>
+        <span class="dot" id="dotNav"></span>
+      </span>
+      閫氳埅鐜鐩戠
+    </button>
+    <button class="mtab" data-tab="eng">
+      <span class="ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/></svg>
+        <span class="dot" id="dotEng"></span>
+      </span>
+      姘村伐鐩戠
+    </button>
+    <button class="mtab" data-tab="wx">
+      <span class="ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9h-1A7 7 0 1 0 5 17"/><path d="M9 21l-1 2"/><path d="M13 21l-1 2"/></svg>
+        <span class="dot" id="dotWx"></span>
+      </span>
+      鎭跺姡澶╂皵鐩戠
+    </button>
+  </div>
+</nav>
+
+<div class="mask" id="mask">
+  <div class="modal">
+    <h3 id="mdTitle">鏂板</h3>
+    <div class="form" id="mdForm"></div>
+    <div class="modal-acts">
+      <button class="btn ghost" id="mdCancel">鍙栨秷</button>
+      <button class="btn" id="mdSave">淇濆瓨</button>
+    </div>
+  </div>
+</div>
+
+<div class="mask" id="expMask">
+  <div class="modal">
+    <h3 id="expTitle">瀵煎嚭澶囦唤</h3>
+    <p class="exp-tip" id="expHint"></p>
+    <textarea id="expText" readonly></textarea>
+    <div class="modal-acts">
+      <button class="btn ghost" id="expClose">鍏抽棴</button>
+      <button class="btn" id="expCopy">澶嶅埗鍐呭</button>
+    </div>
+  </div>
+</div>
+
+<div class="mask" id="syncMask">
+  <div class="modal">
+    <h3>鏁版嵁鍚屾</h3>
+
+    <p class="exp-tip"><strong>浜戠鍚屾瑙勫垯锛堜弗鏍兼暣浣撹鐩栵紝鏃犲悎骞讹級</strong><br>路 鎵撳紑宸ヤ綔鍙?/ 鐐广€屼笅杞姐€嶏細鑷姩浠庝簯绔笅杞藉叏閮ㄦ暟鎹紝<b>鏁翠綋瑕嗙洊鏈湴</b>锛?br>路 鐐广€屼笂浼犮€嶏細鎶婃湰鍦版暟鎹?b>鏁翠綋瑕嗙洊涓婁紶鍒颁簯绔?/b>銆?br>路 鏈湴<b>涓嶄繚瀛樹换浣曟暟鎹?/b>锛屽埛鏂板嵆閲嶆柊浠庝簯绔笅杞斤紝璇峰吇鎴愩€屾敼瀹屽氨涓婁紶銆嶇殑涔犳儻銆?/p>
+    <div class="fld full">
+      <label>鍚屾鏈嶅姟鍦板潃锛堝悗绔?URL锛屽嵆 CloudBase銆孒TTP 璁块棶鏈嶅姟銆嶇粰浣犵殑鍩熷悕锛?/label>
+      <input type="url" id="syncUrl" placeholder="https://浣犵殑鍚庣鍦板潃" autocomplete="off">
+    </div>
+    <div class="fld full" style="margin-top:10px">
+      <label>鎿嶄綔浜哄鍚嶏紙鐢ㄤ簬璁板綍銆屾渶鍚庣紪杈戯細璋佹敼鐨勩€嶏級</label>
+      <input type="text" id="syncOperator" placeholder="濡傦細寮犱笁" autocomplete="off">
+    </div>
+    <div class="modal-acts" style="margin-top:10px">
+      <button class="btn ghost" id="syncSaveUrl">淇濆瓨鍦板潃</button>
+      <button class="btn" id="syncDownload">涓嬭浇锛堣鐩栨湰鍦帮級</button>
+      <button class="btn" id="syncUpload">涓婁紶锛堣鐩栦簯绔級</button>
+    </div>
+
+    <div class="snap-box">
+      <div class="snap-hd">浜戠姣忔棩蹇収 路 璇搷浣滃洖婊?/div>
+      <p class="exp-tip" style="margin-bottom:10px">姣忔銆屼笂浼犮€嶆垚鍔熷悗锛屼簯绔細鑷姩鍙﹀瓨涓€浠?<code>YYYY-MM-DD</code> 鏃ユ湡蹇収銆傝嫢鏌愬ぉ璇竻绌哄悗涓婁紶鎶婁簯绔啿绌猴紝鍙湪杩欓噷鍥炴粴鍒颁箣鍓嶇殑蹇収銆?/p>
+      <div class="snap-row">
+        <select id="snapSelect"><option value="">鈥?鍏堝埛鏂板揩鐓у垪琛?鈥?/option></select>
+        <button class="btn ghost" id="snapRefresh">鍒锋柊鍒楄〃</button>
+        <button class="btn warn" id="snapRollback">鍥炴粴鍒伴€変腑鏃ユ湡</button>
+      </div>
+    </div>
+
+    <hr style="border:none;border-top:1px solid var(--line);margin:16px 0">
+
+    <p class="exp-tip"><strong>鏂瑰紡浜?路 鍒嗕韩閾炬帴锛堥浂璐﹀彿锛?/strong>锛氱敓鎴愪竴涓甫鏁版嵁鐨勯摼鎺ワ紝鍙戠粰鑷繁锛屽彟涓€鍙版墦寮€鍗冲鍏ャ€?/p>
+    <div class="modal-acts" style="margin-top:10px">
+      <button class="btn" id="shareGen">鈶?鐢熸垚鍒嗕韩閾炬帴</button>
+    </div>
+    <div class="fld full" style="margin-top:10px">
+      <label>鍒嗕韩閾炬帴锛堢偣銆屽鍒躲€嶆垨闀挎寜鎵嬪姩澶嶅埗锛?/label>
+      <textarea id="shareLink" class="lnk" readonly placeholder="鐢熸垚鍚庢澶勬樉绀洪摼鎺?></textarea>
+    </div>
+    <div class="modal-acts">
+      <button class="btn ghost" id="syncClose">鍏抽棴</button>
+      <button class="btn" id="shareCopy">澶嶅埗閾炬帴</button>
+    </div>
+    <p class="exp-tip" style="margin-top:10px">鍙︿竴鍙拌澶囨墦寮€甯?<code>#wb=</code> 鐨勯摼鎺ヤ細鑷姩鎻愮ず瀵煎叆锛涗篃鍙湪涓嬫柟绮樿创閾炬帴鎵嬪姩瀵煎叆銆?/p>
+    <div class="fld full" style="margin-top:10px">
+      <label>浠庨摼鎺ュ鍏ワ紙绮樿创鏀跺埌鐨勫垎浜摼鎺ワ級</label>
+      <textarea id="shareImportText" class="lnk" placeholder="鍦ㄦ绮樿创鏀跺埌鐨勯摼鎺?></textarea>
+    </div>
+    <div class="modal-acts">
+      <button class="btn" id="shareImport">鈶?瀵煎叆姝ら摼鎺?/button>
+    </div>
+    <p class="exp-tip" id="syncStatus" style="margin-top:12px"></p>
+  </div>
+</div>
+
+<datalist id="dlWaters">
+  <option value="铏惧硻闂ㄥ彛澶栬埅閬?></option><option value="铏惧硻闂ㄦ按閬?></option><option value="鍙屽笨闂ㄦ按閬?></option>
+  <option value="浣涙浮姘撮亾"></option><option value="鏉″笟闂ㄦ按閬?></option><option value="闈掗緳灞遍敋鍦?></option>
+  <option value="鍏í宀涜タ渚ч敋鍦?></option><option value="娑ㄨ捣娓浮鍙ｆ按鍩?></option><option value="鍙屽瀹㈣繍鐮佸ご姘村煙"></option>
+  <option value="鍙伴棬娓旀腐姘村煙"></option><option value="鍑夋江宀涚爜澶村墠娌?></option><option value="灏忛儹宸ㄦ按閬?></option>
+</datalist>
+
+<script>
+(function(){
+'use strict';
+
+/* ================= 鍩虹宸ュ叿 ================= */
+var KEY = 'wb_lhtn_db';           // 鍏í閫氳埅 workbench
+var OPERATOR_KEY = 'wb_lhtn_operator';
+function _touch(){ return ('ontouchstart' in window) || navigator.maxTouchPoints > 0; }
+var isMobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone|HarmonyOS|Huawei|XiaoMi|MIUI/i.test(navigator.userAgent) || (_touch() && Math.min(window.innerWidth, window.innerHeight) <= 1024);
+var TIPKEY = 'wb_lhtn_tip_off';
+var CHECK_ITEMS = [
+  '鍙戝竷棰勮淇℃伅銆侀€氱煡杈栧尯鑸硅埗',
+  '娓″彛娓¤埞鍋滆埅澶嶈埅閮ㄧ讲',
+  '姘翠笂姘翠笅浣滀笟鍋滃伐鎾ょ',
+  '鑸硅埗杩涙腐閬块銆侀敋娉婂畨鍏ㄥ贰鏌?,
+  '瀹㈡浮鑸逛笌鍗卞寲鍝佽埞閲嶇偣鐩槻',
+  '搴旀€ュ€肩彮涓庢晳鍔╁姏閲忛儴缃?,
+  '杩囩▼缁撴潫鍚庡鑸畨鍏ㄦ鏌?
+];
+/* ================= 閫氳埅鐜 12 绫昏绱?schema ================= */
+var NAV_CATS = [
+  {key:'鐮佸ご', excludeCommon:['lat','lng','geom','owner'], fields:[
+    {key:'berth',label:'娉婁綅鍚嶇О'},
+    {key:'dtype',label:'鐮佸ご绫诲瀷'},
+    {key:'loc',label:'浣嶇疆'},
+    {key:'scale',label:'鐮佸ご灏哄害'},
+    {key:'ton',label:'鐮佸ご鍚ㄧ骇'},
+    {key:'aside',label:'鍏奸潬鍚ㄤ綅'},
+    {key:'use',label:'鐮佸ご鐢ㄩ€?},
+    {key:'dDesign',label:'璁捐姘存繁'},
+    {key:'dReal',label:'瀹為檯姘存繁'},
+    {key:'done',label:'绔ｅ伐鏃ユ湡'}
+  ]},
+  {key:'鑸亾', statusOpts:['姝ｅ父','绠″埗'], excludeCommon:['lat','lng','geom','owner'], fields:[
+    {key:'depth',label:'姘存繁锛坢锛?},
+    {key:'widthKm',label:'瀹藉害锛坘m锛?},
+    {key:'current',label:'娼祦'},
+    {key:'navGrade',label:'鑸硅埗閫氳埅绛夌骇'}
+  ]},
+  {key:'閿氬湴', excludeCommon:['lat','lng','geom','owner'], fields:[
+    {key:'aType',label:'閿氬湴绫诲瀷',type:'select',opts:['瀵瑰閿氬湴','涓撶敤閿氬湴','涓存椂閿氭硦鐐?]},
+    {key:'purpose',label:'鐢ㄩ€?},
+    {key:'rangePos',label:'鑼冨洿鍧愭爣(澶氳竟褰㈣繛绾?'},
+    {key:'anchorPos',label:'閿氭硦鐐?鍧愭爣/L鈮?鑸瑰巶)'}
+  ]},
+  {key:'杩囬┏鍖?, fields:[
+    {key:'opType',label:'浣滀笟绫诲瀷'},
+    {key:'scope',label:'鑼冨洿'}
+  ]},
+  {key:'娴瓛', fields:[
+    {key:'buoyType',label:'娴瓛绫诲瀷'},
+    {key:'moorCap',label:'绯绘硦鑳藉姏'}
+  ]},
+  {key:'妗ユ', fields:[
+    {key:'length',label:'鍏ㄩ暱(m)'},
+    {key:'spanCount',label:'閫氳埅瀛旀暟閲?},
+    {key:'mainClear',label:'涓婚€氳埅瀛斿噣绌洪珮搴?m)'},
+    {key:'mainClass',label:'涓婚€氳埅瀛旈€氳埅绛夌骇'},
+    {key:'subClear',label:'鍓€氳埅瀛斿噣绌洪珮搴?m)'},
+    {key:'subClass',label:'鍓€氳埅瀛旈€氳埅绛夌骇'}
+  ]},
+  {key:'鑸瑰巶', fields:[
+    {key:'shoreLen',label:'宀哥嚎闀垮害(m)'},
+    {key:'dockCap',label:'鏈€澶ц埞鍧?鑸瑰彴鍚ㄧ骇'},
+    {key:'repairType',label:'鍙慨閫犺埞鑸剁被鍨?}
+  ]},
+  {key:'鐢电紗', fields:[
+    {key:'usage',label:'鐢ㄩ€?},
+    {key:'start',label:'璧风偣'},
+    {key:'end',label:'缁堢偣'},
+    {key:'clearH',label:'鍑€绌洪珮搴?m)'},
+    {key:'voltage',label:'鐢靛帇绛夌骇'},
+    {key:'charted',label:'娴峰浘鏍囩ず',type:'select',opts:['鏄?,'鍚?]}
+  ]},
+  {key:'绠＄嚎', fields:[
+    {key:'usage',label:'鐢ㄩ€?},
+    {key:'start',label:'璧风偣'},
+    {key:'end',label:'缁堢偣'},
+    {key:'routeLen',label:'璺敱闀垮害(娴烽噷)'},
+    {key:'buryDepth',label:'鍩嬫繁(m)'},
+    {key:'charted',label:'娴峰浘鏍囩ず',type:'select',opts:['鏄?,'鍚?]}
+  ]},
+  {key:'鎶ュ憡绾?, excludeCommon:['lat','lng','geom','owner'], fields:[
+    {key:'lineType',label:'鎶ュ憡绾垮瀷',type:'select',opts:['鐩寸嚎','鎶樼嚎']},
+    {key:'linePos',label:'鎶ュ憡绾夸綅缃?},
+    {key:'vhf',label:'VHF棰戦亾'},
+    {key:'reportRule',label:'鎶ュ憡瑙勫畾',type:'textarea',full:true},
+    {key:'estabDate',label:'璁剧珛鏃ユ湡',type:'date'},
+    {key:'jurisdiction',label:'鎵€鍦ㄨ緰鍖?}
+  ]},
+  {key:'寮曡埅鐐?, excludeCommon:['lat','lng','geom','owner'], fields:[
+    {key:'boardType',label:'鐧荤杞被鍨?,type:'select',opts:['鐧昏疆','绂昏疆','鐧荤杞?]},
+    {key:'identPos',label:'鏍囪瘑浣嶇疆'},
+    {key:'boardWater',label:'鐧昏疆姘村煙',type:'textarea',full:true,ph:'鍙～鍐欏涓潗鏍囩偣鎴栨枃瀛楁弿杩?},
+    {key:'shipLimit',label:'鑸硅埗闄愬埗瑕佹眰',type:'textarea',full:true},
+    {key:'weatherLimit',label:'澶╂皵闄愬埗瑕佹眰',type:'textarea',full:true}
+  ]},
+  {key:'娌夎埞', fields:[
+    {key:'sinkDate',label:'娌夋病鏃堕棿'},
+    {key:'sinkWater',label:'娌夋病姘村煙'},
+    {key:'shipOwner',label:'鑸硅埗鎵€鏈変汉'},
+    {key:'shipLen',label:'鑸归暱(m)'},
+    {key:'lowTideDist',label:'璺濅綆娼按闈?m)'},
+    {key:'oil',label:'瀛樻补鎯呭喌'},
+    {key:'obstruct',label:'鏄惁纰嶈埅',type:'select',opts:['鏄?,'鍚?]},
+    {key:'noSalvage',label:'鏈墦鎹炲師鍥?}
+  ]},
+  {key:'绂佽埅鍖?, fields:[
+    {key:'scope',label:'鑼冨洿'},
+    {key:'ctrlContent',label:'绂佽埅/绂侀敋/绠″埗鍐呭'},
+    {key:'ctrlStart',label:'璧峰鏃ユ湡'},
+    {key:'ctrlEnd',label:'缁撴潫鏃ユ湡'}
+  ]}
+];
+var NAV_CAT_MAP = {};
+NAV_CATS.forEach(function(c){ NAV_CAT_MAP[c.key]=c; });
+var navSel='';  /* 閫氳埅鐜宸︿晶瀵艰埅褰撳墠閫変腑鐨勭被鍒紙''=鍏ㄩ儴锛?*/
+var navDropdownOpen=false; /* 閫氳埅鐜绫诲埆涓嬫媺鑿滃崟鏄惁灞曞紑 */
+/* 鎵€鏈夌被鍒叡鐢ㄧ殑瀛楁 */
+var NAV_COMMON = [
+  {key:'name',label:'瑕佺礌鍚嶇О',req:true},
+  {key:'waters',label:'鎵€灞炴按鍩?娓尯'},
+  {key:'lat',label:'涓績绾害(掳)'},
+  {key:'lng',label:'涓績缁忓害(掳)'},
+  {key:'geom',label:'鑼冨洿/鍧愭爣涓?,full:true},
+  {key:'owner',label:'绠＄悊/涓氫富鍗曚綅'},
+  {key:'status',label:'鐘舵€?,type:'select',opts:['鍦ㄥ唽','鍦ㄥ缓','鍋滅敤','宸插彇缂?]},
+  {key:'updated',label:'鏁版嵁鏇存柊鏃ユ湡',type:'date'},
+  {key:'note',label:'澶囨敞',full:true}
+];
+/* CSV 鍒楋紙閫氱敤 + 鍏ㄩ儴鍒嗙被瀛楁锛?*/
+var NAV_CSV_KEYS = NAV_COMMON.map(function(f){return f.key;}).concat(
+  NAV_CATS.reduce(function(a,c){ return a.concat(c.fields.map(function(f){return f.key;})); }, []));
+var NAV_CSV_HEAD = NAV_COMMON.map(function(f){return f.label;}).concat(
+  NAV_CATS.reduce(function(a,c){ return a.concat(c.fields.map(function(f){return f.label;})); }, []));
+/* 鎵嬪唽瀵煎叆鐨勯粯璁よ绱犳暟鎹紙鐢?import_nav_from_manual.py 鐢熸垚骞舵敞鍏ワ級 */
+var NAV_SEED = [
+ {
+  "type": "鑸亾",
+  "name": "浣涙浮姘撮亾",
+  "waters": "鍏í杈栧尯",
+  "depth": "10~72",
+  "widthKm": "8.3",
+  "current": "鍥炶浆娴侊紝1.7~3.0 鑺?,
+  "navGrade": "铏惧硻闂?鍏í娓尯 30 涓囧惃绾э紱灏忔磱鐚?鏉″笟闂?20 涓囧惃绾?,
+  "status": "姝ｅ父",
+  "updated": "2026-08-08",
+  "id": "n-鑸亾-01"
+ },
+ {
+  "type": "鑸亾",
+  "name": "鏉″笟闂ㄨ埅閬?,
+  "waters": "鍏í杈栧尯",
+  "depth": ">17.8",
+  "widthKm": "0.54锝?锛堜富鑸亾鍙ｅ鎺ㄨ崘鑸嚎瀹藉害 1000m锛涘彛鍐呯嫮鍙ｆ鑸亾瀹藉害 540m锛岀嫮鍙ｄ互涓滄鑸亾瀹藉害鍔犲鑷?1000m锛岀嫮鍙ｄ互瑗挎鑸亾瀹藉害 800m锛?,
+  "current": "鍙ｅ鑸亾鎴栧彛澶栨帹鑽愯埅绾胯埅琛屾椂鍙楀洖杞祦褰卞搷锛屾定钀芥疆灏忔疆鏈€澶ф祦閫?0.3锝?.0kn锛屽ぇ娼渶澶ф祦閫?0.5锝?.8kn锛屽彛澶栦富鑸亾鏈€澶фí娴佹祦閫熺害 1.1kn銆?,
+  "navGrade": "涓昏埅閬?15 涓囧惃绾э紝鏀埅閬?25 涓囧惃绾?,
+  "status": "姝ｅ父",
+  "updated": "2026-08-08",
+  "id": "n-鑸亾-02"
+ },
+ {
+  "type": "鑸亾",
+  "name": "鍙屽笨闂ㄨ繘娓埅閬?,
+  "waters": "鍏í杈栧尯",
+  "depth": "7.4~69",
+  "widthKm": "0.74~1.5",
+  "current": "涓滃寳~瑗垮崡锛屼竴鑸?3~3.3 鑺傦紝鏈€澶?5 鑺?,
+  "navGrade": "浣涙浮姘撮亾鑸瑰巶浣滀笟鍖?30 涓囧惃锛涘弻灞夸綔涓氬尯-楣侀釜绀?3 涓囧惃绾?,
+  "status": "姝ｅ父",
+  "updated": "2026-08-08",
+  "id": "n-鑸亾-03"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í娌欏矙杞︽浮鐮佸ご1娉?,
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳04鈥?5.8鈥?29掳46鈥?7.3鈥?,
+  "scale": "38绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "杞︽浮",
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2008骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-001"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í娌欏矙杞︽浮鐮佸ご2娉?,
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳04鈥?5.8鈥?29掳46鈥?7.3鈥?,
+  "scale": "50绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "杞︽浮",
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2008骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-002"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í娌欏矙杞︽浮鐮佸ご3娉?,
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳04鈥?5.8鈥?29掳46鈥?7.3鈥?,
+  "scale": "50绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "杞︽浮",
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2008骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-003"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í娌欏矙杞︽浮鐮佸ご4娉?,
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳04鈥?5.8鈥?29掳46鈥?7.3鈥?,
+  "scale": "50绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "杞︽浮",
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2008骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-004"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鏅檧鍙伴棬1#娉婁綅",
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳11鈥?0.6鈥?29掳42鈥?3.2鈥?,
+  "scale": "50绫?,
+  "ton": "500",
+  "aside": "1000",
+  "use": "瀹㈣繍",
+  "dDesign": "6.77",
+  "dReal": "8",
+  "done": "2014骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-005"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鏅檧鍙伴棬2#娉婁綅",
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳11鈥?0.6鈥?29掳42鈥?3.2鈥?,
+  "scale": "50绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "6.77",
+  "dReal": "8",
+  "done": "2014骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-006"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鏅檧鍙伴棬3#娉婁綅",
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳11鈥?0.6鈥?29掳42鈥?3.2鈥?,
+  "scale": "50绫?,
+  "ton": "500",
+  "aside": "1000",
+  "use": "瀹㈣繍",
+  "dDesign": "6.77",
+  "dReal": "8",
+  "done": "2014骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-007"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鏅檧鍙伴棬4#娉婁綅",
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳11鈥?0.6鈥?29掳42鈥?3.2鈥?,
+  "scale": "50绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "6.77",
+  "dReal": "8",
+  "done": "2014骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-008"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鏅檧鍏í澶у矙瀹㈣繍鐮佸ご1娉?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "122掳07鈥?1.7鈥?29掳46鈥?0.4鈥?,
+  "scale": "52.2绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "杞︽浮",
+  "dDesign": "5.65",
+  "dReal": "10-11",
+  "done": "2019.4",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-009"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鏅檧鍏í澶у矙瀹㈣繍鐮佸ご2娉?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "122掳07鈥?1.7鈥?29掳46鈥?0.4鈥?,
+  "scale": "60绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "5.65",
+  "dReal": "11",
+  "done": "2019.4",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-010"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鏅檧鍏í澶у矙瀹㈣繍鐮佸ご3娉?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "122掳07鈥?1.7鈥?29掳46鈥?0.4鈥?,
+  "scale": "60绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "杞︽浮",
+  "dDesign": "4.55",
+  "dReal": "12",
+  "done": "2019.4",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-011"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鏅檧鍏í澶у矙瀹㈣繍鐮佸ご4娉?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "122掳07鈥?1.7鈥?29掳46鈥?0.4鈥?,
+  "scale": "60绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "杞︽浮",
+  "dDesign": "5.65",
+  "dReal": "10",
+  "done": "2019.4",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-012"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "浣涙浮瀹㈣繍鐮佸ご",
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳01鈥?2.0鈥?29掳44鈥?1.4鈥?,
+  "scale": "39绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "涓嶈",
+  "dReal": "5",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-013"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "浣涙浮杞︽浮鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "122掳02鈥?3鈥筹紝29掳45鈥?7鈥?,
+  "scale": "45绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "杞︽浮",
+  "dDesign": "6",
+  "dReal": "6",
+  "done": "2015骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-014"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í娑ㄨ捣娓爜澶?,
+  "berth": "",
+  "dtype": "鐭崇爩鐮佸ご",
+  "loc": "122掳03鈥?6.5鈥?29掳45鈥?1.7鈥?,
+  "scale": "50绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "10",
+  "dReal": "10",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-015"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏冨北涔″ぇ楸煎巶瀹㈣繍鐮佸ご",
+  "berth": "",
+  "dtype": "鐭崇爩鐮佸ご",
+  "loc": "122掳13鈥?4鈥矱 锛?9掳41鈥?3鈥砃",
+  "scale": "16绫?,
+  "ton": "300",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "4",
+  "dReal": "4",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-016"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏冨北宀涜タ骞冲矖瀹㈣繍鐮佸ご",
+  "berth": "",
+  "dtype": "鐭崇爩鐮佸ご",
+  "loc": "122掳12鈥?5鈥矱 锛?9掳42鈥?9鈥砃",
+  "scale": "6绫?,
+  "ton": "200",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "2",
+  "dReal": "2",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-017"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏冨北宀涘ぇ绡辩畷瀹㈣繍鐮佸ご",
+  "berth": "",
+  "dtype": "鐭崇爩鐮佸ご",
+  "loc": "122掳12鈥?6鈥矱 锛?9掳42鈥?4鈥砃",
+  "scale": "6绫?,
+  "ton": "200",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "2.2",
+  "dReal": "2.2",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-018"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏冨北宀涘皬绡辩畷瀹㈣繍鐮佸ご",
+  "berth": "",
+  "dtype": "鐭崇爩鐮佸ご",
+  "loc": "122掳12鈥?5鈥矱锛?29掳42鈥?2鈥砃",
+  "scale": "8绫?,
+  "ton": "200",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "2.5",
+  "dReal": "2.5",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-019"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏冨北宀涘闈㈠北瀹㈣繍鐮佸ご",
+  "berth": "",
+  "dtype": "鐭崇爩鐮佸ご",
+  "loc": "122掳13鈥?0鈥矱锛?29掳41鈥?4鈥砃",
+  "scale": "15绫?,
+  "ton": "200",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "2.8",
+  "dReal": "2.8",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-020"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í鍙伴棬鍋囨棩宀涚爜澶?,
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳11鈥?4鈥矱锛?29掳42鈥?2鈥砃",
+  "scale": "40绫?,
+  "ton": "300",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "5",
+  "dReal": "5",
+  "done": "2007骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-021"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í鐮氱摝宀涘亣鏃ュ矝鐮佸ご",
+  "berth": "",
+  "dtype": "鐭崇爩鐮佸ご",
+  "loc": "122掳14鈥?2鈥矱 锛?9掳40鈥?0鈥砃",
+  "scale": "47.8绫?,
+  "ton": "300",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "3",
+  "dReal": "3",
+  "done": "2005骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-022"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "铏惧硻鏍呮瀹㈣繍鐮佸ご",
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳12鈥?5鈥矱 锛?9掳46鈥?2鈥砃",
+  "scale": "50绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "10",
+  "dReal": "10",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-023"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "婀栨偿瀹㈣繍鐮佸ご",
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "122掳10鈥?7鈥矱 锛?9掳47鈥?3鈥砃",
+  "scale": "50绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "3.7",
+  "dReal": "3.7",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-024"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "铏惧硻鑼跺矙娓″彛",
+  "berth": "",
+  "dtype": "鐭崇爩鐮佸ご",
+  "loc": "122掳19鈥?3鈥矱 锛?9掳51鈥?0鈥砃",
+  "scale": "50绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "瀹㈣繍",
+  "dDesign": "2",
+  "dReal": "2",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-025"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "瀹佹尝鑸熷北娓叚妯腐鍖鸿垷灞卞競閲戞鼎鐭虫补杞繍鏈夐檺鍏徃娌瑰簱鍩哄湴閲戞櫀鐮佸ご1鍙锋硦浣?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳45鈥?8鈥砃/122掳03鈥?9鈥矱",
+  "scale": "84绫?,
+  "ton": "3000",
+  "aside": "4500",
+  "use": "鎴愬搧娌规硦浣?,
+  "dDesign": "9.4",
+  "dReal": "9.4",
+  "done": "2000骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-026"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閲戞鼎1#娉婁綅",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳45鈥?0鈥砃/122掳03鈥?5鈥矱",
+  "scale": "252绫?,
+  "ton": "30000",
+  "aside": "120000",
+  "use": "娌瑰搧",
+  "dDesign": "22",
+  "dReal": "26",
+  "done": "2014骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-027"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閲戞鼎2#娉婁綅",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳45鈥?8鈥砃/122掳03鈥?9鈥矱",
+  "scale": "91.6绫?,
+  "ton": "3000",
+  "aside": "3000",
+  "use": "娌瑰搧",
+  "dDesign": "8",
+  "dReal": "10",
+  "done": "2013骞?2鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-028"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏冨北娌瑰簱鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "122掳12鈥?2鈥砃/29掳42鈥?65鈥矱",
+  "scale": "58绫?,
+  "ton": "3000",
+  "aside": "4500",
+  "use": "娌瑰搧",
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2020骞?0鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-029"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓ゥ娌瑰簱1鍙风爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳46鈥?6鈥砃/122掳07鈥?2鈥矱",
+  "scale": "480绫?,
+  "ton": "50000",
+  "aside": "",
+  "use": "鏈€澶?2涓囧惃涓旇璐ч噺灏戜簬7.8涓囧惃",
+  "dDesign": "娌瑰搧",
+  "dReal": "23",
+  "done": "23",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-030"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓ゥ娌瑰簱2鍙风爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳46鈥?6鈥砃/122掳07鈥?2鈥矱",
+  "scale": "732绫?,
+  "ton": "150000",
+  "aside": "",
+  "use": "娌瑰搧",
+  "dDesign": "25",
+  "dReal": "30",
+  "done": "2022骞?0鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-031"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鑷湪鐩涜揪3鍙风爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳46鈥?9鈥砃/122掳07鈥?2鈥矱",
+  "scale": "320绫?,
+  "ton": "50000",
+  "aside": "",
+  "use": "娌瑰搧",
+  "dDesign": "16.4",
+  "dReal": "16.4",
+  "done": "2024骞?2鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-032"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓滅櫧鑾叉补搴?鍙风爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳48鈥?7鈥砃/122掳10鈥?4鈥矱",
+  "scale": "480绫?,
+  "ton": "150000",
+  "aside": "",
+  "use": "鐭虫补鍒跺搧",
+  "dDesign": "25",
+  "dReal": "30",
+  "done": "2023骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-033"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓滅櫧鑾叉补搴?鍙风爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳48鈥?2鈥砃/122掳11鈥?鈥矱",
+  "scale": "260绫?,
+  "ton": "30000",
+  "aside": "",
+  "use": "鐭虫补鍒跺搧",
+  "dDesign": "12",
+  "dReal": "16",
+  "done": "2023骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-034"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓滅櫧鑾叉补搴?鍙风爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳48鈥?5鈥砃/122掳11鈥?0鈥矱",
+  "scale": "120绫?,
+  "ton": "5000",
+  "aside": "",
+  "use": "鐭虫补鍒跺搧",
+  "dDesign": "8",
+  "dReal": "10",
+  "done": "2023骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-035"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "婀栨偿娌瑰簱鐮佸ご1鍙锋硦浣?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳47鈥?5鈥砃/122掳11鈥?0鈥矱",
+  "scale": "100绫?,
+  "ton": "1000",
+  "aside": "3000",
+  "use": "鐭虫补鍒跺搧",
+  "dDesign": "8.1",
+  "dReal": "8.1",
+  "done": "2023骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-036"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "搴欐咕娌瑰簱鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳45鈥?8鈥砃/122掳13鈥?3鈥矱",
+  "scale": "100绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "鐭虫补鍒跺搧",
+  "dDesign": "5",
+  "dReal": "5",
+  "done": "2021骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-037"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鑸熷北楹﹀摬浼︾墿鍗卞寲鍝佹粴瑁呯爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳44鈥?6鈥砃/122掳03鈥?1鈥矱",
+  "scale": "80绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "婊氳杞﹁締",
+  "dDesign": "4",
+  "dReal": "4.5",
+  "done": "2025骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-038"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鑸熷北楹﹀摬浼︾墿鍗卞寲鍝佸悐瑁呯爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳44鈥?5鈥砃/122掳03鈥?1鈥矱",
+  "scale": "100绫?,
+  "ton": "300",
+  "aside": "",
+  "use": "娌规偿",
+  "dDesign": "8",
+  "dReal": "9",
+  "done": "2025骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-039"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鑸熷北楹﹀摬浼︾墿娌瑰搧鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳44鈥?5鈥砃/122掳03鈥?0鈥矱",
+  "scale": "100绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "娌瑰搧",
+  "dDesign": "8",
+  "dReal": "9",
+  "done": "2025骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-040"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鑸熷北閼嘲瑗跨櫧鑾茬豢鑹叉捣宸ュ埗閫犱笌杩愮淮鍩哄湴鍗卞寲鍝佹粴瑁呯爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳48鈥?3鈥砃/122掳10鈥?1鈥矱",
+  "scale": "120绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "婊氳杞﹁締",
+  "dDesign": "8",
+  "dReal": "7",
+  "done": "2025骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-041"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í寮曡埅绔欑爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳42鈥?6.5鈥筹紝122掳11鈥?0.8鈥?,
+  "scale": "156绫?,
+  "ton": "3000",
+  "aside": "",
+  "use": "鍏朵粬",
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2011",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-042"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鑸熷北閫氳€€娓彛鐗╂祦鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳42鈥?0鈥砃锛?22掳12鈥?0鈥矱",
+  "scale": "160绫?,
+  "ton": "10000",
+  "aside": "15000",
+  "use": "璐х墿瑁呭嵏",
+  "dDesign": "9.3",
+  "dReal": "9.3",
+  "done": "2011骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-043"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "璇氫赴閽㈤搧鐮佸ご涓€鍙锋硦浣?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳42鈥?0.5鈥筹紝122掳11鈥?4.8鈥?,
+  "scale": "100绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "璐х墿瑁呭嵏",
+  "dDesign": "6",
+  "dReal": "6",
+  "done": "2010骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-044"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í闀囪祫浜х粡钀ョ爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳42鈥?8.4鈥筹紝122掳11鈥?0.1鈥?,
+  "scale": "87绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "鏁ｆ潅璐?,
+  "dDesign": "6",
+  "dReal": "6",
+  "done": "1989骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-045"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í鍙伴棬鐢靛巶鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": ",29掳42鈥?8.4鈥筹紝122掳11鈥?4.1",
+  "scale": "36绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "鏁ｆ潅璐?,
+  "dDesign": "6",
+  "dReal": "6",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-046"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í澶栫尗绀佺爜澶?,
+  "berth": "",
+  "dtype": "鐭崇爩鐮佸ご",
+  "loc": "29掳43鈥?0鈥砃锛?22掳10鈥?1鈥矱",
+  "scale": "40绫?,
+  "ton": "300",
+  "aside": "",
+  "use": "鏁ｈ揣",
+  "dDesign": "3",
+  "dReal": "3",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-047"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鑸爣绔欑爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳42鈥?2.2鈥筹紝122掳11鈥?1.8鈥?,
+  "scale": "100绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "鑸爣璁惧",
+  "dDesign": "8",
+  "dReal": "8.3",
+  "done": "2013骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-048"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í鍏冨北鐭虫枡鍘傜爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳42鈥?0鈥砃锛?22掳12鈥?0鈥矱",
+  "scale": "43绫?,
+  "ton": "1000",
+  "aside": "2000",
+  "use": "鏁ｈ揣",
+  "dDesign": "5.6",
+  "dReal": "5.6",
+  "done": "2005骞?鏈?,
+  "status": "宸插彇缂?,
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-049"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓煶娌圭敓鐗╀箼閱囬」鐩爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳45鈥?3.5鈥筹紝122掳03鈥?5.4鈥?,
+  "scale": "164绫?,
+  "ton": "5000",
+  "aside": "",
+  "use": "鏉傝揣",
+  "dDesign": "9.5",
+  "dReal": "9.5",
+  "done": "2006骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-050"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "娑ㄨ捣娓爞鍦虹爜澶?,
+  "berth": "",
+  "dtype": "鐭崇爩鐮佸ご",
+  "loc": "29掳44鈥?1鈥砃锛?22掳03鈥?3鈥矱",
+  "scale": "65绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "璐х墿瑁呭嵏",
+  "dDesign": "4",
+  "dReal": "4",
+  "done": "1998骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-051"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í浣涙浮閲囩煶瑁呭嵏鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳43鈥?0鈥砃锛?22掳01鈥?0鈥矱",
+  "scale": "97绫?,
+  "ton": "1000",
+  "aside": "3000",
+  "use": "璐х墿瑁呭嵏",
+  "dDesign": "7",
+  "dReal": "7",
+  "done": "2004骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-052"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "椋庣數閰嶅涓撶敤鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": ",29掳43鈥?0.1鈥筹紝122掳02鈥?0.8鈥?,
+  "scale": "263绫?,
+  "ton": "2000",
+  "aside": "",
+  "use": "椋庣數璁惧",
+  "dDesign": "7.6",
+  "dReal": "7.6",
+  "done": "2016骞?,
+  "status": "宸插彇缂?,
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-053"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍏í铔熷ご澶у矙灏忎箤榫熺爜澶?姘存偿鐮佸ご",
+  "berth": "",
+  "dtype": "鏁翠綋鐮岀瓚寮?,
+  "loc": "29掳46鈥?5鈥砃锛?22掳08鈥?1鈥矱",
+  "scale": "24绫?,
+  "ton": "300",
+  "aside": "",
+  "use": "璐х墿瑁呭嵏",
+  "dDesign": "2",
+  "dReal": "2",
+  "done": "1986骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-054"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "娴欒兘鐓ょ數鍗歌埞1#娉婁綅",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳45鈥?0鈥砃锛?22掳09鈥?0鈥矱",
+  "scale": "650绫?,
+  "ton": "150000",
+  "aside": "",
+  "use": "鍏?00000",
+  "dDesign": "鐢电叅",
+  "dReal": "20",
+  "done": "20",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-055"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "娴欒兘鐓ょ數鍗歌埞2#娉婁綅",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳45鈥?0鈥砃锛?22掳09鈥?0鈥矱",
+  "scale": "50000绫?,
+  "ton": "",
+  "aside": "",
+  "use": "鐢电叅",
+  "dDesign": "20",
+  "dReal": "20",
+  "done": "2009骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-056"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "娴欒兘鐓ょ數瑁呰埞鐮佸ご1#娉婁綅",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳45鈥?0鈥砃锛?22掳10鈥?0鈥矱",
+  "scale": "526绫?,
+  "ton": "35000",
+  "aside": "",
+  "use": "鍏?0000",
+  "dDesign": "鐢电叅",
+  "dReal": "14",
+  "done": "14",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-057"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "娴欒兘鐓ょ數瑁呰埞鐮佸ご2#娉婁綅",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳45鈥?0鈥砃锛?22掳10鈥?0鈥矱",
+  "scale": "20000绫?,
+  "ton": "",
+  "aside": "",
+  "use": "鐢电叅",
+  "dDesign": "14",
+  "dReal": "14",
+  "done": "2009骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-058"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "娴欒兘鐓ょ數鐮佸ご瑁呰埞鐮佸ご3#娉婁綅",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳45鈥?0鈥砃锛?22掳10鈥?0鈥矱",
+  "scale": "5000绫?,
+  "ton": "",
+  "aside": "",
+  "use": "鐢电叅",
+  "dDesign": "14",
+  "dReal": "14",
+  "done": "2009骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-059"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鍥轰綋搴熷純鐗╃患鍚堝埄鐢ㄩ厤濂楃爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳45鈥?7.1鈥筹紝122掳08鈥?3.1鈥?,
+  "scale": "158绫?,
+  "ton": "3000",
+  "aside": "",
+  "use": "搴熷純鐗?,
+  "dDesign": "14",
+  "dReal": "14",
+  "done": "2009骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-060"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "姝︽腐鐮佸ご鍗歌埞1#鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳43鈥?8鈥砃锛?22掳12鈥?8鈥矱",
+  "scale": "475绫?,
+  "ton": "250000",
+  "aside": "",
+  "use": "鍑忚浇闈犳硦鍏?00000",
+  "dDesign": "鍚ㄧ骇",
+  "dReal": "閾佺熆鐭?,
+  "done": "26",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-061"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "姝︽腐鐮佸ご瑁呰埞鐮佸ご4#娉婁綅",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳43鈥?2鈥砃锛?22掳12鈥?4鈥矱",
+  "scale": "590绫?,
+  "ton": "50000",
+  "aside": "",
+  "use": "閾佺熆鐭?,
+  "dDesign": "15",
+  "dReal": "15",
+  "done": "2013骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-062"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "姝︽腐鐮佸ご瑁呰埞鐮佸ご3#娉婁綅",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳43鈥?2鈥砃锛?22掳12鈥?4鈥矱",
+  "scale": "50000绫?,
+  "ton": "",
+  "aside": "",
+  "use": "閾佺熆鐭?,
+  "dDesign": "15",
+  "dReal": "15",
+  "done": "2013骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-063"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "姝︽腐鐮佸ご瑁呰埞鐮佸ご2#娉婁綅",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘",
+  "loc": "29掳43鈥?2鈥砃锛?22掳12鈥?4鈥矱",
+  "scale": "50000绫?,
+  "ton": "",
+  "aside": "",
+  "use": "閾佺熆鐭?,
+  "dDesign": "15",
+  "dReal": "15",
+  "done": "2013骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-064"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鑷鐮佸ご",
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "29掳43鈥?1鈥砃锛?22掳11鈥?9鈥矱",
+  "scale": "",
+  "ton": "",
+  "aside": "",
+  "use": "浜ら€氳墖",
+  "dDesign": "鍏í",
+  "dReal": "",
+  "done": "",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-065"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鑷鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳46鈥?9.5鈥砃/122掳04鈥?5.3鈥矱",
+  "scale": "130绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "鏉愭枡鐮佸ご",
+  "dDesign": "7",
+  "dReal": "7",
+  "done": "1998骞?2鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-066"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓滈箯鑸硅埗淇€犺埞鍘傝埦瑁呯爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳46鈥?9鈥砃/122掳07鈥?3鈥矱",
+  "scale": "80绫?,
+  "ton": "6000",
+  "aside": "10000",
+  "use": "鑸硅埗淇€?,
+  "dDesign": "7",
+  "dReal": "7",
+  "done": "1999骞?2鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-067"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓滈箯鑸硅埗淇€犺埞鍘傞厤濂楃爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳46鈥?9鈥砃/122掳07鈥?3鈥矱",
+  "scale": "40绫?,
+  "ton": "1500",
+  "aside": "",
+  "use": "鏉愭枡鐮佸ご",
+  "dDesign": "5",
+  "dReal": "5",
+  "done": "1999骞?2鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-068"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙1鍙风爜澶达紙1#娉婁綅锛?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳46鈥?8鈥砃/122掳04鈥?1鈥矱",
+  "scale": "300绫?,
+  "ton": "300000",
+  "aside": "",
+  "use": "鑸硅埗淇€?,
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2007骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-069"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙2鍙风爜澶达紙2#娉婁綅锛?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳46鈥?9鈥砃/122掳04鈥?4鈥矱",
+  "scale": "230绫?,
+  "ton": "150000",
+  "aside": "",
+  "use": "鑸硅埗淇€?,
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2007骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-070"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙4鍙风爜澶达紙3#娉婁綅锛?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳46鈥?9鈥砃/122掳04鈥?6鈥矱",
+  "scale": "270绫?,
+  "ton": "100000",
+  "aside": "",
+  "use": "鑸硅埗淇€?,
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2006骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-071"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙5鍙风爜澶达紙4#-5#娉婁綅锛?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳46鈥?8鈥砃/122掳06鈥?3鈥矱",
+  "scale": "500绫?,
+  "ton": "300000",
+  "aside": "100000",
+  "use": "鑸硅埗淇€?,
+  "dDesign": "6.5",
+  "dReal": "7",
+  "done": "2021骞?0鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-072"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙6鍙风爜澶达紙6#娉婁綅锛?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳46鈥?8鈥砃/122掳05鈥?1鈥矱",
+  "scale": "300绫?,
+  "ton": "300000",
+  "aside": "",
+  "use": "鑸硅埗淇€?,
+  "dDesign": "6.5",
+  "dReal": "6.5",
+  "done": "2006骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-073"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙7鍙风爜澶达紙7#娉婁綅锛?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳46鈥?8鈥砃/122掳05鈥?1鈥矱",
+  "scale": "190绫?,
+  "ton": "70000",
+  "aside": "",
+  "use": "鑸硅埗淇€?,
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2007骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-074"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙1#鑸瑰彴绐佸牑鐮佸ご锛?#娉婁綅锛?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳46鈥?8鈥砃/122掳05鈥?1鈥矱",
+  "scale": "280绫?,
+  "ton": "150000",
+  "aside": "",
+  "use": "鑸硅埗淇€?,
+  "dDesign": "7",
+  "dReal": "7",
+  "done": "24",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-075"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙1鍙疯埞鍙版潗鏂欑爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳47鈥?0鈥砃/122掳06鈥?0鈥矱",
+  "scale": "50绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "璐х墿瑁呭嵏",
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2007骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-076"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙1鍙风爜澶村皬娓睜鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳47鈥?0鈥砃/122掳06鈥?0鈥矱",
+  "scale": "50绫?,
+  "ton": "1000",
+  "aside": "",
+  "use": "璐х墿瑁呭嵏",
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2007骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-077"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閼簹鑸瑰巶1鍙风爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "122 掳06鈥?7 銆?29 掳47 鈥?2 銆?,
+  "scale": "",
+  "ton": "",
+  "aside": "",
+  "use": "478绫?,
+  "dDesign": "20涓囧惃",
+  "dReal": "20涓囧惃銆?5涓囧惃骞堕潬",
+  "done": "鑸硅埗淇€?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-078"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閼簹鑸瑰巶2鍙风爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "122 掳06 鈥?6 銆? 29 掳47 鈥?3 銆?,
+  "scale": "",
+  "ton": "",
+  "aside": "",
+  "use": "200绫?,
+  "dDesign": "6涓囧惃",
+  "dReal": "6涓囧惃3妗ｅ苟闈?,
+  "done": "鑸硅埗淇€?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-079"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閼簹鑸瑰巶3鍙风爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "122掳 06 鈥?0 銆? 29 掳47 鈥?6 銆?,
+  "scale": "",
+  "ton": "",
+  "aside": "",
+  "use": "250绫?,
+  "dDesign": "5涓囧惃",
+  "dReal": "15涓囧惃3妗ｅ苟闈?,
+  "done": "鑸硅埗淇€?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-080"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閼簹鑸瑰巶4鍙风爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "122 掳07 鈥?2 銆?29 掳47 鈥?0 銆?,
+  "scale": "",
+  "ton": "",
+  "aside": "",
+  "use": "176绫?,
+  "dDesign": "4涓囧惃",
+  "dReal": "6涓囧惃3妗ｅ苟闈?,
+  "done": "鑸硅埗淇€?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-081"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閼簹鐗╄祫瑁呭嵏鐮佸ご",
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳47鈥?7鈥砃/122掳06鈥?2鈥矱",
+  "scale": "152绫?,
+  "ton": "10000",
+  "aside": "",
+  "use": "鏉愭枡鐮佸ご",
+  "dDesign": "10",
+  "dReal": "10",
+  "done": "2006骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-082"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閼簹鑸瑰巶7鍙风爜澶?,
+  "berth": "",
+  "dtype": "楂樻々姊佹澘寮?,
+  "loc": "29掳47鈥?9.6鈥砃/122掳07鈥?3.3鈥矱",
+  "scale": "480绫?,
+  "ton": "2000*4",
+  "aside": "",
+  "use": "浠舵潅璐ц鍗?,
+  "dDesign": "7.35",
+  "dReal": "7.35",
+  "done": "2019骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鏂板熀娴锋磱",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-083"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閼簹宸ヤ綔鑸圭爜澶?,
+  "berth": "",
+  "dtype": "娴爜澶?,
+  "loc": "29掳47鈥?9.6鈥砃/122掳07鈥?3.3鈥矱",
+  "scale": "85绫?,
+  "ton": "500*2",
+  "aside": "",
+  "use": "宸ヤ綔鑸?,
+  "dDesign": "5.05",
+  "dReal": "5.05",
+  "done": "2019骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鏂板熀娴锋磱",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-084"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閼簹婊氳鑸圭爜澶?,
+  "berth": "",
+  "dtype": "楂樻々澧╅鍒剁┖蹇冩澘寮?,
+  "loc": "29掳47鈥?9.6鈥砃/122掳07鈥?3.3鈥矱",
+  "scale": "37绫?,
+  "ton": "500",
+  "aside": "",
+  "use": "婊氳鑸?,
+  "dDesign": "4.45",
+  "dReal": "4.45",
+  "done": "2019骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鏂板熀娴锋磱",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-085"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓滄眹鑸瑰巶鍥哄畾姘存偿鐮佸ご",
+  "berth": "",
+  "dtype": "鐭崇爩鐮佸ご",
+  "loc": "29掳40鈥?0鈥砃/122掳09鈥?0鈥矱",
+  "scale": "80绫?,
+  "ton": "3000",
+  "aside": "4000",
+  "use": "鑸硅埗鍋滈潬",
+  "dDesign": "4.5",
+  "dReal": "3.5",
+  "done": "2012骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-086"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "榫欏北鑸瑰巶20涓囧惃鑸瑰潪",
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "29掳46鈥?0鈥砃/122掳03鈥?0鈥矱",
+  "scale": "310绫趁?4.8绫?,
+  "ton": "20涓囧惃",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "12.5绫?,
+  "dReal": "12.5绫?,
+  "done": "2009骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-087"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "榫欏北鑸瑰巶7涓囧惃鑸瑰潪",
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "29掳46鈥?0鈥砃/122掳03鈥?0鈥矱",
+  "scale": "240绫趁?0绫?,
+  "ton": "7涓囧惃",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "11绫?,
+  "dReal": "11绫?,
+  "done": "1999骞?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-088"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓滈箯鑸硅埗淇€犺埞鍘傝埞鍧?,
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "29掳46鈥?9鈥砃/122掳07鈥?3鈥矱",
+  "scale": "90绫?,
+  "ton": "3000",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "6",
+  "dReal": "6",
+  "done": "1986骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-089"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鏅檧涓滈箯鑸硅埗淇€犺埞鍘傝埞鍙?,
+  "berth": "",
+  "dtype": "鑸瑰彴",
+  "loc": "29掳46鈥?9鈥砃/122掳07鈥?3鈥矱",
+  "scale": "",
+  "ton": "",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "",
+  "dReal": "",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-090"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鏅檧涓滈箯鑸硅埗淇€犺埞鍘傝埞鍙?,
+  "berth": "",
+  "dtype": "鑸瑰彴",
+  "loc": "29掳46鈥?9鈥砃/122掳07鈥?3鈥矱",
+  "scale": "",
+  "ton": "",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "",
+  "dReal": "",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-091"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙1鍙峰潪",
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "29掳46鈥?6鈥砃/122掳04鈥?5鈥矱",
+  "scale": "280绫?,
+  "ton": "80000",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "9.3",
+  "dReal": "9.3",
+  "done": "2007骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-092"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙2鍙峰潪",
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "29掳46鈥?3鈥砃/122掳04鈥?7鈥矱",
+  "scale": "470绫?,
+  "ton": "300000",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "10.7",
+  "dReal": "10.7",
+  "done": "2007骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-093"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙3鍙峰潪",
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "29掳46鈥?1鈥砃/122掳04鈥?3鈥矱",
+  "scale": "539绫?,
+  "ton": "150000",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "8",
+  "dReal": "8",
+  "done": "2006骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-094"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙鑸瑰姟宸ョ▼鍏徃涓€鍙疯埞鍙?,
+  "berth": "",
+  "dtype": "鑸瑰彴",
+  "loc": "29掳46鈥?1鈥砃/122掳04鈥?3鈥矱",
+  "scale": "",
+  "ton": "",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "",
+  "dReal": "",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-095"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓繙鑸瑰姟宸ョ▼鍏徃浜屽彿鑸瑰彴",
+  "berth": "",
+  "dtype": "鑸瑰彴",
+  "loc": "29掳46鈥?1鈥砃/122掳04鈥?3鈥矱",
+  "scale": "",
+  "ton": "",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "",
+  "dReal": "",
+  "done": "涓嶈",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-096"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閼簹鑸瑰巶20涓囧惃绾ц埞鍧?,
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "122掳 06 鈥?0  銆?29 掳 47 鈥?5 銆?,
+  "scale": "610绫趁?0.8绫?,
+  "ton": "20涓囧惃",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "12.4",
+  "dReal": "12.4",
+  "done": "2006骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-097"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "閼簹鑸瑰巶6涓囧惃绾ц埞鍧?,
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "122  掳06  鈥?2 銆?29 掳 47 鈥?7 銆?,
+  "scale": "230绫趁?0绫?,
+  "ton": "6涓囧惃",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "10.9",
+  "dReal": "10.9",
+  "done": "2006骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-098"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "涓滄眹鑸瑰巶3000鍚ㄧ骇鑸瑰潪",
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "29掳40鈥?0鈥砃/122掳09鈥?0鈥矱",
+  "scale": "167绫?,
+  "ton": "3000",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "6",
+  "dReal": "6",
+  "done": "2011骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-099"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "浜氭嘲鑸瑰巶15涓囧惃绾ц埞鍧?,
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "122掳09 鈥?4.6銆?29 掳48鈥?8.9 銆?,
+  "scale": "300绫趁?6绫?,
+  "ton": "15涓囧惃",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "14",
+  "dReal": "14",
+  "done": "2016骞?2鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-100"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "浜氭嘲鑸瑰巶30涓囧惃绾ц埞鍧?,
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "122 掳09 鈥?4.98 銆?29 掳48 鈥?8.9 銆?,
+  "scale": "360绫趁?6绫?,
+  "ton": "30涓囧惃",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "16",
+  "dReal": "16",
+  "done": "2016骞?2鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-101"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鐟朵赴鑸瑰巶鑸捐鐮佸ご",
+  "berth": "",
+  "dtype": "鐮佸ご",
+  "loc": "122掳13鈥?9銆?29 掳45鈥?5 銆?,
+  "scale": "90绫?,
+  "ton": "5000",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "3.2",
+  "dReal": "3.2",
+  "done": "2016骞?2鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-102"
+ },
+ {
+  "type": "鐮佸ご",
+  "name": "鐟朵赴鑸瑰巶鑸瑰潪",
+  "berth": "",
+  "dtype": "鑸瑰潪",
+  "loc": "122 掳09 鈥?4.98 銆?29 掳48 鈥?8.9 銆?,
+  "scale": "360绫趁?6绫?,
+  "ton": "1涓囧惃",
+  "aside": "",
+  "use": "淇€犺埞",
+  "dDesign": "16",
+  "dReal": "16",
+  "done": "2007骞?鏈?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í",
+  "updated": "2026-08-08",
+  "id": "n-鐮佸ご-103"
+ },
+ {
+  "type": "鎶ュ憡绾?,
+  "name": "L2鎶ュ憡绾?,
+  "lineType": "鐩寸嚎",
+  "points": [
+   {"label": "涓滄寫鍜€", "lat": "29掳44鈥?68N", "lng": "122掳18鈥?22E"},
+   {"label": "鍏í宀涘绀佺伅妗?, "lat": "", "lng": ""}
+  ],
+  "linePos": "涓滄寫鍜€锛?9掳44鈥?68N/122掳18鈥?22E锛変笌鍏í宀涘绀佺伅妗╄繛绾?,
+  "vhf": "28",
+  "reportRule": "鍚戝畞娉㈣垷灞盫TS鎶ュ憡鑸瑰悕銆佽埞鑸跺姩鎬併€佽埞鑸剁绫汇€佹渶澶у悆姘?,
+  "estabDate": "2016-08-01",
+  "jurisdiction": "鍏í娴蜂簨澶?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í杈栧尯",
+  "updated": "2026-08-09",
+  "id": "n-鎶ュ憡绾?1"
+ },
+ {
+  "type": "鎶ュ憡绾?,
+  "name": "L3鎶ュ憡绾?,
+  "lineType": "鎶樼嚎",
+  "points": [
+   {"label": "姊呭北宀涘皬鎷呭北", "lat": "29掳46鈥?11N", "lng": "121掳59鈥?34E"},
+   {"label": "姹€瀛愬北鐏々", "lat": "", "lng": ""},
+   {"label": "娓╁窞宄欑伅妗?, "lat": "", "lng": ""},
+   {"label": "楦﹂箠绀佺伅妗?, "lat": "", "lng": ""},
+   {"label": "鍏í宀涢儹宸ㄥ北瑗夸晶", "lat": "29掳42鈥?47N", "lng": "122掳04鈥?17E"}
+  ],
+  "linePos": "姊呭北宀涘皬鎷呭北锛?9掳46鈥?11N/121掳59鈥?34E锛夈€佹眬瀛愬北鐏々銆佹俯宸炲硻鐏々銆侀甫楣婄鐏々涓庡叚妯矝閮法灞辫タ渚э紙29掳42鈥?47N/122掳04鈥?17E锛夎繛绾?,
+  "vhf": "28",
+  "reportRule": "鍚戝畞娉㈣垷灞盫TS鎶ュ憡鑸瑰悕銆佽埞鑸跺姩鎬併€佽埞鑸剁绫汇€佹渶澶у悆姘?,
+  "estabDate": "2016-08-01",
+  "jurisdiction": "鍏í娴蜂簨澶勩€佹灞辨捣浜嬪",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í杈栧尯",
+  "updated": "2026-08-09",
+  "id": "n-鎶ュ憡绾?2"
+},
+{
+  "type": "寮曡埅鐐?,
+  "name": "瀹佹尝鑸熷北娓潯甯氶棬1鍙凤紙閫傜敤浜庣櫥杞級",
+  "boardType": "鐧昏疆",
+  "points": [],
+  "identPos": "",
+  "boardWater": "29掳42鈥?32鈥砃锛?22掳17鈥?67鈥矱\n29掳42鈥?10鈥砃锛?22掳17鈥?67鈥矱\n29掳43鈥?05鈥砃锛?22掳16鈥?00鈥矱\n29掳42鈥?83鈥砃锛?22掳16鈥?00鈥矱",
+  "shipLimit": "鏅€氳揣鑸广€佹补鑸广€侀泦瑁呯鑸广€佸嵄闄╁搧鑸?,
+  "weatherLimit": "鏉″笟闂ㄥ彛澶栨氮楂?1.5绫砛n椋庡姏>6绾?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í杈栧尯",
+  "updated": "2026-08-09",
+  "id": "n-寮曡埅鐐?1"
+},
+{
+  "type": "寮曡埅鐐?,
+  "name": "瀹佹尝鑸熷北娓潯甯氶棬2鍙凤紙閫傜敤浜庣杞級",
+  "boardType": "绂昏疆",
+  "points": [],
+  "identPos": "",
+  "boardWater": "29掳42鈥?44鈥砃锛?22掳16鈥?00鈥矱\n29掳42鈥?03鈥砃锛?22掳16鈥?00鈥矱\n29掳42鈥?88鈥砃锛?22掳15鈥?00鈥矱\n29掳42鈥?49鈥砃锛?22掳15鈥?00鈥矱",
+  "shipLimit": "鏅€氳揣鑸广€佹补鑸广€侀泦瑁呯鑸广€佸嵄闄╁搧鑸?,
+  "weatherLimit": "鏉″笟闂ㄥ彛澶栨氮楂?1.5绫砛n椋庡姏>6绾?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í杈栧尯",
+  "updated": "2026-08-09",
+  "id": "n-寮曡埅鐐?2"
+},
+{
+  "type": "寮曡埅鐐?,
+  "name": "瀹佹尝鑸熷北娓潯甯氶棬3鍙凤紙閫傜敤浜庣櫥/绂昏疆锛?,
+  "boardType": "鐧荤杞?,
+  "points": [
+    {"label": "鏉″笟闂?鍙峰紩鑸偣", "lat": "29掳41鈥?00鈥砃", "lng": "122掳22鈥?00鈥矱"}
+  ],
+  "identPos": "鏉″笟闂?鍙峰紩鑸偣锛?9掳41鈥?00鈥砃/122掳22鈥?00鈥矱锛?,
+  "boardWater": "鍗婂緞 0.5 娴烽噷",
+  "shipLimit": "鏅€氳揣鑸广€佹补鑸广€侀泦瑁呯鑸?,
+  "weatherLimit": "涓€鑸皵璞℃捣鍐?,
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í杈栧尯",
+  "updated": "2026-08-09",
+  "id": "n-寮曡埅鐐?3"
+},
+{
+  "type": "妗ユ",
+  "name": "鍏í鑷冲ぇ閾滅洏宀涘ぇ妗?,
+  "length": "260",
+  "spanCount": "鏃?,
+  "mainClear": "/",
+  "mainClass": "/",
+  "subClear": "/",
+  "subClass": "/",
+  "status": "鍦ㄥ唽",
+  "waters": "鍏í杈栧尯",
+  "updated": "2026-08-09",
+  "note": "",
+  "id": "n-妗ユ-01"
+},
+{
+  "type": "閿氬湴",
+  "name": "鏉″笟闂ㄥ閿氬湴",
+  "aType": "涓撶敤閿氬湴",
+  "purpose": "鐩墠浠呬緵淇濈◣娌瑰姞娉ㄤ娇鐢?,
+  "anchorLimit": "",
+  "shipyard": "",
+  "rangePts": [
+    {"lat":"29掳40鈥?3鈥?6N","lng":"122掳18鈥?9鈥?9E"},
+    {"lat":"29掳40鈥?5鈥?2N","lng":"122掳20鈥?5鈥?5E"},
+    {"lat":"29掳37鈥?9鈥?2N","lng":"122掳18鈥?2鈥?4E"},
+    {"lat":"29掳37鈥?8鈥?2N","lng":"122掳15鈥?6鈥?8E"},
+    {"lat":"29掳37鈥?2鈥?7N","lng":"122掳13鈥?8鈥?2E"}
+  ],
+  "rangePos": "锛?9掳40鈥?3鈥?6N/122掳18鈥?9鈥?9E锛夈€侊紙29掳40鈥?5鈥?2N/122掳20鈥?5鈥?5E锛夈€侊紙29掳37鈥?9鈥?2N/122掳18鈥?2鈥?4E锛夈€侊紙29掳37鈥?8鈥?2N/122掳15鈥?6鈥?8E锛変笌锛?9掳37鈥?2鈥?7N/122掳13鈥?8鈥?2E锛夎繛绾挎按鍩?,
+  "anchorPts": [
+    {"label":"澶栭敋鍦?","lat":"29掳39鈥?6鈥?2N","lng":"122掳18鈥?8鈥?3E"},
+    {"label":"澶栭敋鍦?","lat":"29掳39鈥?3鈥?5N","lng":"122掳17鈥?4鈥?2E"},
+    {"label":"澶栭敋鍦?","lat":"29掳38鈥?0鈥?0N","lng":"122掳18鈥?8鈥?8E"},
+    {"label":"澶栭敋鍦?","lat":"29掳38鈥?2鈥?6N","lng":"122掳16鈥?6鈥?1E"},
+    {"label":"澶栭敋鍦?","lat":"29掳37鈥?4鈥?1N","lng":"122掳18鈥?4鈥?6E"},
+    {"label":"澶栭敋鍦?","lat":"29掳37鈥?7鈥?7N","lng":"122掳15鈥?1鈥?9E"},
+    {"label":"澶栭敋鍦?","lat":"29掳38鈥?6鈥?7N","lng":"122掳16鈥?6鈥?7E"},
+    {"label":"澶栭敋鍦?","lat":"29掳39鈥?2鈥?2N","lng":"122掳17鈥?2鈥?9E"}
+  ],
+  "anchorPos": "澶栭敋鍦?锛?9掳39鈥?6鈥?2N/122掳18鈥?8鈥?3E锛夛紱澶栭敋鍦?锛?9掳39鈥?3鈥?5N/122掳17鈥?4鈥?2E锛夛紱澶栭敋鍦?锛?9掳38鈥?0鈥?0N/122掳18鈥?8鈥?8E锛夛紱澶栭敋鍦?锛?9掳38鈥?2鈥?6N/122掳16鈥?6鈥?1E锛夛紱澶栭敋鍦?锛?9掳37鈥?4鈥?1N/122掳18鈥?4鈥?6E锛夛紱澶栭敋鍦?锛?9掳37鈥?7鈥?7N/122掳15鈥?1鈥?9E锛夛紱澶栭敋鍦?锛?9掳38鈥?6鈥?7N/122掳16鈥?6鈥?7E锛夛紱澶栭敋鍦?锛?9掳39鈥?2鈥?2N/122掳17鈥?2鈥?9E锛?,
+  "status": "鍦ㄥ唽",
+  "waters": "鏉″笟闂ㄦ按閬?,
+  "updated": "2026-08-09",
+  "note": "澶栭敋鍦伴敋浣嶇偣8涓?,
+  "id": "n-閿氬湴-01"
+},
+{
+  "type": "閿氬湴",
+  "name": "浣涙浮姘撮亾涓存椂閿氭硦鐐?,
+  "aType": "涓存椂閿氭硦鐐?,
+  "purpose": "",
+  "anchorLimit": "",
+  "shipyard": "",
+  "rangePts": [],
+  "rangePos": "",
+  "anchorPts": [
+    {"label":"1#","lat":"29掳47鈥?82N","lng":"122掳06鈥?68E","limit":"207","shipyard":"閼簹鑸瑰巶"},
+    {"label":"2#","lat":"29掳47鈥?52N","lng":"122掳06鈥?11E","limit":"251","shipyard":"涓繙鑸瑰巶"},
+    {"label":"3#","lat":"29掳47鈥?33N","lng":"122掳05鈥?49E","limit":"184","shipyard":"涓繙鑸瑰巶"},
+    {"label":"4#","lat":"29掳46鈥?50N","lng":"122掳03鈥?00E","limit":"98鎴?72","shipyard":"榫欏北鑸瑰巶"},
+    {"label":"5#","lat":"29掳48鈥?90N","lng":"122掳05鈥?00E","limit":"363","shipyard":"榫欏北鑸瑰巶"},
+    {"label":"6#","lat":"29掳49鈥?97N","lng":"122掳06鈥?05E","limit":"266","shipyard":"榫欏北鑸瑰巶"},
+    {"label":"7#","lat":"29掳50鈥?10N","lng":"122掳07鈥?65E","limit":"","shipyard":"閼簹鑸瑰巶"},
+    {"label":"8#","lat":"29掳49鈥?40N","lng":"122掳07鈥?10E","limit":"","shipyard":"閼簹鑸瑰巶"},
+    {"label":"9#","lat":"29掳48鈥?40N","lng":"122掳04鈥?63E","limit":"345","shipyard":"涓繙鑸瑰巶"}
+  ],
+  "anchorPos": "1#锛?9掳47鈥?82N/122掳06鈥?68E锛?L鈮?07m /閼簹鑸瑰巶锛?#锛?9掳47鈥?52N/122掳06鈥?11E锛?L鈮?51m /涓繙鑸瑰巶锛?#锛?9掳47鈥?33N/122掳05鈥?49E锛?L鈮?84m /涓繙鑸瑰巶锛?#锛?9掳46鈥?50N/122掳03鈥?00E锛?L鈮?8鎴?72m /榫欏北鑸瑰巶锛?#锛?9掳48鈥?90N/122掳05鈥?00E锛?L鈮?63m /榫欏北鑸瑰巶锛?#锛?9掳49鈥?97N/122掳06鈥?05E锛?L鈮?66m /榫欏北鑸瑰巶锛?#锛?9掳50鈥?10N/122掳07鈥?65E锛?/閼簹鑸瑰巶锛?#锛?9掳49鈥?40N/122掳07鈥?10E锛?/閼簹鑸瑰巶锛?#锛?9掳48鈥?40N/122掳04鈥?63E锛?L鈮?45m /涓繙鑸瑰巶",
+  "status": "鍦ㄥ唽",
+  "waters": "浣涙浮姘撮亾",
+  "updated": "2026-08-09",
+  "note": "娉細閼簹鑸瑰巶閿氭硦鐐?銆?銆?锛涗腑杩滆埞鍘傞敋娉婄偣2銆?銆?锛涢緳灞辫埞鍘傞敋娉婄偣4銆?銆?",
+  "id": "n-閿氬湴-02"
+}
+];
+var ENG_TYPES = ['鐤忔禋鍚瑰～','鎵撴々娌夋々','鐮佸ご寤鸿','绠＄嚎鏁疯','娴峰簳鐢电紗','娌夎埞鎵撴崬','姘翠笅鍕樻祴','鍏朵粬'];
+var SHIP_TYPES = ['鎸栨偿鑸?,'娉ラ┏','鎵撴々鑸?,'璧烽噸鑸?,'鐢电紗鏁疯鑸?,'璀︽垝鑸?,'浜ら€氳埞','鍏朵粬鏂藉伐鑸硅埗'];
+var SHIP_DYN = ['鍦ㄥ満鏂藉伐','绂诲満'];
+
+function pad(n){return (n<10?'0':'')+n;}
+function fmtD(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function today(){return fmtD(new Date());}
+function shift(n){var d=new Date();d.setDate(d.getDate()+n);return fmtD(d);}
+function shiftT(n,h){var d=new Date();d.setDate(d.getDate()+n);d.setHours(h||8,0,0,0);
+  return fmtD(d)+'T'+pad(d.getHours())+':'+pad(d.getMinutes());}
+function diffDays(a,b){ // a - b, 澶╂暟
+  if(!a) return null;
+  var x=new Date(a+'T00:00:00'), y=new Date((b||today())+'T00:00:00');
+  return Math.round((x-y)/86400000);
+}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function getOperator(){ return (localStorage.getItem(OPERATOR_KEY)||'').trim() || '鏈缃?; }
+function fmtEdit(ts){
+  if(!ts) return '';
+  var d = (typeof ts==='number' || /^\d+$/.test(String(ts))) ? new Date(Number(ts)) : new Date(ts);
+  if(isNaN(d.getTime())) return '';
+  return pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+}
+function lastEditHtml(it){
+  if(!it || (!it.updatedAt && !it.updatedBy)) return '';
+  var t = fmtEdit(it.updatedAt);
+  var who = esc(it.updatedBy || '');
+  if(!t && !who) return '';
+  var txt = '鏈€鍚庣紪杈? + (t?('锛?+t):'') + (who?(' 路 '+who):'');
+  return '<div class="last-edit">'+txt+'</div>';
+}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function cnDate(s){ if(!s) return '鈥?; var p=s.split('-'); return p.length===3?(p[1]+'鏈?+p[2]+'鏃?):s; }
+function cnDT(s){ if(!s) return '鈥?; var t=s.split('T'); return cnDate(t[0])+(t[1]?(' '+t[1]):''); }
+
+/* ---------- 鍏巻杞啘鍘嗭紙1900-2099锛?---------- */
+var LUNAR_INFO = [
+0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2,
+0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977,
+0x04970,0x0a4b0,0x0b4b5,0x06a50,0x06d40,0x1ab54,0x02b60,0x09570,0x052f2,0x04970,
+0x06566,0x0d4a0,0x0ea50,0x06e95,0x05ad0,0x02b60,0x186e3,0x092e0,0x1c8d7,0x0c950,
+0x0d4a0,0x1d8a6,0x0b550,0x056a0,0x1a5b4,0x025d0,0x092d0,0x0d2b2,0x0a950,0x0b557,
+0x06ca0,0x0b550,0x15355,0x04da0,0x0a5d0,0x14573,0x052d0,0x0a9a8,0x0e950,0x06aa0,
+0x0aea6,0x0ab50,0x04b60,0x0aae4,0x0a570,0x05260,0x0f263,0x0d950,0x05b57,0x056a0,
+0x096d0,0x04dd5,0x04ad0,0x0a4d0,0x0d4d4,0x0d250,0x0d558,0x0b540,0x0b5a0,0x195a6,
+0x095b0,0x049b0,0x0a974,0x0a4b0,0x0b27a,0x06a50,0x06d40,0x0af46,0x0ab60,0x09570,
+0x04af5,0x04970,0x064b0,0x074a3,0x0ea50,0x06b58,0x055c0,0x0ab60,0x096d5,0x092e0,
+0x0c960,0x0d954,0x0d4a0,0x0da50,0x07552,0x056a0,0x0abb7,0x025d0,0x092d0,0x0cab5,
+0x0a950,0x0b4a0,0x0baa4,0x0ad50,0x055d9,0x04ba0,0x0a5b0,0x15176,0x052b0,0x0a930,
+0x07954,0x06aa0,0x0ad50,0x05b52,0x04b60,0x0a6e6,0x0a4e0,0x0d260,0x0ea65,0x0d530,
+0x05aa0,0x076a3,0x096d0,0x04bd7,0x04ad0,0x0a4d0,0x1d0b6,0x0d250,0x0d520,0x0dd45,
+0x0b5a0,0x056d0,0x055b2,0x049b0,0x0a577,0x0a4b0,0x0aa50,0x1b255,0x06d20,0x0ada0
+];
+function lunarLeapMonth(y){ return LUNAR_INFO[y-1900] & 0xf; }
+function lunarLeapDays(y){ return lunarLeapMonth(y) ? ((LUNAR_INFO[y-1900] & 0x10000) ? 30 : 29) : 0; }
+function lunarMonthDays(y,m){ return (LUNAR_INFO[y-1900] & (0x10000 >> m)) ? 30 : 29; }
+function lunarYearDays(y){
+  var i=LUNAR_INFO[y-1900], sum=348, j=0x8000;
+  while(j>0x8){ sum += (i&j)?1:0; j>>=1; }
+  return sum + lunarLeapDays(y);
+}
+function solarToLunar(date){
+  var base = new Date(1900,0,31);
+  var offset = Math.floor((date.getTime()-base.getTime())/86400000);
+  var y=1900;
+  while(offset>=lunarYearDays(y)){ offset-=lunarYearDays(y); y++; }
+  var leap=lunarLeapMonth(y), isLeap=false, m=1, days;
+  while(m<=13){
+    if(leap && !isLeap && m===leap+1){
+      days = lunarLeapDays(y);
+      if(offset<days){ isLeap=true; m=leap; break; }
+      offset -= days;
+    }
+    if(m>12) break;
+    days = lunarMonthDays(y,m);
+    if(offset<days) break;
+    offset -= days;
+    m++;
+  }
+  var d = offset + 1;
+  var monthNames=['姝?,'浜?,'涓?,'鍥?,'浜?,'鍏?,'涓?,'鍏?,'涔?,'鍗?,'鍐?,'鑵?];
+  var dayNames=['鍒濅竴','鍒濅簩','鍒濅笁','鍒濆洓','鍒濅簲','鍒濆叚','鍒濅竷','鍒濆叓','鍒濅節','鍒濆崄',
+                '鍗佷竴','鍗佷簩','鍗佷笁','鍗佸洓','鍗佷簲','鍗佸叚','鍗佷竷','鍗佸叓','鍗佷節','浜屽崄',
+                '寤夸竴','寤夸簩','寤夸笁','寤垮洓','寤夸簲','寤垮叚','寤夸竷','寤垮叓','寤夸節','涓夊崄'];
+  return {year:y, month:m, day:d, isLeap:isLeap,
+    text:'鍐滃巻' + monthNames[m-1] + (isLeap?'闂?:'') + '鏈? + dayNames[d-1]};
+}
+function updateLunarDate(){
+  var el = $('hdrLunar');
+  if(el) el.textContent = solarToLunar(new Date()).text;
+}
+
+function $(id){return document.getElementById(id);}
+
+/* ================= 鏁版嵁 ================= */
+var DB = {v:3, nav:[], eng:[], wx:[], todo:[]};
+
+function seed(){
+  return {
+    v:3,
+    nav: NAV_SEED.map(function(x){ return JSON.parse(JSON.stringify(x)); }),
+    eng:[
+      {id:'e2025031',name:'娴欒兘鍏í鐢靛巶浜屾湡宸ョ▼2脳1000MW椤圭洰鍙栨帓姘村彛鑸爣鐏柦宸ヤ綔涓?,unit:'鑸熷北澶у畯寤鸿鏈夐檺鍏徃',wtype:'鍏朵粬',permit:'鑸熸捣閫氳埅鍑嗗瓧锛?025锛夌031鍙?,
+       start:'2025-03-02',end:'2025-04-16',status:'宸茶繃鏈?,isMajor:false,isCompleteReport:false,isPreInterview:false,
+       ships:[{name:'鍚屾亽宸?1',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鑵炬偊2',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'娴峰崥906',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鑵炬偊1',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鍥藉崕宸?',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'娴欐櫘宸?1',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鍗氭磱鎷?',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'}],
+       measures:'鎸夎鍙瘉鏍稿畾浜嬮」浣滀笟锛屾弧瓒抽€氳埅瀹夊叏瑕佹眰锛涗綔涓氭按鍩熻鑸爣鐏苟鍙戝竷鑸閫氬憡',note:'浣滀笟姘村煙锛氬叚妯矝涓滃寳渚у叚妯叅鐢电爜澶村彇鎺掓按鍙ｅ墠娌挎按鍩燂紙浜旂偣杩炵嚎鑼冨洿锛夛紱鍙戣瘉鏃ユ湡锛?025-02-28锛涜鍙瘉缂栫爜锛氳垷娴烽€氳埅鍑嗗瓧锛?025锛夌031鍙?},
+      {id:'e20260005',name:'鑸熷北涓繙娴疯繍閲嶅伐鏈夐檺鍏徃鍥涘彿鑸瑰潪宸ョ▼',unit:'涓缓娓埅灞€闆嗗洟鏈夐檺鍏徃',wtype:'鐮佸ご寤鸿',permit:'娴欒垷娴蜂簨鍑嗗瓧锛?026锛夌0005鍙?, start:'2026-04-03',end:'2026-09-30',status:'鏂藉伐涓?,isMajor:false,isCompleteReport:false,isPreInterview:false, ships:[{name:'楣忔櫙168',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'娲嬫禋009',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'娴欐椹?5',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鍥藉崕宸?',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'姘稿皻閫?8',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'杩滄嫋8',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'椤虹洓69',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鏃ョ洓2',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鑸熻繙6',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'涓滄禋宸?',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'搴峰疁2',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鍏村彂588',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'涓滈『7',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'涓滈『28',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鑱氶懌688',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鏃ョ洓6',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鏃ョ洓18',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鍚夋槍5',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'}], measures:'鎸夎鍙瘉鏍稿畾浜嬮」鍦ㄥ叚妯矝鍖椾晶鑸熷北涓繙娴疯繍閲嶅伐7鍙疯埦瑁呯爜澶翠笢渚ф按鍩熶綔涓氾紱钀藉疄閫氳埅瀹夊叏淇濋殰鎺柦锛屾湇浠庢捣浜嬮儴闂ㄧ粺涓€鎸囨尌',note:'涓氫富鍗曚綅锛氳垷灞变腑杩滄捣杩愰噸宸ユ湁闄愬叕鍙革紱浣滀笟姘村煙锛?鍙疯埦瑁呯爜澶翠笢渚ф按鍩熷叚鐐硅繛绾胯寖鍥达紱鍘熷彂鏈?026-04-03鑷?026-07-31锛屽凡寤舵湡鑷?026-09-30锛涘師鑸圭弽娓?24宸插垹闄わ紝鏂板鑱氶懌688銆佹棩鐩?銆佹棩鐩?8銆佸悏鏄?'},
+      {id:'e20260097',name:'瀹佹尝鑸熷北娓叚妯腐鍖烘定璧锋腐浣滀笟鍖?000鍚ㄧ骇婊氳鐮佸ご鍕樺療宸ョ▼',unit:'娴欐睙鐪佸伐绋嬬墿鎺㈠嫎瀵熻璁￠櫌鏈夐檺鍏徃',wtype:'姘翠笅鍕樻祴',permit:'娴欒垷娴蜂簨鍑嗗瓧锛?026锛夌0097鍙?, start:'2026-07-20',end:'2026-08-10',status:'鏂藉伐涓?,isMajor:false,isCompleteReport:false,isPreInterview:false, ships:[{name:'楦垮崥宸?',type:'閽绘帰鑸?,dynamic:'鍦ㄥ満鏂藉伐'}], measures:'閽绘帰鑸瑰墠鍚庢姏璁惧叓瀛楅敋锛屼綔涓氬尯璁炬樉钁楅敋鏍囦笌澶滈棿璀︾ず鐏紱椋庡姏澶т簬9绾ф椂鎾ょ鑷冲彴闂ㄦ笖娓垨娌堝闂ㄤ腑蹇冩笖娓?,note:'寤鸿鍗曚綅锛氭禉姹熻垷灞辩兢宀涙柊鍖烘禉涓滃寲宸ョ鎶€浜т笟鏈夐檺鍏徃锛涗綔涓氭按鍩燂細娑ㄨ捣娓綔涓氬尯绉诲姩鏂藉伐浣滀笟姘村煙100m脳50m锛涘彂璇佹棩鏈燂細2026-07-17'},
+      {id:'e20260106',name:'瀹佹尝鑸熷北娓叚妯腐鍖轰經娓′綔涓氬尯闄嗗煙鍏堣椤圭洰閰嶅鐮佸ご宸ョ▼鍕樺療宸ョ▼',unit:'瀹佹尝鍗庝笢鏍稿伐涓氬嫎瀵熻璁￠櫌闆嗗洟鏈夐檺鍏徃',wtype:'姘翠笅鍕樻祴',permit:'娴欒垷娴蜂簨鍑嗗瓧锛?026锛夌0106鍙?, start:'2026-07-27',end:'2026-09-20',status:'鏂藉伐涓?,isMajor:false,isCompleteReport:false,isPreInterview:false, ships:[{name:'娴欏畾49004',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'},{name:'鍗氫紵1',type:'鍏朵粬鏂藉伐鑸硅埗',dynamic:'鍦ㄥ満鏂藉伐'}], measures:'鎸夎鍙瘉鏍稿畾浜嬮」浣滀笟锛岃惤瀹為€氳埅瀹夊叏淇濋殰鎺柦锛屾柦宸ヨ埞鑸跺叏绋嬪紑鍚疉IS骞跺姞寮哄€肩彮鐬湜',note:'浣滀笟姘村煙锛氫經娓′綔涓氬尯闄嗗煙鍏堣椤圭洰閰嶅鐮佸ご宸ョ▼鐩稿叧姘村煙锛堝叚鐐硅繛绾胯寖鍥达級锛涘彂璇佹棩鏈燂細2026-07-24锛涜埞鑸舵竻鍗曚緷鎹€氳埅瀹夊叏淇濋殰鏂规锛岃鏍稿'},
+      {id:'e20260084',name:'鑸熷北鍏í榫欏北鑸瑰巶鐮佸ご宸ョ▼鍕樺療',unit:'娴欐睙鐪佸伐绋嬬墿鎺㈠嫎瀵熻璁￠櫌鏈夐檺鍏徃',wtype:'姘翠笅鍕樻祴',permit:'娴欒垷娴蜂簨鍑嗗瓧锛?026锛夌0084鍙?, start:'2026-07-09',end:'2026-09-15',status:'鏂藉伐涓?,isMajor:false,isCompleteReport:false,isPreInterview:false, ships:[{name:'闅嗛『鍕?',type:'鍕樻帰鑸?,dynamic:'鍦ㄥ満鏂藉伐'},{name:'娴欏嫎宸?',type:'鍕樻帰鑸?,dynamic:'鍦ㄥ満鏂藉伐'},{name:'闅嗛『2',type:'閿氳墖',dynamic:'鍦ㄥ満鏂藉伐'}], measures:'閽绘帰鑸规姏閿氬畾浣嶏紝浣滀笟鍖哄崐寰?00m涓鸿鎴掑尯锛涢鍔涘ぇ浜?绾у仠宸ワ紝閰嶅涓撹亴璀︽垝涓嶸HF瀹堝惉',note:'涓氫富鍗曚綅锛氳垷灞卞競榫欏北鑸瑰巶鏈夐檺鍏徃锛涗綔涓氭按鍩燂細榫欏北鑸瑰巶鐮佸ご鍓嶆部鐩稿叧姘村煙锛涘彂璇佹棩鏈燂細2026-07-06锛涙柦宸ヨ埞鑸剁粡鑱斿姩鍗?90纭'},
+      {id:'eHD2026XH',name:'2026骞磋タ婀栦綔涓氬尯娴风璺敱璋冩煡',unit:'涓煶鍖栨捣娲嬬煶娌瑰伐绋嬫湁闄愬叕鍙?,wtype:'姘翠笅鍕樻祴',permit:'TH070326050900002499', start:'2026-05-22',end:'2026-08-22',status:'鏂藉伐涓?,isMajor:false,isCompleteReport:false,isPreInterview:false, ships:[{name:'娴欏槈娴风001',type:'娴嬮噺鑸?,dynamic:'鍦ㄥ満鏂藉伐'}], measures:'浣滀笟鑸规樉绀哄彿鐏彿鍨嬶紝VHF鍏ㄦ椂瀹堝惉锛涢鍔涒墹8绾с€佹氮楂樷墹2.0绫虫柟鍙綔涓氾紝澶滈棿鍋滄浣滀笟骞舵挙绂?,note:'娌挎捣姘翠笂姘翠笅娲诲姩鎶ュ憡涔︼紱浣滀笟姘村煙锛氳タ婀栦綔涓氬尯CEP鑷充笁灞辩櫥闄嗙偣澶╃劧姘旀捣搴曠閬揔P273-281銆並P300-345绠＄嚎绾?3鍏噷锛涙帴鏀剁紪鐮侊細TH070326050900002499锛涙姤鍛婃棩鏈燂細2026-05-09'},
+      {id:'eHD2026DBL',name:'涓滅櫧鑾插矝娌瑰搧銆佸伐浣滆埞鐮佸ご姘存繁娴嬮噺',unit:'瀹佹尝娴峰ぇ宸ョ▼鍕樺療璁捐鏈夐檺鍏徃',wtype:'姘翠笅鍕樻祴',permit:'TH070326062400001703', start:'2026-06-27',end:'2026-07-10',status:'宸插畬宸?,isMajor:false,isCompleteReport:false,isPreInterview:false, ships:[{name:'鍙ゆ捣6',type:'娴嬮噺鑸?,dynamic:'绂诲満'}], measures:'鎸夋椿鍔ㄦ柟妗堣惤瀹為€氳埅瀹夊叏淇濋殰锛屼綔涓氳埞鑸舵樉绀哄彿鐏彿鍨嬨€佸姞寮虹灜鏈?,note:'娌挎捣姘翠笂姘翠笅娲诲姩鎶ュ憡涔︼紱浣滀笟姘村煙锛氫笢鐧借幉娌瑰搧鐮佸ご鍙婂伐浣滆埞鐮佸ご鐐?鑷崇偣4杩炵嚎鑼冨洿锛涙帴鏀剁紪鐮侊細TH070326062400001703锛涙姤鍛婃棩鏈燂細2026-06-24'},
+      {id:'eHD2026FD',name:'鍏í宀涒€斾經娓″矝娴风紗杩佸缓锛堝惈闄嗗煙锛夊伐绋嬶紙娴风紗閮ㄥ垎锛夋壂娴?,unit:'娴欐睙娣辫摑娴嬬粯鎶€鏈湁闄愬叕鍙?,wtype:'娴峰簳鐢电紗',permit:'TH070326051200003546', start:'2026-05-16',end:'2026-05-31',status:'宸插畬宸?,isMajor:false,isCompleteReport:false,isPreInterview:false, ships:[{name:'鍚埅渚?',type:'娴嬮噺鑸?,dynamic:'绂诲満'}], measures:'娴嬮噺鑸规寜瑙勫畾鏄剧ず鍙风伅鍙峰瀷锛孷HF瀹堝惉锛涜瑙佹壂娴嬩綔涓氭柟妗堝強搴旀€ラ妗?,note:'娌挎捣姘翠笂姘翠笅娲诲姩鎶ュ憡涔︼紱浣滀笟姘村煙锛氬叚妯矝瑗夸晶涓庝經娓″矝涓滀晶涓棿娴峰煙鍗楀寳涓ゅ尯锛涙帴鏀剁紪鐮侊細TH070326051200003546锛涙姤鍛婃棩鏈燂細2026-05-12'},
+      {id:'eHD2026NH',name:'瀹佹尝鑸熷北娓叚妯崡鑸亾宸ョ▼姘存繁娴嬮噺鍙婇殰纰嶇墿鎵祴浣滀笟',unit:'瀹佹尝涓婅埅娴嬬粯鑲′唤鏈夐檺鍏徃',wtype:'姘翠笅鍕樻祴',permit:'TH070326043000001102', start:'2026-05-06',end:'2026-05-30',status:'宸插畬宸?,isMajor:false,isCompleteReport:false,isPreInterview:false, ships:[{name:'娴峰伐浜?7',type:'娴嬮噺鑸?,dynamic:'绂诲満'}], measures:'鎸夋椿鍔ㄦ柟妗堣惤瀹為€氳埅瀹夊叏淇濋殰锛屼綔涓氳埞鑸舵樉绀哄彿鐏彿鍨嬨€佸姞寮虹灜鏈?,note:'娌挎捣姘翠笂姘翠笅娲诲姩鎶ュ憡涔︼紱浣滀笟姘村煙锛氬畞娉㈣垷灞辨腐鍏í鍗楄埅閬撳伐绋嬬浉鍏虫按鍩燂紱鎺ユ敹缂栫爜锛歍H070326043000001102'},
+      {id:'eHD2026TZM',name:'鏉″笟闂ㄥ強铏惧硻闂ㄥ鎸栨Ы鍖哄煙姘存繁娴嬮噺',unit:'瀹佹尝娴峰ぇ宸ョ▼鍕樺療璁捐鏈夐檺鍏徃',wtype:'姘翠笅鍕樻祴',permit:'TH070326060500001480', start:'2026-06-08',end:'2026-06-25',status:'宸插畬宸?,isMajor:false,isCompleteReport:false,isPreInterview:false, ships:[{name:'娴欐捣娴?2',type:'娴嬮噺鑸?,dynamic:'绂诲満'}], measures:'鎸夋椿鍔ㄦ柟妗堣惤瀹為€氳埅瀹夊叏淇濋殰锛屼綔涓氳埞鑸舵樉绀哄彿鐏彿鍨嬨€佸姞寮虹灜鏈?,note:'娌挎捣姘翠笂姘翠笅娲诲姩鎶ュ憡涔︼紱浣滀笟姘村煙锛氳櫨宄欓棬鑸亾鍙ｅ娈点€佹潯甯氶棬鑸亾鍙ｅ娈靛強鍙ｅ唴娈碉紱鎺ユ敹缂栫爜锛歍H070326060500001480'},
+      {id:'eHD2026HN',name:'铏惧硻闀囨箹娉ュ矝娴锋按娣″寲寤鸿宸ョ▼娴峰簳姘寸鎵祴椤圭洰',unit:'瀹佹尝娴峰ぇ宸ョ▼鍕樺療璁捐鏈夐檺鍏徃',wtype:'绠＄嚎鏁疯',permit:'TH070326050800001101', start:'2026-05-15',end:'2026-06-10',status:'宸插畬宸?,isMajor:false,isCompleteReport:false,isPreInterview:false, ships:[{name:'鍙ゆ捣6',type:'娴嬮噺鑸?,dynamic:'绂诲満'}], measures:'鎸夋椿鍔ㄦ柟妗堣惤瀹為€氳埅瀹夊叏淇濋殰锛屼綔涓氳埞鑸舵樉绀哄彿鐏彿鍨嬨€佸姞寮虹灜鏈?,note:'娌挎捣姘翠笂姘翠笅娲诲姩鎶ュ憡涔︼紱浣滀笟姘村煙锛氳櫨宄欓晣婀栨偿宀涚偣1鑷崇偣6杩炵嚎鑼冨洿锛涙帴鏀剁紪鐮侊細TH070326050800001101'}
+    ],
+    wx:[],
+    todo:[]
+  };
+}
+
+// 鏈湴涓嶅啀鎸佷箙鍖栦换浣曟暟鎹細姣忔鎵撳紑閮界敤鍐呯疆绉嶅瓙鍒濆鍖栧唴瀛橈紝鍐嶈嚜鍔ㄤ粠浜戠涓嬭浇鏁翠綋瑕嗙洊銆?
+function load(){
+  DB = seed();                 // 鍐呭瓨鍒濆鍊硷紙浠呯敤浜庝簯绔笅杞藉畬鎴愬墠鐨勫厹搴曞睍绀猴紝闈炴寔涔呭寲锛?
+  if(syncGetUrl()){
+    syncPullBackend().catch(function(){});  // 鎵撳紑宸ヤ綔鍙板嵆鑷姩浠庝簯绔笅杞藉叏閮ㄦ暟鎹紝鏁翠綋瑕嗙洊鏈湴
+  }
+}
+// 鏈湴涓嶄繚瀛樹换浣曟暟鎹細鏁版嵁浠ヤ簯绔负鍑嗭紝鍒锋柊鍗抽噸鏂颁笅杞借鐩栥€?
+// 鍐呭瓨 DB 宸插湪鍚勫鍒犳敼鎿嶄綔涓洿鏂帮紝杩欓噷涓嶅啀鍐?localStorage锛屼篃涓嶅啀鑷姩涓婁紶銆?
+function save(){}
+function migrate(){
+  // 鐗堟湰鍗囩骇锛歷2 璧烽€氳埅鐜瑕佺礌鍙拌处娓呯┖锛岀敱鐢ㄦ埛閲嶆柊褰曞叆
+  if((DB.v||1) < 2){
+    DB.v = 2; // 鐗堟湰鍗囩骇涓嶅啀娓呯┖閫氳埅瑕佺礌锛堢幇閫氳埅瑕佺礌鏉ヨ嚜浜戠/绉嶅瓙锛屾媺鍙栬鐩栦笉搴旇娓呮帀锛?
+  }
+  // 鍏煎鏃ф暟鎹細搴熷純妫€鏌ユ棩鏈熷瓧娈碉紝琛ユ柊瀛楁锛涙柦宸ヨ埞鑸惰ˉ鍔ㄦ€?
+  DB.eng.forEach(function(it){
+    delete it.lastInspect; delete it.nextInspect; delete it.check; delete it.freqDays;
+    if(typeof it.isCompleteReport !== 'boolean') it.isCompleteReport = false;
+    if(typeof it.isPreInterview !== 'boolean') it.isPreInterview = false;
+    if(!Array.isArray(it.ships)) it.ships = [];
+    it.ships.forEach(function(s){
+      if(!s.type) s.type = '鍏朵粬鏂藉伐鑸硅埗';
+      if(!s.dynamic) s.dynamic = '鍦ㄥ満鏂藉伐';
+    });
+  });
+  // 閫氳埅鐜瑕佺礌鍙拌处锛氭棫銆岄殣鎮ｄ簨椤广€嶄换鍔℃ā鍨嬪凡搴熷純锛屼粎淇濈暀鏂拌绱犳ā鍨嬭褰?
+  DB.nav = DB.nav.filter(function(i){ return NAV_CAT_MAP[i.type] || i.name; });
+  DB.nav.forEach(function(i){
+    if(!NAV_CAT_MAP[i.type]) i.type = NAV_CATS[0].key;
+    if(!i.status) i.status = '鍦ㄥ唽';
+    if(!i.id) i.id = uid();
+  });
+}
+
+/* ================= 涓氬姟鍒ゅ畾 ================= */
+function navState(it){
+  if(it.status==='宸插畬鎴?) return {k:'done'};
+  var d = diffDays(it.due);
+  if(d===null) return {k:'norm'};
+  if(d<0) return {k:'od', d:d};
+  if(d<=2) return {k:'soon', d:d};
+  return {k:'norm', d:d};
+}
+function engAlerts(it){
+  var out=[];
+  if(it.status==='宸插畬宸?) return out;
+  var de = diffDays(it.end);
+  if(de!==null){
+    if(de<0) out.push({lv:'od', txt:'璁稿彲鏈熷凡灞婃弧 '+(-de)+' 澶╋紝椤绘牳鏌ユ槸鍚︿粛鍦ㄤ綔涓?});
+    else if(de<=7) out.push({lv:'soon', txt:'璁稿彲鏈熻繕鍓?'+de+' 澶╋紝鎻愰啋鍔炵悊寤舵湡鎴栫宸ユ姤澶?});
+  }
+  return out;
+}
+function wxDone(it){ var n=0; for(var i=0;i<CHECK_ITEMS.length;i++){ if(it.checks && it.checks[i]) n++; } return n; }
+
+/* ================= 浠婂ぉ瑕佸鐞?================= */
+function buildToday(){
+  var rows=[];
+  // 鎵嬪伐寰呭姙锛氭棤璁烘埅姝㈡棩鏈熸槸鍚﹀凡鍒帮紝鍧囧睍绀哄湪寰呭姙椤碉紱閫炬湡銆佺揣鎬ヤ簨椤逛紭鍏堛€?  (DB.todo||[]).forEach(function(it){
+    if(it.status==='宸插畬鎴?) return;
+    var deadline = it.due || '', dueDay = deadline ? deadline.slice(0,10) : '', days = dueDay ? diffDays(dueDay) : null;
+    var urgent = it.priority==='绱ф€? || (days!==null && days < 0);
+    var near = it.priority==='閲嶈' || (days!==null && days <= 1);
+    var meta = '娣诲姞鏃堕棿锛? + (it.createdAt||'--');
+    if(deadline) meta += ' 路 鎴锛? + deadline.replace('T',' ');
+    else meta += ' 路 鏆傛湭璁剧疆鎴鏃堕棿';
+    if(it.owner) meta += ' 路 璐熻矗浜猴細' + it.owner;
+    if(it.note) meta += ' 路 ' + it.note;
+    rows.push({lv:urgent?3:(near?2:1),mod:'todo',id:it.id,tag:'寰呭姙',title:it.title||'鏈懡鍚嶄簨椤?,meta:meta,
+      acts:[['done','瀹屾垚'],['edit','缂栬緫'],['del','鍒犻櫎']]});
+  });
+  /* 閫氳埅鐜瑕佺礌涓洪潤鎬佸弬鑰冨彴璐︼紝涓嶈繘鍏ャ€屼粖澶╄澶勭悊銆嶅緟鍔炴祦 */
+  DB.eng.forEach(function(it){
+    if(it.isCompleteReport) return; // 宸叉彁浜ゅ畬宸ユ姤鍛婄殑姘村伐娲诲姩涓嶅啀鍗犵敤寰呭姙
+    engAlerts(it).forEach(function(a){
+      rows.push({lv:a.lv==='od'?2:1,mod:'eng',id:it.id,tag:'姘村伐鐩戠',title:it.name,meta:a.txt,
+        acts:[['go','鏌ョ湅']]});
+    });
+  });
+  DB.wx.forEach(function(it){
+    if(it.status!=='鐢熸晥涓?) return;
+    var n = wxDone(it);
+    rows.push({lv:n<CHECK_ITEMS.length?2:1,mod:'wx',id:it.id,tag:'鎭跺姡澶╂皵',
+      title:it.wtype+it.level+'棰勮 路 鐢熸晥涓?,
+      meta:n<CHECK_ITEMS.length?('闃叉姉鎺柦宸茶惤瀹?'+n+'/'+CHECK_ITEMS.length+' 椤癸紝灏氭湁 '+(CHECK_ITEMS.length-n)+' 椤瑰緟钀藉疄'):'鎺柦宸插叏閮ㄨ惤瀹烇紝娉ㄦ剰鍙婃椂瑙ｉ櫎鍝嶅簲',
+      acts:[['go','鍘昏惤瀹?]]});
+  });
+  rows.sort(function(a,b){return b.lv-a.lv;});
+  return rows;
+}
+
+function renderToday(){
+  var d=new Date(), wk=['鏃?,'涓€','浜?,'涓?,'鍥?,'浜?,'鍏?][d.getDay()];
+  $('todayDate').textContent = '浠婂ぉ瑕佸鐞?路 '+d.getFullYear()+'骞?+(d.getMonth()+1)+'鏈?+d.getDate()+'鏃?鏄熸湡'+wk;
+  var rows = buildToday();
+  var od = rows.filter(function(r){return r.lv>=2;}).length;
+  $('todayCnt').textContent = rows.length? ('鍏?'+rows.length+' 椤癸紝闇€浼樺厛澶勭悊 '+od+' 椤?) : '';
+  var box = $('todayList');
+  var dt = $('dotToday');
+  if(dt){ if(rows.length){ dt.textContent = rows.length; dt.classList.add('show'); } else { dt.classList.remove('show'); } }
+  if(!rows.length){
+    box.innerHTML = '<div class="empty">鏆傛棤寰呭姙浜嬮」銆傚彲鐐瑰嚮鍙充笂瑙掋€屾坊鍔犱簨椤广€嶅垱寤轰粖澶╃殑宸ヤ綔瀹夋帓銆?/div>';
+    return;
+  }
+  var h='';
+  rows.forEach(function(r){
+    var rowClass = r.lv===3 ? 'urgent' : (r.lv===2 ? 'od' : 'soon');
+    var tagClass = r.lv>=2 ? 'b-red' : 'b-warn';
+    var urgentFlag = r.lv===3 ? '<span class="urgent-flag">绱ф€?/span>' : '';
+    h += '<div class="trow '+rowClass+'">'+
+      '<div class="tmain">'+
+        '<div class="ttitle">'+urgentFlag+'<span class="badge '+tagClass+'">'+r.tag+'</span> '+esc(r.title)+'</div>'+
+        '<div class="tmeta">'+esc(r.meta)+'</div>'+
+      '</div><div class="tacts">'+
+      r.acts.map(function(a){
+        var cls = a[0]==='done'?'ok':(a[0]==='check'?'warn':(a[0]==='del'?'red':'gray'));
+        return '<button class="btn sm '+cls+'" data-quick="'+a[0]+'" data-mod="'+r.mod+'" data-id="'+r.id+'">'+a[1]+'</button>';
+      }).join('')+
+      '</div></div>';
+  });
+  box.innerHTML = h;
+}
+
+/* ================= 缁熻鍗?================= */
+function renderStats(){
+  var engOn = DB.eng.filter(function(i){return i.status==='鏂藉伐涓?||i.status==='璁稿彲鍔炵悊涓?;}).length;
+  var wxOn = DB.wx.filter(function(i){return i.status==='鐢熸晥涓?;}).length;
+  var html =
+   '<div class="stat w"><div class="n">'+engOn+'</div><div class="l">鍦ㄧ洃姘村伐椤圭洰</div></div>'+
+   '<div class="stat g"><div class="n">'+wxOn+'</div><div class="l">鐢熸晥涓ぉ姘旈璀?/div></div>';
+  $('statsRow').innerHTML = html;
+}
+
+/* ================= 鍏í娼睈鍗＄墖 ================= */
+var _tideCache = { date: '', data: null };
+var _tideSelectedDate = '';
+
+function tideToday() {
+  var d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+function fetchTide(date) {
+  var url = syncGetUrl() + '/api/tide-v2' + (date ? ('?date=' + encodeURIComponent(date)) : '');
+  return fetch(url, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+    .then(function (r) { return r.json(); });
+}
+
+function _paintTide() {
+  var o = _tideCache.data;
+  var tables = $('tideTables');
+  if (!o) { if (tables) tables.innerHTML = ''; return; }
+
+  // 鏃ユ湡琛?
+  var dateEl = $('tideDate'), lunarEl = $('tideLunar'), typeEl = $('tideType');
+  var d = o.date || _tideSelectedDate || tideToday();
+  if (dateEl) dateEl.textContent = d;
+  if (lunarEl) {
+    var parts = d.split('-');
+    var lunar = solarToLunar(new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10)));
+    lunarEl.textContent = lunar ? lunar.text : '鍐滃巻--';
+  }
+  if (typeEl) {
+    typeEl.textContent = o.tideType || '--';
+    typeEl.className = 'tag' + (o.tideType === '灏忔疆' ? ' small' : '');
+  }
+
+  if (!o.tides || !o.tides.length) {
+    if (tables) tables.innerHTML = '<div class="empty">璇ユ棩鏈熸殏鏃犳疆姹愭暟鎹?/div>';
+    return;
+  }
+
+  // 褰撳墠娼綅涓庨€愬皬鏃舵洸绾匡細鐢变簯鍑芥暟杩斿洖鐨勬暣鐐规疆楂樻彃鍊煎緱鍑?  var hourly = Array.isArray(o.hourly) ? o.hourly : [];
+  var liveHtml = _tideLiveHtml(hourly, d, o.fetchedAt);
+  var chartHtml = _tideChartHtml(hourly, d);
+
+  // 琛ㄦ牸 1锛氭定娼?/ 閫€娼椂娈?  var pHtml = '';
+  if (o.periods && o.periods.length) {
+    pHtml += '<table><tbody>';
+    o.periods.forEach(function (p) {
+      pHtml += '<tr><td class="col-label">' + esc(p.type) + '鏃堕棿</td><td>' + esc(p.start) + ' - ' + esc(p.end) + '</td></tr>';
+    });
+    pHtml += '</tbody></table>';
+  }
+
+  // 琛ㄦ牸 2锛氶珮浣庢疆璇︽儏
+  var tHtml = '<table><thead><tr><th class="col-label">楂樹綆娼?/th>';
+  o.tides.forEach(function (x) {
+    tHtml += '<th>' + (x.type === '楂樻疆' ? '婊℃疆' : '骞叉疆') + '</th>';
+  });
+  tHtml += '</tr></thead><tbody>';
+  tHtml += '<tr><td class="col-label">娼椂</td>';
+  o.tides.forEach(function (x) { tHtml += '<td>' + esc(x.time) + '</td>'; });
+  tHtml += '</tr><tr><td class="col-label">娼珮(宄板€?</td>';
+  o.tides.forEach(function (x) { tHtml += '<td>' + esc(x.height) + 'cm</td>'; });
+  tHtml += '</tr></tbody></table>';
+
+  // 澶囨敞
+  var noteHtml = '';
+  if (o.base) noteHtml += '<div class="tide-base">娼珮鍩哄噯闈細' + esc(o.base) + '</div>';
+  if (o.baseNote) noteHtml += '<div class="tide-base-note">' + esc(o.baseNote) + '</div>';
+  if (o.notice) noteHtml += '<div class="tide-note">' + esc(o.notice) + '</div>';
+
+  if (tables) { tables.innerHTML = liveHtml + chartHtml + noteHtml + pHtml + tHtml; _bindTideChart(hourly); }
+}
+
+function _tideLiveHtml(hourly, date, fetchedAt) {
+  var isToday = date === tideToday();
+  var now = new Date();
+  var minute = now.getHours() * 60 + now.getMinutes();
+  var values = hourly.map(function (x) { return Number(x.height); }).filter(function (x) { return Number.isFinite(x); });
+  var current = null, trend = '--';
+  if (isToday && values.length > 1) {
+    var index = Math.min(22, Math.max(0, Math.floor(minute / 60)));
+    var part = (minute % 60) / 60;
+    current = values[index] + (values[index + 1] - values[index]) * part;
+    trend = values[index + 1] >= values[index] ? '娑ㄦ疆涓? : '钀芥疆涓?;
+  }
+  var timeText = isToday ? now.toLocaleTimeString('zh-CN', {hour:'2-digit', minute:'2-digit'}) : '鎵€閫夋棩鏈?;
+  var updated = fetchedAt ? new Date(fetchedAt).toLocaleTimeString('zh-CN', {hour:'2-digit', minute:'2-digit'}) : '闅忔暟鎹姞杞?;
+  return '<div class="tide-live">'
+    + '<div class="tide-live-item"><span class="tl-label">褰撳墠娼綅</span><strong>' + (current === null ? '--' : (current / 100).toFixed(2) + ' m') + '</strong><span class="tl-sub">' + (current === null ? '浠呬粖澶╂樉绀哄疄鏃舵彃鍊? : timeText + ' 路 ' + trend) + '</span></div>'
+    + '<div class="tide-live-item"><span class="tl-label">浠婃棩娼珮鑼冨洿</span><strong>' + (values.length ? (Math.min.apply(null, values) / 100).toFixed(2) + '鈥? + (Math.max.apply(null, values) / 100).toFixed(2) + ' m' : '--') + '</strong><span class="tl-sub">閫愬皬鏃舵疆楂?/span></div>'
+    + '<div class="tide-live-item"><span class="tl-label">鏁版嵁鐘舵€?/span><strong>澶╂枃娼鎶?/strong><span class="tl-sub">鏇存柊鏃堕棿锛? + esc(updated) + '</span></div>'
+    + '</div>';
+}
+
+// 鍗曡皟涓夋鎻掑€硷細鏇茬嚎缁忚繃姣忎釜鏁寸偣鏁版嵁锛屼笖鍦ㄩ珮娼€佷綆娼檮杩戜笉浜х敓涓嶇湡瀹炵殑杩囧啿銆?function _tideSmoothSlopes(vals) {
+  var n = vals.length, d = [], m = new Array(n), i;
+  for (i = 0; i < n - 1; i++) d.push(vals[i + 1] - vals[i]);
+  m[0] = d[0]; m[n - 1] = d[n - 2];
+  for (i = 1; i < n - 1; i++) m[i] = d[i - 1] * d[i] <= 0 ? 0 : (2 * d[i - 1] * d[i]) / (d[i - 1] + d[i]);
+  return m;
+}
+
+function _tideSmoothValue(vals, position) {
+  var i = Math.max(0, Math.min(vals.length - 2, Math.floor(position))), t = Math.max(0, Math.min(1, position - i));
+  var m = _tideSmoothSlopes(vals), t2 = t * t, t3 = t2 * t;
+  return (2 * t3 - 3 * t2 + 1) * vals[i] + (t3 - 2 * t2 + t) * m[i] + (-2 * t3 + 3 * t2) * vals[i + 1] + (t3 - t2) * m[i + 1];
+}
+
+function _tideChartHtml(hourly, date) {
+  if (!hourly || hourly.length < 2) return '';
+  var vals = hourly.map(function (x) { return Number(x.height); });
+  var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals), pad = Math.max(20, (max - min) * .16);
+  var w = 760, h = 178, left = 37, right = 12, top = 14, bottom = 25;
+  var x = function (i) { return left + i * (w - left - right) / (vals.length - 1); };
+  var y = function (v) { return top + (max + pad - v) * (h - top - bottom) / (max - min + pad * 2); };
+  var xy = vals.map(function (v, i) { return { x: x(i), y: y(v) }; });
+  // 涓庡師缃戠珯涓€鑷达細涓ユ牸鎸夋瘡涓暣鐐规疆楂樼敤鐩寸嚎杩炴帴锛屼笉鍒堕€犻澶栫殑涓棿瓒嬪娍銆?  var points = xy.map(function (p) { return p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
+  var area = points + ' ' + x(vals.length - 1).toFixed(1) + ',' + (h - bottom) + ' ' + left + ',' + (h - bottom);
+  var slopes = _tideSmoothSlopes(vals), dx = x(1) - x(0), scaleY = (h - top - bottom) / (max - min + pad * 2);
+  // 浠ュ崟璋冧笁娆¤礉濉炲皵鏇茬嚎杩炴帴鍏ㄩ儴鏁寸偣閿氱偣锛屼笉浼氭妸楂樻疆銆佷綆娼媺鍒版暟鎹寖鍥翠箣澶栥€?  var linePath = 'M ' + xy[0].x.toFixed(1) + ' ' + xy[0].y.toFixed(1);
+  for (var ci = 0; ci < xy.length - 1; ci++) {
+    var slopeA = -slopes[ci] * scaleY, slopeB = -slopes[ci + 1] * scaleY;
+    linePath += ' C ' + (xy[ci].x + dx / 3).toFixed(1) + ' ' + (xy[ci].y + slopeA / 3).toFixed(1) + ' ' + (xy[ci + 1].x - dx / 3).toFixed(1) + ' ' + (xy[ci + 1].y - slopeB / 3).toFixed(1) + ' ' + xy[ci + 1].x.toFixed(1) + ' ' + xy[ci + 1].y.toFixed(1);
+  }
+  var areaPath = linePath + ' L ' + x(vals.length - 1).toFixed(1) + ' ' + (h - bottom) + ' L ' + left + ' ' + (h - bottom) + ' Z';
+  var svg = '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="閫愬皬鏃舵疆楂樻洸绾?>';
+  [0, .5, 1].forEach(function (p) { var py = top + p * (h - top - bottom); svg += '<line class="grid" x1="' + left + '" y1="' + py + '" x2="' + (w-right) + '" y2="' + py + '"></line>'; });
+  svg += '<path class="area" d="' + areaPath + '"></path><path class="line" d="' + linePath + '"></path>';
+  xy.forEach(function (p) { svg += '<circle class="dot" cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="2.6"></circle>'; });
+  [0, 6, 12, 18, 23].forEach(function (i) { svg += '<text x="' + x(i) + '" y="' + (h-6) + '" text-anchor="middle">' + String(i).padStart(2,'0') + ':00</text>'; });
+  svg += '<text x="4" y="' + (top+4) + '">' + (max/100).toFixed(1) + 'm</text><text x="4" y="' + (h-bottom) + '">' + (min/100).toFixed(1) + 'm</text>';
+  if (date === tideToday()) { var now = new Date(), minute = now.getHours()*60 + now.getMinutes(), pos = Math.min(vals.length-1, minute/60), v = _tideSmoothValue(vals, pos), nowX = x(0) + dx * pos, nowY = y(v), labelX = nowX > w - 120 ? nowX - 8 : nowX + 8, anchor = nowX > w - 120 ? 'end' : 'start'; svg += '<line class="now-guide" x1="' + nowX + '" y1="' + top + '" x2="' + nowX + '" y2="' + (h-bottom) + '"></line><circle class="now-ring" cx="' + nowX + '" cy="' + nowY + '" r="6"></circle><text class="now-label" x="' + labelX + '" y="' + Math.max(top + 12, nowY - 12) + '" text-anchor="' + anchor + '">褰撳墠 ' + (v/100).toFixed(2) + 'm</text>'; }
+  svg += '<g class="tide-picked" visibility="hidden"><line class="pick-guide"></line><circle class="pick-dot" r="5"></circle><text class="pick-label"></text></g><rect class="tide-hit" x="' + left + '" y="' + top + '" width="' + (w-left-right) + '" height="' + (h-top-bottom) + '" fill="transparent"></rect>';
+  return '<div class="tide-chart"><div class="tide-chart-hd"><strong>閫愬皬鏃舵疆楂樻洸绾?/strong><span>鍗曚綅锛歮 路 鐐瑰嚮鏇茬嚎鏌ョ湅鏁寸偣娼珮</span></div>' + svg + '</div>';
+}
+
+function _bindTideChart(hourly) {
+  var chart = document.querySelector('.tide-chart svg');
+  if (!chart || !hourly || hourly.length < 2) return;
+  chart.addEventListener('click', function (event) {
+    var box = chart.getBoundingClientRect(), view = chart.viewBox.baseVal, left = 37, right = 12, top = 14, bottom = 25, width = view.width, height = view.height;
+    var pointX = (event.clientX - box.left) * width / box.width;
+    var index = Math.max(0, Math.min(hourly.length - 1, Math.round((pointX - left) / (width - left - right) * (hourly.length - 1))));
+    var vals = hourly.map(function (x) { return Number(x.height); }), min = Math.min.apply(null, vals), max = Math.max.apply(null, vals), pad = Math.max(20, (max - min) * .16);
+    var x = left + index * (width - left - right) / (hourly.length - 1), y = top + (max + pad - vals[index]) * (height - top - bottom) / (max - min + pad * 2);
+    var picked = chart.querySelector('.tide-picked'), line = picked.querySelector('line'), dot = picked.querySelector('circle'), label = picked.querySelector('text');
+    picked.setAttribute('visibility', 'visible'); line.setAttribute('x1', x); line.setAttribute('x2', x); line.setAttribute('y1', top); line.setAttribute('y2', height-bottom); dot.setAttribute('cx', x); dot.setAttribute('cy', y);
+    label.setAttribute('x', x > width - 120 ? x - 8 : x + 8); label.setAttribute('y', Math.max(top + 12, y - 12)); label.setAttribute('text-anchor', x > width - 120 ? 'end' : 'start'); label.textContent = String(index).padStart(2, '0') + ':00 路 ' + (vals[index] / 100).toFixed(2) + 'm';
+  });
+  if(!Array.isArray(DB.todo)) DB.todo = [];
+  DB.todo.forEach(function(i){
+    if(!i.id) i.id = uid();
+    if(!i.status) i.status = '寰呭姙';
+    if(!i.createdAt) i.createdAt = today();
+  });
+}
+
+function renderTide(force) {
+  var t = _tideSelectedDate || tideToday();
+  if (!force && _tideCache.date === t && _tideCache.data) { _paintTide(); return; }
+  var tables = $('tideTables');
+  if (tables) tables.innerHTML = '<div class="empty">姝ｅ湪鑾峰彇娼睈鏁版嵁鈥?/div>';
+  fetchTide(t).then(function (o) {
+    if (o && o.error) throw new Error(o.error);
+    _tideCache.date = t; _tideCache.data = o;
+    _paintTide();
+  }).catch(function (e) {
+    if (tables) tables.innerHTML = '<div class="empty">娼睈鏁版嵁鏆備笉鍙敤锛? + (e && e.message ? e.message : '缃戠粶閿欒') + '锛夈€傝纭鍚屾鏈嶅姟鍦板潃锛屾垨绋嶅悗閲嶈瘯銆?/div>';
+  });
+}
+
+function initTideDatePicker() {
+  if (window._tidePickerInited) return;
+  window._tidePickerInited = true;
+  var btn = $('tideChangeBtn'), input = $('tideDateInput');
+  if (!btn || !input) return;
+  btn.addEventListener('click', function () {
+    input.value = _tideSelectedDate || tideToday();
+    input.showPicker ? input.showPicker() : input.click();
+  });
+  input.addEventListener('change', function () {
+    if (input.value) {
+      _tideSelectedDate = input.value;
+      renderTide(true);
+    }
+  });
+}
+
+/* ================= 鍐呰仈 SVG 鍥捐〃 ================= */
+function donut(pct, label, color){
+  pct = Math.max(0, Math.min(100, Math.round(pct||0)));
+  var R=40, C=2*Math.PI*R, on=C*pct/100;
+  return '<svg viewBox="0 0 120 120" width="100%" height="132" role="img">'+
+    '<circle cx="60" cy="60" r="'+R+'" fill="none" stroke="#e9eef4" stroke-width="13"/>'+
+    '<circle cx="60" cy="60" r="'+R+'" fill="none" stroke="'+color+'" stroke-width="13" stroke-linecap="round"'+
+    ' stroke-dasharray="'+on.toFixed(1)+' '+(C-on).toFixed(1)+'" transform="rotate(-90 60 60)"/>'+
+    '<text x="60" y="57" text-anchor="middle" font-size="23" font-weight="700" fill="#1c2733">'+pct+'%</text>'+
+    '<text x="60" y="76" text-anchor="middle" font-size="11" fill="#6d7d8f">'+esc(label)+'</text></svg>';
+}
+function bars(data, color){
+  // data: [{k, v, c?}]
+  if(!data.length) return '<div class="empty" style="padding:26px 0">鏆傛棤鏁版嵁</div>';
+  var W=460, rowH=26, H=data.length*rowH+8;
+  var max=1; data.forEach(function(d){ if(d.v>max) max=d.v; });
+  var s='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="'+Math.max(H,54)+'" role="img">';
+  data.forEach(function(d,i){
+    var y=i*rowH+4, bw=Math.max(2,(d.v/max)*250);
+    s+='<text x="0" y="'+(y+14)+'" font-size="12" fill="#3c4a59">'+esc(d.k)+'</text>';
+    s+='<rect x="150" y="'+(y+3)+'" width="'+bw.toFixed(1)+'" height="14" rx="7" fill="'+(d.c||color)+'"/>';
+    s+='<text x="'+(150+bw+7)+'" y="'+(y+14.5)+'" font-size="12" font-weight="600" fill="#1c2733">'+esc(d.t!=null?d.t:d.v)+'</text>';
+  });
+  return s+'</svg>';
+}
+function renderCharts(){
+  // 閫氳埅鐜锛氬悇绫诲埆鏁伴噺宸插湪銆岄€氳埅鐜銆嶉〉宸︿晶瀵艰埅浠ヨ鏍囧睍绀猴紝杩欓噷涓嶅啀鍗曠嫭缁樺浘
+
+  // 姘村伐
+  var eTot=DB.eng.length, eOn=DB.eng.filter(function(i){return i.status==='鏂藉伐涓?;}).length;
+  $('engDonut').innerHTML = donut(eTot?eOn/eTot*100:0, '鏂藉伐涓?'+eOn+'/'+eTot, '#1668c1');
+  var eArr=DB.eng.filter(function(i){return i.status!=='宸插畬宸?;}).map(function(i){
+    var d=diffDays(i.end);
+    var nm=i.name.length>9?i.name.slice(0,9)+'鈥?:i.name;
+    return {k:nm, v:Math.max(0,d||0), t:(d===null?'鈥?:(d<0?('瓒呮湡'+(-d)+'澶?):(d+'澶?))), c:(d!==null&&d<0)?'#d93025':((d!==null&&d<=7)?'#e07b00':'#12855a')};
+  });
+  $('engBars').innerHTML = bars(eArr, '#12855a');
+
+  // 澶╂皵
+  var tot=DB.wx.length*CHECK_ITEMS.length, dn=0;
+  DB.wx.forEach(function(i){ dn+=wxDone(i); });
+  $('wxDonut').innerHTML = donut(tot?dn/tot*100:0, '鎺柦 '+dn+'/'+tot+' 椤?, '#0b5394');
+  var wArr=DB.wx.map(function(i){
+    var n=wxDone(i);
+    return {k:i.wtype+i.level, v:n, t:n+'/'+CHECK_ITEMS.length, c:i.status==='鐢熸晥涓??(n<CHECK_ITEMS.length?'#e07b00':'#12855a'):'#9fb0c2'};
+  });
+  $('wxBars').innerHTML = bars(wArr, '#0b5394');
+}
+
+/* ================= 鍒楄〃娓叉煋 ================= */
+function lvBadge(l){
+  var c = l==='閲嶅ぇ'?'b-red':(l==='杈冮噸'?'b-warn':'b-gray');
+  return '<span class="badge '+c+'">'+esc(l||'涓€鑸?)+'</span>';
+}
+function renderNav(){
+  var kw=$('fNavKw').value.trim();
+  // 绫诲埆涓嬫媺鑿滃崟锛?3 绫诲悎鎴愪竴涓寜閽級
+  var counts={};
+  DB.nav.forEach(function(i){ if(i.type) counts[i.type]=(counts[i.type]||0)+1; });
+  var total=DB.nav.length;
+  var cur = (navSel && NAV_CAT_MAP[navSel]) ? navSel : '';
+  var curLabel = cur || '閫夋嫨瑕佺礌绫诲埆';
+  var curCnt = cur ? (counts[cur]||0) : total;
+  var side='<div class="cat-dropdown'+(navDropdownOpen?' open':'')+'" id="catDropdown">'+
+    '<button class="cat-dropbtn" type="button" id="catDropBtn">'+
+      '<span>'+esc(curLabel)+'</span>'+
+      '<span class="cnt">'+curCnt+'</span>'+
+      '<span class="arrow">鈻?/span>'+
+    '</button>'+
+    '<div class="cat-droplist">'+
+      NAV_CATS.map(function(c){
+        var n=counts[c.key]||0;
+        return '<div class="cat-ditem'+(navSel===c.key?' on':'')+'" data-cat="'+esc(c.key)+'">'+
+          '<span>'+esc(c.key)+'</span><span class="cnt">'+n+'</span></div>';
+      }).join('')+
+    '</div></div>';
+  $('navSide').innerHTML=side;
+  // 鍙充晶鏍囬
+  if(!cur){
+    $('navMainT').textContent = '閫氳埅鐜瑕佺礌鍙拌处';
+    $('navMainS').textContent = total ? ('鍏?'+total+' 鏉?路 鐐瑰嚮涓婃柟涓嬫媺鎸夐挳閫夋嫨绫诲埆') : '鐐瑰嚮涓婃柟涓嬫媺鎸夐挳閫夋嫨绫诲埆';
+    $('fNavKw').style.display = 'none';
+    $('navAddBtn').style.display = 'none';
+    $('navList').innerHTML='<div class="empty">璇烽€夋嫨涓婃柟涓嬫媺鑿滃崟涓殑瑕佺礌绫诲埆鏌ョ湅</div>';
+    return;
+  }
+  $('fNavKw').style.display = '';
+  $('navAddBtn').style.display = '';
+  $('navMainT').textContent = cur+' 瑕佺礌';
+  $('navMainS').textContent = (counts[cur]||0)+' 鏉?;
+  // 鍒楄〃杩囨护
+  var list = DB.nav.filter(function(i){
+    if(i.type!==cur) return false;
+    if(kw){
+      var hay = [i.name,i.waters,i.note,
+        (NAV_CAT_MAP[i.type]?NAV_CAT_MAP[i.type].fields.map(function(f){return i[f.key];}).join(' '):'')].join(' ');
+      if(hay.indexOf(kw)<0) return false;
+    }
+    return true;
+  });
+  if(!list.length){ $('navList').innerHTML='<div class="empty">銆?+cur+'銆嶄笅鏆傛棤瑕佺礌锛岀偣銆? 鏂板銆嶅綍鍏?/div>'; return; }
+  var h='';
+  list.forEach(function(it){
+    var cat = NAV_CAT_MAP[it.type] || {label:it.type,fields:[]};
+    var cls = (it.status==='鍋滅敤'||it.status==='宸插彇缂?) ? 'off' : '';
+    var stc = (it.status==='鍦ㄥ唽'||it.status==='姝ｅ父')?'b-ok':(it.status==='鍦ㄥ缓'?'b-blue':(it.status==='绠″埗'?'b-warn':(it.status==='宸插彇缂?||it.status==='鍋滅敤'?'b-red':'b-gray')));
+    var st = it.status ? '<span class="badge '+stc+'">'+esc(it.status)+'</span>' : '';
+    var kv='';
+    if(it.waters) kv+='<div>姘村煙/娓尯锛?b>'+esc(it.waters)+'</b></div>';
+    if(it.lat&&it.lng && !navExcludedCommon(it.type,'lat') && !navExcludedCommon(it.type,'lng')) kv+='<div>涓績鍧愭爣锛?b>'+esc(it.lat)+', '+esc(it.lng)+'</b></div>';
+    if(it.geom && !navExcludedCommon(it.type,'geom')) kv+='<div>鑼冨洿锛?b>'+esc(it.geom)+'</b></div>';
+    if(it.owner && !navExcludedCommon(it.type,'owner')) kv+='<div>绠＄悊/涓氫富锛?b>'+esc(it.owner)+'</b></div>';
+    cat.fields.forEach(function(f){ if(it[f.key]) kv+='<div>'+esc(f.label)+'锛?b>'+esc(it[f.key])+'</b></div>'; });
+    if(it.type==='閿氬湴'){
+      var asub='';
+      if(it.rangePts && it.rangePts.length){
+        asub += '<div style="font-weight:600;margin:6px 0 2px">鑼冨洿椤剁偣锛?+it.rangePts.length+'锛夛細</div>'+
+          it.rangePts.map(function(p){ return '<div>路 '+(p.lat||'')+(p.lng?(' / '+p.lng):'')+'</div>'; }).join('');
+      }
+      if(it.anchorPts && it.anchorPts.length){
+        asub += '<div style="font-weight:600;margin:6px 0 2px">閿氭硦鐐癸紙'+it.anchorPts.length+'锛夛細</div>'+
+          it.anchorPts.map(function(p){
+            return '<div>路 '+(p.label?esc(p.label)+' ':'')+(p.lat||'')+(p.lng?(' / '+p.lng):'')+(p.limit?(' L鈮?+esc(p.limit)+'m'):'')+(p.shipyard?(' / '+esc(p.shipyard)):'')+'</div>';
+          }).join('');
+      }
+      if(asub) kv += '<div class="desc">'+asub+'</div>';
+    }
+    h+='<div class="item '+cls+'" id="it-'+it.id+'">'+
+      '<div class="item-hd"><h4>'+esc(it.name||'(鏈懡鍚?')+'</h4>'+
+        '<span class="badge b-gray">'+esc(cat.label)+'</span>'+st+'</div>'+
+      (kv?'<div class="kv">'+kv+'</div>':'')+
+      (it.note?'<div class="desc">'+esc(it.note)+'</div>':'')+
+      '<div class="acts">'+
+        '<button class="btn sm gray" data-edit="nav" data-id="'+it.id+'">缂栬緫</button>'+
+        '<button class="btn sm red" data-del="nav" data-id="'+it.id+'">鍒犻櫎</button>'+
+      '</div>'+lastEditHtml(it)+'</div>';
+  });
+  $('navList').innerHTML=h;
+}
+function renderEng(){
+  var fs=$('fEngStatus').value, kw=$('fEngKw').value.trim();
+  var list = DB.eng.filter(function(i){
+    if(fs && i.status!==fs) return false;
+    if(kw){
+      var shipText = (Array.isArray(i.ships)?i.ships:[]).map(function(s){ return (s.name||'')+' '+(s.type||'')+' '+(s.dynamic||''); }).join(' ');
+      if((i.name+i.unit+(i.permit||'')+(i.note||'')+shipText).indexOf(kw)<0) return false;
+    }
+    return true;
+  }).sort(function(a,b){ return (a.end||'9999').localeCompare(b.end||'9999'); });
+  if(!list.length){ $('engList').innerHTML='<div class="empty">娌℃湁绗﹀悎鏉′欢鐨勯」鐩?/div>'; return; }
+  var h='';
+  list.forEach(function(it){
+    var al=engAlerts(it), hasOd=al.some(function(a){return a.lv==='od';});
+    var cls = it.status==='宸插畬宸??'done':(hasOd?'od':(al.length?'soon':''));
+    var stc = it.status==='鏂藉伐涓??'b-blue':(it.status==='宸插畬宸??'b-ok':(it.status==='宸茶繃鏈??'b-red':'b-warn'));
+    var majorBadge = it.isMajor ? '<span class="badge b-red">閲嶅ぇ姘村伐</span>' : '';
+    h+='<div class="item '+cls+'" id="it-'+it.id+'">'+
+      '<div class="item-hd"><h4>'+esc(it.name)+'</h4><span class="badge '+stc+'">'+esc(it.status)+'</span>'+
+        '<span class="badge b-gray">'+esc(it.wtype)+'</span>'+majorBadge+'</div>'+
+      '<div class="kv">'+
+        '<div>寤鸿/鏂藉伐鍗曚綅锛?b>'+esc(it.unit||'鈥?)+'</b></div>'+
+        '<div>璁稿彲璇佸彿锛?b>'+esc(it.permit||'鈥?)+'</b></div>'+
+        '<div>璁稿彲鏈熼檺锛?b>'+cnDate(it.start)+' 鑷?'+cnDate(it.end)+'</b></div>'+
+        '<div>鎻愪氦瀹屽伐鎶ュ憡锛?b>'+(it.isCompleteReport?'鏄?:'鍚?)+'</b></div>'+
+        '<div>寮€宸ュ墠绾﹁皥锛?b>'+(it.isPreInterview?'鏄?:'鍚?)+'</b></div>'+
+      '</div>'+
+      ((it.ships&&it.ships.length)?'<div class="desc"><div style="font-weight:600;margin-bottom:4px">椤圭洰鏂藉伐鑸硅埗锛?/div>'+
+        it.ships.map(function(s){return '<div>路 '+esc(s.name)+' <span class="badge b-gray">'+esc(s.type)+'</span> '+(s.dynamic?('<span class="badge '+(s.dynamic==='绂诲満'?'b-warn':'b-ok')+'">'+esc(s.dynamic)+'</span>'):'')+'</div>';}).join('')+
+      '</div>':'')+
+      (it.measures?'<div class="desc">瀹夊叏鎺柦锛?+esc(it.measures)+'</div>':'')+
+      (it.note?'<div class="kv"><div>澶囨敞锛?b>'+esc(it.note)+'</b></div></div>':'')+
+      (al.length?'<div class="kv" style="margin-top:6px">'+al.map(function(a){
+        return '<div><span class="badge '+(a.lv==='od'?'b-red':'b-warn')+'">'+esc(a.txt)+'</span></div>';}).join('')+'</div>':'')+
+      '<div class="acts">'+
+        '<button class="btn sm gray" data-edit="eng" data-id="'+it.id+'">缂栬緫</button>'+
+        '<button class="btn sm red" data-del="eng" data-id="'+it.id+'">鍒犻櫎</button>'+
+      '</div>'+lastEditHtml(it)+'</div>';
+  });
+  $('engList').innerHTML=h;
+}
+function renderWx(){
+  var fs=$('fWxStatus').value, kw=$('fWxKw').value.trim();
+  var list = DB.wx.filter(function(i){
+    if(fs && i.status!==fs) return false;
+    if(kw && (i.wtype+i.level+(i.note||'')).indexOf(kw)<0) return false;
+    return true;
+  }).sort(function(a,b){
+    var da=a.status==='鐢熸晥涓??0:1, db2=b.status==='鐢熸晥涓??0:1;
+    if(da!==db2) return da-db2;
+    return (b.start||'').localeCompare(a.start||'');
+  });
+  if(!list.length){ $('wxList').innerHTML='<div class="empty">娌℃湁绗﹀悎鏉′欢鐨勯璀﹁繃绋?/div>'; return; }
+  var lvc={'钃濊壊':'b-blue','榛勮壊':'b-warn','姗欒壊':'b-warn','绾㈣壊':'b-red'};
+  var h='';
+  list.forEach(function(it){
+    var n=wxDone(it), pct=Math.round(n/CHECK_ITEMS.length*100);
+    var cls = it.status==='鐢熸晥涓??(n<CHECK_ITEMS.length?'od':'soon'):'done';
+    h+='<div class="item '+cls+'" id="it-'+it.id+'">'+
+      '<div class="item-hd"><h4>'+esc(it.wtype)+esc(it.level)+'棰勮</h4>'+
+        '<span class="badge '+(lvc[it.level]||'b-gray')+'">'+esc(it.level)+'棰勮</span>'+
+        '<span class="badge '+(it.status==='鐢熸晥涓??'b-red':'b-ok')+'">'+esc(it.status)+'</span></div>'+
+      '<div class="kv">'+
+        '<div>璧峰鏃堕棿锛?b>'+cnDT(it.start)+'</b></div>'+
+        '<div>杩涙腐閬块鑸硅埗锛?b>'+(it.ships||0)+' 鑹?/b></div>'+
+        '<div>鎺柦钀藉疄锛?b>'+n+'/'+CHECK_ITEMS.length+'</b></div>'+
+      '</div>'+
+      (it.note?'<div class="desc">'+esc(it.note)+'</div>':'')+
+      '<div class="pbar"><i style="width:'+pct+'%;background:'+(pct===100?'#12855a':'#e07b00')+'"></i></div>'+
+      '<div class="checks">'+CHECK_ITEMS.map(function(c,idx){
+        var on = !!(it.checks && it.checks[idx]);
+        return '<label class="chk '+(on?'done':'')+'"><input type="checkbox" data-chk="'+it.id+'" data-idx="'+idx+'"'+(on?' checked':'')+'>'+esc(c)+'</label>';
+      }).join('')+'</div>'+
+      '<div class="acts">'+
+        (it.status==='鐢熸晥涓??'<button class="btn sm ok" data-quick="close" data-mod="wx" data-id="'+it.id+'">瑙ｉ櫎鍝嶅簲</button>':'')+
+        '<button class="btn sm gray" data-edit="wx" data-id="'+it.id+'">缂栬緫</button>'+
+        '<button class="btn sm red" data-del="wx" data-id="'+it.id+'">鍒犻櫎</button>'+
+      '</div>'+lastEditHtml(it)+'</div>';
+  });
+  $('wxList').innerHTML=h;
+}
+
+function renderAll(){
+  renderToday(); renderStats(); renderCharts();
+  renderNav(); renderEng(); renderWx(); renderDots(); backupTip(); renderTide(); initTideDatePicker();
+}
+
+/* 搴曢儴涓夋ā鍧楀鑸笂鐨勫緟鍔炶鏍?*/
+function renderDots(){
+  /* 閫氳埅鐜瑕佺礌涓洪潤鎬佸弬鑰冨彴璐︼紝搴曢儴瑙掓爣涓嶅啀璁″緟鍔?*/
+  var engOd=0, engSoon=0;
+  DB.eng.forEach(function(i){
+    var al=engAlerts(i);
+    if(al.some(function(a){return a.lv==='od';})) engOd++;
+    else if(al.length) engSoon++;
+  });
+  var wxOd = DB.wx.filter(function(i){ return i.status==='鐢熸晥涓? && wxDone(i)<CHECK_ITEMS.length; }).length;
+  var wxSoon = DB.wx.filter(function(i){ return i.status==='鐢熸晥涓? && wxDone(i)===CHECK_ITEMS.length; }).length;
+  setDot('dotNav', 0, 0);
+  setDot('dotEng', engOd, engSoon);
+  setDot('dotWx',  wxOd,  wxSoon);
+}
+function setDot(id, od, soon){
+  var el = $(id); if(!el) return;
+  var n = od || soon;
+  el.textContent = n>99 ? '99+' : n;
+  el.className = 'dot' + (od ? ' show' : (soon ? ' show warn' : ''));
+}
+function backupTip(){
+  var total = DB.nav.length+DB.eng.length+DB.wx.length;
+  if(total>=30 && !sessionStorage.getItem(TIPKEY)){
+    $('tipText').textContent = '鍙拌处宸茬Н绱?'+total+' 鏉¤褰曪紝寤鸿鐐瑰彸涓婅銆屽鍑哄浠姐€嶄繚瀛樹竴浠斤紝閬垮厤娓呯悊娴忚鍣ㄦ暟鎹椂涓㈠け銆?;
+    $('tipBackup').classList.add('show');
+  }else{
+    $('tipBackup').classList.remove('show');
+  }
+}
+
+/* ================= 琛ㄥ崟 ================= */
+var editing = null; // {mod, id}
+function opt(list, cur){
+  return list.map(function(v){ return '<option'+(v===cur?' selected':'')+'>'+esc(v)+'</option>'; }).join('');
+}
+function fld(label, inner, full){
+  return '<div class="fld'+(full?' full':'')+'"><label>'+label+'</label>'+inner+'</div>';
+}
+function shipRowHtml(ship){
+  ship = ship || {};
+  return '<div class="ship-row">'+
+    '<input type="text" class="ship-name" placeholder="鑸硅埗鍚嶇О" value="'+esc(ship.name||'')+'">'+
+    '<select class="ship-type">'+opt(SHIP_TYPES, ship.type||'鍏朵粬鏂藉伐鑸硅埗')+'</select>'+
+    '<select class="ship-dyn">'+opt(SHIP_DYN, ship.dynamic||'鍦ㄥ満鏂藉伐')+'</select>'+
+    '<button type="button" class="btn-del" onclick="this.parentElement.remove()">鍒犻櫎</button>'+
+  '</div>';
+}
+function addShipRow(){ var box=$('shipBox'); if(box) box.insertAdjacentHTML('beforeend', shipRowHtml()); }
+window.addShipRow = addShipRow;
+/* ---- 鎶ュ憡绾匡細鍧愭爣鐐瑰姩鎬佽 ---- */
+function ptRowHtml(pt, idx){
+  pt = pt || {};
+  return '<div class="pt-row">'+
+    '<span class="pt-idx">'+idx+'</span>'+
+    '<input type="text" class="pt-label" placeholder="鐐瑰悕绉帮紙鐏々 / 宀涘笨 / 鍦板悕锛? value="'+esc(pt.label||'')+'">'+
+    '<input type="text" class="pt-lat" placeholder="绾害 濡?29掳44鈥?68N" value="'+esc(pt.lat||'')+'">'+
+    '<input type="text" class="pt-lng" placeholder="缁忓害 濡?122掳18鈥?22E" value="'+esc(pt.lng||'')+'">'+
+    '<button type="button" class="btn-del" onclick="delPtRow(this)">鍒犻櫎</button>'+
+  '</div>';
+}
+function reportLinePointsHtml(it){
+  var pts = (Array.isArray(it.points) && it.points.length) ? it.points
+    : (it.lineType==='鎶樼嚎' ? [{},{},{}] : [{},{}]);
+  var inner = '<div id="ptBox">'+pts.map(function(p,i){ return ptRowHtml(p,i+1); }).join('')+'</div>'+
+    '<button type="button" class="btn sm ghost" onclick="addPtRow()">+ 娣诲姞鍧愭爣鐐?/button>'+
+    '<div class="pt-tip">鐩寸嚎鍙?2 涓鐐硅繛绾匡紱鎶樼嚎鎸夐『搴忓鐐硅繛绾裤€傚潗鏍囨牸寮忥細搴β板垎鈥?灏忔暟 + N/E锛涚伅妗╃瓑鏃犲潗鏍囧彲鐣欑┖锛屼繚瀛樺悗鑷姩鐢熸垚浣嶇疆鎻忚堪銆?/div>';
+  return fld('鎶ュ憡绾夸綅缃紙鍧愭爣鐐硅繛绾匡級', inner, 1);
+}
+function addPtRow(){ var box=$('ptBox'); if(box){ box.insertAdjacentHTML('beforeend', ptRowHtml({}, box.children.length+1)); } }
+function delPtRow(btn){ btn.parentElement.remove(); renumPt(); }
+function renumPt(){ var box=$('ptBox'); if(!box) return; var idxs=box.querySelectorAll('.pt-idx'); for(var i=0;i<idxs.length;i++) idxs[i].textContent=i+1; }
+window.addPtRow = addPtRow; window.delPtRow = delPtRow;
+/* ---- 寮曡埅鐐癸細鍧愭爣鐐瑰姩鎬佽 ---- */
+function identPosPointsHtml(it){
+  var pts = (Array.isArray(it.points) && it.points.length) ? it.points : [{}];
+  var inner = '<div id="ptBox">'+pts.map(function(p,i){ return ptRowHtml(p,i+1); }).join('')+'</div>'+
+    '<button type="button" class="btn sm ghost" onclick="addPtRow()">+ 娣诲姞鍧愭爣鐐?/button>'+
+    '<div class="pt-tip">鏍囪瘑浣嶇疆浠ョ含搴︼紙搴?鍒?绉掞級銆佺粡搴︼紙搴?鍒?绉掞級琛ㄧず锛屼緥濡?25-12-12/119-20-30銆傚鐏々/鍦板悕渚濇褰曞叆锛屾棤鍧愭爣鍙暀绌恒€?/div>';
+  return fld('鏍囪瘑浣嶇疆锛堝潗鏍囩偣锛?, inner, 1);
+}
+/* ---- 閿氬湴锛氳寖鍥村潗鏍?澶氳竟褰? + 閿氭硦鐐?鍙岀紪杈戝櫒 ---- */
+function rangeRowHtml(pt, idx){
+  pt = pt || {};
+  return '<div class="pt-row">'+
+    '<span class="pt-idx">'+idx+'</span>'+
+    '<input type="text" class="pt-lat" placeholder="绾害 濡?29掳40鈥?3鈥?6N" value="'+esc(pt.lat||'')+'">'+
+    '<input type="text" class="pt-lng" placeholder="缁忓害 濡?122掳18鈥?9鈥?9E" value="'+esc(pt.lng||'')+'">'+
+    '<button type="button" class="btn-del" onclick="delRangeRow(this)">鍒犻櫎</button>'+
+  '</div>';
+}
+function anchorRowHtml(pt, idx){
+  pt = pt || {};
+  return '<div class="pt-row">'+
+    '<input type="text" class="pt-label" placeholder="鏍囨敞(濡?1# / 澶栭敋鍦?)" value="'+esc(pt.label||'')+'">'+
+    '<input type="text" class="pt-lat" placeholder="绾害" value="'+esc(pt.lat||'')+'">'+
+    '<input type="text" class="pt-lng" placeholder="缁忓害" value="'+esc(pt.lng||'')+'">'+
+    '<input type="text" class="pt-limit" placeholder="L鈮?m)鍙┖" value="'+esc(pt.limit||'')+'">'+
+    '<input type="text" class="pt-yard" placeholder="鍏宠仈鑸瑰巶鍙┖" value="'+esc(pt.shipyard||'')+'">'+
+    '<button type="button" class="btn-del" onclick="delAnchorRow(this)">鍒犻櫎</button>'+
+  '</div>';
+}
+function anchorRangeHtml(it){
+  var pts = (Array.isArray(it.rangePts) && it.rangePts.length) ? it.rangePts : [{},{},{},{},{}];
+  var inner = '<div id="rangeBox">'+pts.map(function(p,i){ return rangeRowHtml(p,i+1); }).join('')+'</div>'+
+    '<button type="button" class="btn sm ghost" onclick="addRangeRow()">+ 娣诲姞鑼冨洿鐐?/button>'+
+    '<div class="pt-tip">渚濇褰曞叆閿氬湴鑼冨洿鍚勯《鐐癸紙搴β板垎鈥茬鈥?+ N/E锛夛紝淇濆瓨鍚庤嚜鍔ㄧ敓鎴愩€孉銆丅銆丆涓嶥杩炵嚎姘村煙銆嶆弿杩般€?/div>';
+  return fld('鑼冨洿鍧愭爣锛堝杈瑰舰杩炵嚎锛?, inner, 1);
+}
+function anchorPointsHtml(it){
+  var pts = (Array.isArray(it.anchorPts) && it.anchorPts.length) ? it.anchorPts : [{}];
+  var inner = '<div id="anchorBox">'+pts.map(function(p,i){ return anchorRowHtml(p,i+1); }).join('')+'</div>'+
+    '<button type="button" class="btn sm ghost" onclick="addAnchorRow()">+ 娣诲姞閿氭硦鐐?/button>'+
+    '<div class="pt-tip">姣忎釜閿氭硦鐐瑰綍鍏ユ爣娉ㄣ€佸潗鏍囷紱鍙€夊～ L鈮よ埞闀块檺鍒?m) 涓庡叧鑱旇埞鍘傦紝鐢ㄤ簬涓存椂閿氭硦鐐圭鐞嗐€?/div>';
+  return fld('閿氭硦鐐癸紙鍧愭爣 / L鈮?/ 鍏宠仈鑸瑰巶锛?, inner, 1);
+}
+function addRangeRow(){ var box=$('rangeBox'); if(box){ box.insertAdjacentHTML('beforeend', rangeRowHtml({}, box.children.length+1)); } }
+function delRangeRow(btn){ btn.parentElement.remove(); renumRange(); }
+function renumRange(){ var box=$('rangeBox'); if(!box) return; var idxs=box.querySelectorAll('.pt-idx'); for(var i=0;i<idxs.length;i++) idxs[i].textContent=i+1; }
+function addAnchorRow(){ var box=$('anchorBox'); if(box){ box.insertAdjacentHTML('beforeend', anchorRowHtml({}, box.children.length+1)); } }
+function delAnchorRow(btn){ btn.parentElement.remove(); }
+window.addRangeRow=addRangeRow; window.delRangeRow=delRangeRow; window.addAnchorRow=addAnchorRow; window.delAnchorRow=delAnchorRow;
+function navExcludedCommon(catKey, key){
+  var cat = NAV_CAT_MAP[catKey];
+  if(!cat || !cat.excludeCommon) return false;
+  return cat.excludeCommon.indexOf(key)>=0;
+}
+function navFieldHtml(f, val, catKey){
+  var v = val==null?'':val;
+  if(f.type==='select'){
+    var opts = f.opts || [];
+    if(f.key==='status' && catKey && NAV_CAT_MAP[catKey] && NAV_CAT_MAP[catKey].statusOpts){
+      opts = NAV_CAT_MAP[catKey].statusOpts;
+    }
+    return '<select name="'+f.key+'">'+opt(opts, v)+'</select>';
+  }else if(f.type==='date'){
+    return '<input type="date" name="'+f.key+'" value="'+esc(v)+'">';
+  }else if(f.type==='textarea'){
+    return '<textarea name="'+f.key+'" placeholder="'+esc(f.ph||'')+'">'+esc(v)+'</textarea>';
+  }else{
+    return '<input name="'+f.key+'" value="'+esc(v)+'" placeholder="'+esc(f.ph||'')+'">';
+  }
+}
+function navFormHtml(it){
+  var h='';
+  h += fld('瑕佺礌绫诲埆','<select name="type" onchange="navTypeChanged(this.value)">'+opt(NAV_CATS.map(function(c){return c.key;}), it.type)+'</select>');
+  NAV_COMMON.forEach(function(f){
+    if(navExcludedCommon(it.type, f.key)) return;
+    h += fld(f.label+(f.req?' *':''), navFieldHtml(f, it[f.key], it.type), f.full);
+  });
+  var cat = NAV_CAT_MAP[it.type] || {fields:[]};
+  (cat.fields||[]).forEach(function(f){
+    if(it.type==='鎶ュ憡绾? && f.key==='linePos'){ h += reportLinePointsHtml(it); return; }
+    if(it.type==='寮曡埅鐐? && f.key==='identPos'){ h += identPosPointsHtml(it); return; }
+    if(it.type==='閿氬湴' && f.key==='rangePos'){ h += anchorRangeHtml(it); return; }
+    if(it.type==='閿氬湴' && f.key==='anchorPos'){ h += anchorPointsHtml(it); return; }
+    h += fld(f.label, navFieldHtml(f, it[f.key], it.type), f.full);
+  });
+  return h;
+}
+function navTypeChanged(newType){
+  var els = $('mdForm').querySelectorAll('[name]');
+  var cur = {};
+  for(var i=0;i<els.length;i++){ cur[els[i].name] = els[i].type==='checkbox'?els[i].checked:els[i].value; }
+  cur.type = newType;
+  $('mdForm').innerHTML = navFormHtml(cur);
+}
+window.navTypeChanged = navTypeChanged;
+function openForm(mod, id){
+  editing = {mod:mod, id:id||null};
+  var it = id ? DB[mod].filter(function(x){return x.id===id;})[0] : null;
+  var t = {nav:'閫氳埅鐜瑕佺礌', eng:'姘村伐鐩戠椤圭洰', wx:'鎭跺姡澶╂皵棰勮杩囩▼', todo:'寰呭姙浜嬮」'}[mod];
+  $('mdTitle').textContent = (id?'缂栬緫':'鏂板')+t;
+  var h='';
+  if(mod==='nav'){
+    var navDef = (navSel && NAV_CAT_MAP[navSel]) ? navSel : NAV_CATS[0].key;
+    var navDefStatus = (NAV_CAT_MAP[navDef] && NAV_CAT_MAP[navDef].statusOpts) ? NAV_CAT_MAP[navDef].statusOpts[0] : '鍦ㄥ唽';
+    it = it || {type:navDef, status:navDefStatus};
+    h = navFormHtml(it);
+  }else if(mod==='todo'){
+    it = it || {title:'',due:'',priority:'鏅€?,owner:'',status:'寰呭姙',note:''};
+    h += fld('浜嬮」 *','<input name="title" value="'+esc(it.title||'')+'" placeholder="渚嬪锛氭牳鏌ユ柦宸ユ按鍩熻鎴掕埞鍒颁綅鎯呭喌">',1);
+    h += fld('鎴鏃堕棿','<input type="datetime-local" name="due" value="'+esc(it.due||'')+'">');
+    h += fld('浼樺厛绾?,'<select name="priority">'+opt(['鏅€?,'閲嶈','绱ф€?],it.priority||'鏅€?)+'</select>');
+    h += fld('璐熻矗浜?,'<input name="owner" value="'+esc(it.owner||'')+'" placeholder="閫夊～">');
+    h += fld('澶囨敞','<textarea name="note" placeholder="琛ュ厖澶勭悊瑕佹眰銆佸叧鑱旈」鐩瓑">'+esc(it.note||'')+'</textarea>',1);
+  }else if(mod==='eng'){
+    it = it || {name:'',unit:'',wtype:'鐤忔禋鍚瑰～',permit:'',start:today(),end:shift(30),status:'鏂藉伐涓?,measures:'',note:'',isMajor:false,isCompleteReport:false,isPreInterview:false};
+    h += fld('椤圭洰鍚嶇О','<input name="name" value="'+esc(it.name)+'">',1);
+    h += fld('鏄惁閲嶅ぇ姘村伐','<label class="chk-row"><input type="checkbox" name="isMajor" '+(it.isMajor?'checked':'')+'> <span>閲嶅ぇ姘村伐椤圭洰</span></label>',1);
+    h += fld('寤鸿 / 鏂藉伐鍗曚綅','<input name="unit" value="'+esc(it.unit||'')+'">');
+    h += fld('浣滀笟绫诲瀷','<select name="wtype">'+opt(ENG_TYPES,it.wtype)+'</select>');
+    h += fld('璁稿彲璇佸彿','<input name="permit" value="'+esc(it.permit||'')+'">');
+    h += fld('椤圭洰鐘舵€?,'<select name="status">'+opt(['璁稿彲鍔炵悊涓?,'鏂藉伐涓?,'宸插畬宸?,'宸茶繃鏈?],it.status)+'</select>');
+    h += fld('璁稿彲寮€濮?,'<input type="date" name="start" value="'+esc(it.start)+'">');
+    h += fld('璁稿彲鎴','<input type="date" name="end" value="'+esc(it.end)+'">');
+    h += fld('鏄惁鎻愪氦瀹屽伐鎶ュ憡','<label class="chk-row"><input type="checkbox" name="isCompleteReport" '+(it.isCompleteReport?'checked':'')+'> <span>宸叉彁浜ゅ畬宸ユ姤鍛?/span></label>',1);
+    h += fld('鏄惁瀹屾垚寮€宸ュ墠绾﹁皥','<label class="chk-row"><input type="checkbox" name="isPreInterview" '+(it.isPreInterview?'checked':'')+'> <span>宸插畬鎴愬紑宸ュ墠绾﹁皥</span></label>',1);
+    var ships = Array.isArray(it.ships) ? it.ships : [];
+    h += fld('椤圭洰鏂藉伐鑸硅埗','<div id="shipBox">'+ships.map(shipRowHtml).join('')+'</div>'+
+      '<button type="button" class="btn sm ghost" onclick="addShipRow()">+ 娣诲姞鑸硅埗</button>',1);
+    h += fld('璀︽垝鑸?/ 瀹夊叏鎺柦','<textarea name="measures">'+esc(it.measures||'')+'</textarea>',1);
+    h += fld('澶囨敞','<input name="note" value="'+esc(it.note||'')+'">',1);
+  }else if(mod==='wx'){
+    it = it || {wtype:'澶ч',level:'榛勮壊',start:shiftT(0,8),status:'鐢熸晥涓?,ships:0,checks:[],note:''};
+    h += fld('澶╂皵绫诲瀷','<select name="wtype">'+opt(['鍙伴','澶ч','澶ч浘','瀵掓疆','寮哄娴?],it.wtype)+'</select>');
+    h += fld('棰勮绛夌骇','<select name="level">'+opt(['钃濊壊','榛勮壊','姗欒壊','绾㈣壊'],it.level)+'</select>');
+    h += fld('璧峰鏃堕棿','<input type="datetime-local" name="start" value="'+esc(it.start)+'">');
+    h += fld('鍝嶅簲鐘舵€?,'<select name="status">'+opt(['鐢熸晥涓?,'宸茶В闄?],it.status)+'</select>');
+    h += fld('杩涙腐閬块鑸硅埗锛堣墭锛?,'<input type="number" inputmode="numeric" name="ships" value="'+(it.ships||0)+'">');
+    h += fld('鎯呭喌璇存槑','<textarea name="note" placeholder="椋庡姏銆佽兘瑙佸害銆侀噸鐐归儴缃?>'+esc(it.note||'')+'</textarea>',1);
+  }
+  $('mdForm').innerHTML = h;
+  $('mask').classList.add('on');
+}
+function closeForm(){ $('mask').classList.remove('on'); editing=null; }
+
+function saveForm(){
+  if(!editing) return;
+  var mod = editing.mod, data = {};
+  var els = $('mdForm').querySelectorAll('[name]');
+  for(var i=0;i<els.length;i++){
+    if(els[i].type==='checkbox'){ data[els[i].name] = els[i].checked; }
+    else{ data[els[i].name] = els[i].value.trim ? els[i].value.trim() : els[i].value; }
+  }
+  if(mod==='nav' && !data.name){ alert('璇峰～鍐欒绱犲悕绉?); return; }
+  if(mod==='todo' && !data.title){ alert('璇峰～鍐欎簨椤?); return; }
+  if(mod==='todo' && !data.status) data.status = '寰呭姙';
+  if(mod==='todo' && !editing.id) data.createdAt = new Date().toLocaleString('zh-CN', {hour12:false});
+  if(mod==='eng' && !data.name){ alert('璇峰～鍐欓」鐩悕绉?); return; }
+  if(mod==='wx'){ data.ships = parseInt(data.ships,10)||0; }
+  data.updatedAt = Date.now();
+  data.updatedBy = getOperator();
+  if(mod==='eng'){
+    data.ships = [];
+    var rows = $('mdForm').querySelectorAll('.ship-row');
+    for(var ri=0;ri<rows.length;ri++){
+      var r=rows[ri];
+      var nm = r.querySelector('.ship-name').value.trim();
+      var tp = r.querySelector('.ship-type').value;
+      var dy = r.querySelector('.ship-dyn') ? r.querySelector('.ship-dyn').value : '鍦ㄥ満鏂藉伐';
+      if(nm) data.ships.push({name:nm, type:tp, dynamic:dy});
+    }
+  }
+  if(mod==='nav' && (data.type==='鎶ュ憡绾? || data.type==='寮曡埅鐐? || data.type==='閿氬湴')){
+    if(data.type==='鎶ュ憡绾? || data.type==='寮曡埅鐐?){
+      data.points = [];
+      var prows = $('mdForm').querySelectorAll('#ptBox .pt-row');
+      for(var pi=0;pi<prows.length;pi++){
+        var pr = prows[pi];
+        var pl = pr.querySelector('.pt-label').value.trim();
+        var plat = pr.querySelector('.pt-lat').value.trim();
+        var plng = pr.querySelector('.pt-lng').value.trim();
+        if(pl||plat||plng) data.points.push({label:pl, lat:plat, lng:plng});
+      }
+      if(data.points.length){
+        var pnames = data.points.map(function(p){
+          var coord = (p.lat||p.lng) ? ('锛?+[p.lat,p.lng].filter(Boolean).join('/')+'锛?) : '';
+          return (p.label||'')+coord;
+        });
+        var joined = (data.type==='鎶ュ憡绾? && data.lineType==='鎶樼嚎' && pnames.length>2)
+          ? pnames.slice(0,-1).join('銆?)+'涓?+pnames[pnames.length-1]
+          : pnames.join('銆?);
+        if(data.type==='鎶ュ憡绾?) data.linePos = joined+'杩炵嚎';
+        if(data.type==='寮曡埅鐐?) data.identPos = joined;
+      }else{
+        if(data.type==='鎶ュ憡绾?) data.linePos = '';
+        if(data.type==='寮曡埅鐐?) data.identPos = '';
+      }
+    }
+    if(data.type==='閿氬湴'){
+      data.rangePts = [];
+      var rrows = $('mdForm').querySelectorAll('#rangeBox .pt-row');
+      for(var ri2=0; ri2<rrows.length; ri2++){
+        var rr = rrows[ri2];
+        var rlat = rr.querySelector('.pt-lat').value.trim();
+        var rlng = rr.querySelector('.pt-lng').value.trim();
+        if(rlat||rlng) data.rangePts.push({lat:rlat, lng:rlng});
+      }
+      data.anchorPts = [];
+      var arows = $('mdForm').querySelectorAll('#anchorBox .pt-row');
+      for(var ai2=0; ai2<arows.length; ai2++){
+        var ar = arows[ai2];
+        var al = ar.querySelector('.pt-label').value.trim();
+        var alat = ar.querySelector('.pt-lat').value.trim();
+        var alng = ar.querySelector('.pt-lng').value.trim();
+        var alim = ar.querySelector('.pt-limit') ? ar.querySelector('.pt-limit').value.trim() : '';
+        var ay = ar.querySelector('.pt-yard') ? ar.querySelector('.pt-yard').value.trim() : '';
+        if(al||alat||alng||alim||ay) data.anchorPts.push({label:al, lat:alat, lng:alng, limit:alim, shipyard:ay});
+      }
+      if(data.rangePts.length){
+        var rn = data.rangePts.map(function(p){ return (p.lat||p.lng) ? ('锛?+[p.lat,p.lng].filter(Boolean).join('/')+'锛?) : ''; });
+        var rj = rn.length>2 ? rn.slice(0,-1).join('銆?)+'涓?+rn[rn.length-1] : rn.join('銆?);
+        data.rangePos = rj + '杩炵嚎姘村煙';
+      } else { data.rangePos = ''; }
+      if(data.anchorPts.length){
+        var an = data.anchorPts.map(function(p){
+          var c = (p.lat||p.lng) ? ('锛?+[p.lat,p.lng].filter(Boolean).join('/')+'锛?) : '';
+          return (p.label||'')+c+(p.limit?(' L鈮?+p.limit+'m'):'')+(p.shipyard?(' /'+p.shipyard):'');
+        });
+        data.anchorPos = an.join('锛?);
+      } else { data.anchorPos = ''; }
+    }
+  }
+
+  if(editing.id){
+    var arr = DB[mod];
+    var formNames = [], fels = $('mdForm').querySelectorAll('[name]');
+    for(var fi=0; fi<fels.length; fi++) formNames.push(fels[fi].name);
+    for(var j=0;j<arr.length;j++){
+      if(arr[j].id===editing.id){
+        if(mod==='nav'){ NAV_CSV_KEYS.forEach(function(k){ if(formNames.indexOf(k)<0 && k!=='type') delete arr[j][k]; }); }
+        for(var k in data){ arr[j][k]=data[k]; }
+        break;
+      }
+    }
+  }else{
+    data.id = uid();
+    if(mod==='wx') data.checks = [false,false,false,false,false,false,false];
+    DB[mod].unshift(data);
+  }
+  save(); closeForm(); renderAll();
+}
+
+/* ================= 蹇嵎鎿嶄綔 ================= */
+function find(mod,id){ return DB[mod].filter(function(x){return x.id===id;})[0]; }
+function quick(act, mod, id){
+  var it = find(mod,id); if(!it) return;
+  if(act==='edit'){ openForm(mod,id); return; }
+  if(act==='del'){
+    if(confirm('纭畾鍒犻櫎杩欐潯寰呭姙浜嬮」鍚楋紵鍒犻櫎鍚庝笉鍙仮澶嶃€?)){ DB[mod] = DB[mod].filter(function(x){ return x.id!==id; }); save(); renderAll(); }
+    return;
+  }
+  if(act==='done'){ it.status='宸插畬鎴?; it.doneAt=today(); }
+  else if(act==='reopen'){ it.status='寰呭姙'; }
+  else if(act==='defer'){ it.due=today(); }
+  else if(act==='close'){ it.status='宸茶В闄?; }
+  else if(act==='go'){ gotoItem(mod,id); return; }
+  it.updatedAt = Date.now(); it.updatedBy = getOperator();
+  save(); renderAll();
+}
+function gotoItem(mod,id){
+  switchTab(mod);
+  setTimeout(function(){
+    var el = $('it-'+id);
+    if(el){ el.scrollIntoView({behavior:'smooth',block:'center'});
+      el.classList.add('flash'); setTimeout(function(){el.classList.remove('flash');},1600); }
+  },60);
+}
+/* ================= 涓タ閮ㄦ捣鍩熷ぉ姘旈鎶ワ紙鑷姩鎶撳彇 + 鍥藉瘑 SM4 瑙ｅ瘑锛?================= */
+var WX_API = 'https://www.zs121.com.cn/TQW/Forecast/get48hWeatherForecast?city=' + encodeURIComponent('鑸熷北甯?);
+var WX_KEY = '8078354164775464';
+var SM4_SBOX = [0xd6,0x90,0xe9,0xfe,0xcc,0xe1,0x3d,0xb7,0x16,0xb6,0x14,0xc2,0x28,0xfb,0x2c,0x05,0x2b,0x67,0x9a,0x76,0x2a,0xbe,0x04,0xc3,0xaa,0x44,0x13,0x26,0x49,0x86,0x06,0x99,0x9c,0x42,0x50,0xf4,0x91,0xef,0x98,0x7a,0x33,0x54,0x0b,0x43,0xed,0xcf,0xac,0x62,0xe4,0xb3,0x1c,0xa9,0xc9,0x08,0xe8,0x95,0x80,0xdf,0x94,0xfa,0x75,0x8f,0x3f,0xa6,0x47,0x07,0xa7,0xfc,0xf3,0x73,0x17,0xba,0x83,0x59,0x3c,0x19,0xe6,0x85,0x4f,0xa8,0x68,0x6b,0x81,0xb2,0x71,0x64,0xda,0x8b,0xf8,0xeb,0x0f,0x4b,0x70,0x56,0x9d,0x35,0x1e,0x24,0x0e,0x5e,0x63,0x58,0xd1,0xa2,0x25,0x22,0x7c,0x3b,0x01,0x21,0x78,0x87,0xd4,0x00,0x46,0x57,0x9f,0xd3,0x27,0x52,0x4c,0x36,0x02,0xe7,0xa0,0xc4,0xc8,0x9e,0xea,0xbf,0x8a,0xd2,0x40,0xc7,0x38,0xb5,0xa3,0xf7,0xf2,0xce,0xf9,0x61,0x15,0xa1,0xe0,0xae,0x5d,0xa4,0x9b,0x34,0x1a,0x55,0xad,0x93,0x32,0x30,0xf5,0x8c,0xb1,0xe3,0x1d,0xf6,0xe2,0x2e,0x82,0x66,0xca,0x60,0xc0,0x29,0x23,0xab,0x0d,0x53,0x4e,0x6f,0xd5,0xdb,0x37,0x45,0xde,0xfd,0x8e,0x2f,0x03,0xff,0x6a,0x72,0x6d,0x6c,0x5b,0x51,0x8d,0x1b,0xaf,0x92,0xbb,0xdd,0xbc,0x7f,0x11,0xd9,0x5c,0x41,0x1f,0x10,0x5a,0xd8,0x0a,0xc1,0x31,0x88,0xa5,0xcd,0x7b,0xbd,0x2d,0x74,0xd0,0x12,0xb8,0xe5,0xb4,0xb0,0x89,0x69,0x97,0x4a,0x0c,0x96,0x77,0x7e,0x65,0xb9,0xf1,0x09,0xc5,0x6e,0xc6,0x84,0x18,0xf0,0x7d,0xec,0x3a,0xdc,0x4d,0x20,0x79,0xee,0x5f,0x3e,0xd7,0xcb,0x39,0x48];
+var SM4_FK = [0xa3b1bac6,0x56aa3350,0x677d9197,0xb27022dc];
+function sm4CK(){var a=[],i,j,t;for(i=0;i<32;i++){t=0;for(j=0;j<4;j++){t=(t<<8)|(((4*i+j)*7)&0xff);}a.push(t>>>0);}return a;}
+var SM4_CK = sm4CK();
+function sm4Rotl(x,n){return ((x<<n)|(x>>>(32-n)))>>>0;}
+function sm4SboxT(x){var o=0,i,b;for(i=0;i<4;i++){b=(x>>>(24-8*i))&0xff;o=(o<<8)|SM4_SBOX[b];}return o>>>0;}
+function sm4L(x){return (x^sm4Rotl(x,2)^sm4Rotl(x,10)^sm4Rotl(x,18)^sm4Rotl(x,24))>>>0;}
+function sm4L1(x){return (x^sm4Rotl(x,13)^sm4Rotl(x,23))>>>0;}
+function sm4KeyExpand(kU32){
+  var k=[kU32[0]^SM4_FK[0],kU32[1]^SM4_FK[1],kU32[2]^SM4_FK[2],kU32[3]^SM4_FK[3]],rk=[],i,tmp;
+  for(i=0;i<32;i++){ tmp=(k[1]^k[2]^k[3]^SM4_CK[i])>>>0; tmp=sm4SboxT(tmp); tmp=sm4L1(tmp); k.push((k[0]^tmp)>>>0); k.shift(); rk.push(k[3]); }
+  return rk;
+}
+function sm4Round(block,rk){
+  var x=block.slice(),i,tmp;
+  for(i=0;i<32;i++){ tmp=(x[1]^x[2]^x[3]^rk[i])>>>0; tmp=sm4SboxT(tmp); tmp=sm4L(tmp); x.push((x[0]^tmp)>>>0); x.shift(); }
+  return [x[3],x[2],x[1],x[0]];
+}
+function sm4Decrypt(cipher, keyStr){
+  var kb=new TextEncoder().encode(keyStr), kU32=[0,0,0,0], i, off, blk, w, out=[];
+  for(i=0;i<4;i++) kU32[i]=(kb[i*4]<<24)|(kb[i*4+1]<<16)|(kb[i*4+2]<<8)|kb[i*4+3];
+  var rk=sm4KeyExpand(kU32); rk=rk.reverse();
+  for(off=0; off<cipher.length; off+=16){
+    blk=[0,0,0,0];
+    for(i=0;i<4;i++) blk[i]=(cipher[off+i*4]<<24)|(cipher[off+i*4+1]<<16)|(cipher[off+i*4+2]<<8)|cipher[off+i*4+3];
+    w=sm4Round(blk,rk);
+    for(i=0;i<4;i++) out.push((w[i]>>>24)&0xff,(w[i]>>>16)&0xff,(w[i]>>>8)&0xff,w[i]&0xff);
+  }
+  var pad=out[out.length-1]; if(pad>=1&&pad<=16) out.length=out.length-pad;
+  return out;
+}
+var _wxLoaded=false;
+function loadWxForecast(){
+  var statusEl=$('wxStatus'), bodyEl=$('wxBody'), errEl=$('wxErr'), textEl=$('wxStatusText'), btn=$('wxRefresh');
+  if(!statusEl) return;
+  statusEl.style.display=''; statusEl.querySelector('.dot').className='dot loading';
+  bodyEl.style.display='none'; errEl.style.display='none'; textEl.textContent='姝ｅ湪鑾峰彇棰勬姤鈥?;
+  btn.disabled=true;
+  fetch(WX_API,{cache:'no-store'}).then(function(r){ return r.json(); }).then(function(o){
+    if(!o || !o.data) throw new Error('鎺ュ彛鏈繑鍥炴暟鎹?);
+    var bin=atob(o.data), bytes=new Uint8Array(bin.length), i;
+    for(i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+    var out=sm4Decrypt(bytes, WX_KEY);
+    var txt=new TextDecoder('utf-8').decode(new Uint8Array(out));
+    var obj=JSON.parse(txt);
+    $('wxMidwest').textContent = obj.midwestWind || '锛堟殏鏃犱腑瑗块儴娴峰煙棰勬姤锛?;
+    $('wxNorth').textContent = obj.northSeaWind || '鈥?;
+    $('wxEast').textContent = obj.eastSeaWind || '鈥?;
+    var dt=obj.datetime||'';
+    if(dt.length>=12) dt = dt.substr(0,4)+'-'+dt.substr(4,2)+'-'+dt.substr(6,2)+' '+dt.substr(8,2)+':'+dt.substr(10,2);
+    $('wxTime').textContent = '棰勬姤鏃堕棿锛?+dt;
+    statusEl.style.display='none'; bodyEl.style.display='';
+    evalWxWarn(obj.midwestWind);
+  }).catch(function(e){
+    statusEl.style.display='none'; errEl.style.display='';
+    errEl.innerHTML='鑾峰彇澶辫触锛?+((e&&e.message)?e.message:e)+'銆?br>璇锋鏌ョ綉缁滐紝鎴栫偣涓嬫柟銆屽師绔欏畬鏁撮〉銆嶆牳瀵广€?;
+    _wxLoaded=false;
+  }).finally(function(){ btn.disabled=false; });
+}
+
+/* ----- 鏍规嵁涓タ閮ㄦ捣鍩熼鍔涢鎶ワ紝鏅鸿兘鎻愰啋鐢熸垚棰勮 ----- */
+function parseWind(text){
+  if(!text) return {gust:0,sustain:0,max:0};
+  var gust=0, sustain=0;
+  var g=text.match(/闃甸\s*(\d+)\s*绾?);
+  if(g) gust=parseInt(g[1],10);
+  var m=text.match(/(?:鍋廩涓滃崡瑗垮寳]+椋巪椋庡姏|鍖楅|鍗楅|涓滈|瑗块|瑗垮寳椋巪涓滃崡椋巪涓滃寳椋巪瑗垮崡椋?\s*(\d+)(?:\s*[-~鍒拌嚦]\s*(\d+))?\s*绾?);
+  if(m){ var a=parseInt(m[1],10), b=m[2]?parseInt(m[2],10):a; sustain=Math.max(a,b); }
+  var all=text.match(/(\d+)\s*绾?g)||[];
+  var maxAll=0; all.forEach(function(s){ var n=parseInt(s,10); if(n>maxAll) maxAll=n; });
+  return {gust:gust, sustain:sustain, max:maxAll};
+}
+function inferWxType(text){
+  if(/澶ч浘|娴撻浘|闆?.test(text)) return '澶ч浘';
+  if(/瀵掓疆/.test(text)) return '瀵掓疆';
+  if(/鍙伴/.test(text)) return '鍙伴';
+  if(/闆穦寮哄娴亅寮洪檷闆▅鏆撮洦/.test(text)) return '寮哄娴?;
+  return '澶ч';
+}
+function windLevel(gust, sustain){
+  if(gust>=10 || sustain>=9) return '绾㈣壊';
+  if(gust>=9 || sustain>=8) return '姗欒壊';
+  return '榛勮壊';
+}
+function evalWxWarn(text){
+  var w=parseWind(text);
+  if(w.gust<8 && w.sustain<7) return;                 // 鏈揪闃堝€硷紝涓嶆彁閱?
+  var d=today(), flag=localStorage.getItem('wb_lhtn_wxwarn_'+d);
+  if(flag) return;                                    // 浠婂ぉ宸插鐞嗚繃锛堢敓鎴愭垨蹇界暐锛?
+  var type=inferWxType(text), level=windLevel(w.gust,w.sustain);
+  var info='涓タ閮ㄦ捣鍩熼鎶ワ細';
+  if(w.sustain) info+='鎸佺画椋?'+w.sustain+' 绾?+(w.gust?('锛岄樀椋?'+w.gust+' 绾?):'');
+  else if(w.gust) info+='闃甸 '+w.gust+' 绾?;
+  else info+='椋庡姏 '+w.max+' 绾?;
+  var box=$('wxWarn');
+  box.querySelector('.wx-warn-info').textContent = info+'銆傚缓璁敓鎴愩€?+type+'路'+level+'銆戦璀﹁繃绋嬶紝鏄惁鐢熸垚锛?;
+  box._payload={type:type, level:level, text:text};
+  box.style.display='';
+}
+function genWxFromWarn(){
+  var box=$('wxWarn'); var p=box._payload; if(!p) return;
+  DB.wx.push({id:uid(), wtype:p.type, level:p.level, start:shiftT(0,8),
+    status:'鐢熸晥涓?, ships:0, checks:[false,false,false,false,false,false,false],
+    note:'鑷姩渚濇嵁锛?+today()+' 涓タ閮ㄦ捣鍩熼鎶ワ級锛?+p.text,
+    updatedAt:Date.now(), updatedBy:getOperator()});
+  save(); renderWx();
+  localStorage.setItem('wb_lhtn_wxwarn_'+today(),'gen');
+  box.style.display='none';
+}
+function ignoreWxWarn(){
+  localStorage.setItem('wb_lhtn_wxwarn_'+today(),'ign');
+  $('wxWarn').style.display='none';
+}
+
+function switchTab(t){
+  ['today','nav','eng','wx'].forEach(function(k){ var p=$('pane-'+k); if(p) p.classList.toggle('on', k===t); });
+  var tabs=document.querySelectorAll('[data-tab]');
+  for(var i=0;i<tabs.length;i++){ tabs[i].classList.toggle('on', tabs[i].getAttribute('data-tab')===t); }
+  if(t==='wx' && !_wxLoaded){ _wxLoaded=true; loadWxForecast(); }
+}
+
+/* ================= 澶囦唤 ================= */
+function dl(name, content, type){
+  var blob = new Blob([content], {type:type||'application/json;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+function doExport(){
+  var name = '鍏í閫氳埅鐩戠鍙拌处_'+today().replace(/-/g,'')+'.json';
+  var content = JSON.stringify({app:'lhtn-workbench', v:1, exportAt:new Date().toISOString(),
+    nav:DB.nav, eng:DB.eng, wx:DB.wx, todo:DB.todo}, null, 2);
+  if(isMobile){
+    $('expTitle').textContent = '瀵煎嚭澶囦唤锛圝SON锛?;
+    $('expHint').textContent = '宸茬敓鎴愬浠藉唴瀹广€傜偣銆屽鍒跺唴瀹广€嶅鍒跺悗锛屽湪寰俊鍙戠粰銆愭枃浠朵紶杈撳姪鎵嬨€戞垨鑷繁锛涚數鑴戞祻瑙堝櫒鎵撳紑宸ヤ綔鍙?鈫?鐐广€屽鍏ユ仮澶嶃€嶉€夋鏂囦欢锛堟垨鏂板缓 .json 绮樿创锛夊嵆鍙€?;
+    $('expText').value = content;
+    $('expMask').classList.add('on');
+  } else {
+    dl(name, content);
+  }
+}
+function doCsv(){
+  var cur = $('pane-nav').classList.contains('on')?'nav':($('pane-eng').classList.contains('on')?'eng':($('pane-wx').classList.contains('on')?'wx':'nav'));
+  var rows=[], name='';
+  function q(s){ return '"'+String(s==null?'':s).replace(/"/g,'""')+'"'; }
+  if(cur==='eng'){
+    name='姘村伐鐩戠鍙拌处'; rows.push(['椤圭洰鍚嶇О','鏄惁閲嶅ぇ姘村伐','寤鸿鏂藉伐鍗曚綅','浣滀笟绫诲瀷','璁稿彲璇佸彿','璁稿彲寮€濮?,'璁稿彲鎴','椤圭洰鐘舵€?,'鎻愪氦瀹屽伐鎶ュ憡','寮€宸ュ墠绾﹁皥','鏂藉伐鑸硅埗','瀹夊叏鎺柦','澶囨敞']);
+    DB.eng.forEach(function(i){
+      var ships = (Array.isArray(i.ships)?i.ships:[]).map(function(s){return s.name+'('+s.type+(s.dynamic?','+s.dynamic:'')+')';}).join('锛?);
+      rows.push([i.name,i.isMajor?'鏄?:'鍚?,i.unit,i.wtype,i.permit,i.start,i.end,i.status,i.isCompleteReport?'鏄?:'鍚?,i.isPreInterview?'鏄?:'鍚?,ships,i.measures,i.note]);
+    });
+  }else if(cur==='wx'){
+    name='鎭跺姡澶╂皵鍙拌处'; rows.push(['澶╂皵绫诲瀷','棰勮绛夌骇','璧峰鏃堕棿','鐘舵€?,'閬块鑸硅埗鏁?,'鎺柦钀藉疄','鎯呭喌璇存槑']);
+    DB.wx.forEach(function(i){ rows.push([i.wtype,i.level,i.start,i.status,i.ships,wxDone(i)+'/'+CHECK_ITEMS.length,i.note]); });
+  }else{
+    name='閫氳埅鐜瑕佺礌鍙拌处'; rows.push(NAV_CSV_HEAD);
+    DB.nav.forEach(function(i){
+      rows.push(NAV_CSV_KEYS.map(function(k){ return i[k]==null?'':i[k]; }));
+    });
+  }
+  var csv = '\ufeff'+rows.map(function(r){ return r.map(q).join(','); }).join('\r\n');
+  if(isMobile){
+    $('expTitle').textContent = '瀵煎嚭鍙拌处锛圕SV锛?;
+    $('expHint').textContent = '宸茬敓鎴?CSV 鏂囨湰銆傜偣銆屽鍒跺唴瀹广€嶅鍒跺悗锛屽彂鍒扮數鑴戠矘璐村埌璁颁簨鏈?Excel 鍙﹀瓨涓?.csv 鎵撳紑锛堟鏍煎紡涓嶈兘鐩存帴瀵煎叆宸ヤ綔鍙帮級銆?;
+    $('expText').value = csv;
+    $('expMask').classList.add('on');
+  } else {
+    dl(name+'_'+today().replace(/-/g,'')+'.csv', csv, 'text/csv;charset=utf-8');
+  }
+}
+function doImport(file){
+  var fr = new FileReader();
+  fr.onload = function(){
+    try{
+      var o = JSON.parse(fr.result);
+      if(!o || (!o.nav && !o.eng && !o.wx && !o.todo)) throw new Error('鏍煎紡涓嶇');
+      var n=(o.nav||[]).length+(o.eng||[]).length+(o.wx||[]).length+(o.todo||[]).length;
+      if(!confirm('澶囦唤鏂囦欢鍏?'+n+' 鏉¤褰曘€俓n瀵煎叆灏嗚鐩栧綋鍓嶅伐浣滃彴鐨勫叏閮ㄦ暟鎹紝纭畾缁х画鍚楋紵')) return;
+      DB = {v:o.v||1, nav:o.nav||[], eng:o.eng||[], wx:o.wx||[], todo:o.todo||[]};
+      migrate();
+      DB.nav.forEach(function(i){ if(!i.id) i.id=uid(); });
+      DB.eng.forEach(function(i){ if(!i.id) i.id=uid(); });
+      DB.wx.forEach(function(i){ if(!i.id) i.id=uid(); if(!i.checks) i.checks=[]; });
+      save(); renderAll();
+      alert('宸叉仮澶?'+n+' 鏉¤褰曘€?);
+    }catch(e){ alert('瀵煎叆澶辫触锛氭枃浠朵笉鏄湰宸ヤ綔鍙板鍑虹殑 JSON 澶囦唤銆?); }
+  };
+  fr.readAsText(file, 'utf-8');
+}
+
+/* ================= 鏁版嵁鍒嗕韩锛堥摼鎺ュ悓姝ワ紝闆惰处鍙凤級 ================= */
+function bytesToBase64(bytes){
+  var bin=''; var chunk=0x8000;
+  for(var i=0;i<bytes.length;i+=chunk){ bin+=String.fromCharCode.apply(null, bytes.subarray(i,i+chunk)); }
+  return btoa(bin);
+}
+function base64ToBytes(b64){
+  var bin=atob(b64); var bytes=new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  return bytes;
+}
+function strToUtf8(str){ return new TextEncoder().encode(str); }
+function utf8ToStr(bytes){ return new TextDecoder().decode(bytes); }
+function gzipStr(str){ return new Response(new Blob([strToUtf8(str)]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer().then(function(ab){ return new Uint8Array(ab); }); }
+function gunzipBytes(bytes){ return new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer().then(function(ab){ return utf8ToStr(new Uint8Array(ab)); }); }
+function sharePayload(){ return JSON.stringify({app:'lhtn-workbench', v:3, exportAt:new Date().toISOString(), nav:DB.nav, eng:DB.eng, wx:DB.wx, todo:DB.todo}); }
+function syncOpen(){
+  $('syncStatus').textContent='';
+  $('shareLink').value='';
+  $('shareImportText').value='';
+  $('syncUrl').value=syncGetUrl();
+  $('syncOperator').value=localStorage.getItem(OPERATOR_KEY)||'';
+  $('syncMask').classList.add('on');
+  syncListSnaps();
+}
+function shareGenLink(){
+  var base=location.href.split('#')[0];
+  var json=sharePayload();
+  if(location.protocol==='file:'){
+    $('syncStatus').textContent='鎻愮ず锛氬綋鍓嶆槸鏈湴鏂囦欢锛岀敓鎴愮殑閾炬帴鍙兘鍦ㄥ悓鏂囦欢涓嬬敤銆傚缓璁敤鎴戠粰浣犵殑绾夸笂閾炬帴鎵撳紑宸ヤ綔鍙帮紝杩欐牱鍒嗕韩閾炬帴鎵嶈兘鍦ㄦ墜鏈?鐢佃剳闂翠簰閫氥€?;
+  }
+  if(typeof CompressionStream!=='undefined'){
+    gzipStr(json).then(function(bytes){
+      $('shareLink').value=base+'#wb=g'+bytesToBase64(bytes);
+      $('syncStatus').textContent='宸茬敓鎴?鉁?澶嶅埗閾炬帴锛屽井淇″彂缁欒嚜宸憋紝鍙︿竴鍙拌澶囨墦寮€鍗宠嚜鍔ㄨ浇鍏ャ€?;
+      try{ $('shareLink').focus(); if($('shareLink').setSelectionRange) $('shareLink').setSelectionRange(0,$('shareLink').value.length); }catch(e){}
+    }).catch(function(){ shareGenRaw(base, json); });
+  } else {
+    shareGenRaw(base, json);
+  }
+}
+function shareGenRaw(base, json){
+  $('shareLink').value=base+'#wb=u'+bytesToBase64(strToUtf8(json));
+  $('syncStatus').textContent='宸茬敓鎴愶紙鏈帇缂╋紝閾炬帴杈冮暱锛夈€傚鍒跺彂缁欒嚜宸憋紝鍙︿竴鍙拌澶囨墦寮€鍗宠浇鍏ャ€?;
+  try{ $('shareLink').focus(); if($('shareLink').setSelectionRange) $('shareLink').setSelectionRange(0,$('shareLink').value.length); }catch(e){}
+}
+function shareCopyLink(){
+  var ta=$('shareLink');
+  if(!ta.value){ alert('璇峰厛鐢熸垚鍒嗕韩閾炬帴銆?); return; }
+  try{ ta.focus(); if(ta.setSelectionRange) ta.setSelectionRange(0,ta.value.length); else ta.select(); }catch(e){}
+  var done=false;
+  try{ done=document.execCommand('copy'); }catch(e){}
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(ta.value).catch(function(){}); done=true; }
+  alert(done?'宸插鍒?鉁?鍘诲井淇″彂缁欒嚜宸憋紝鍙︿竴鍙拌澶囨墦寮€閾炬帴鍗冲彲鑷姩杞藉叆銆?:'澶嶅埗澶辫触锛岃闀挎寜鏂囨湰妗嗘墜鍔ㄥ鍒躲€?);
+}
+// merge=true 鏃舵寜 id 鍚堝苟锛氫簯绔?瀵煎叆鏁版嵁瑕嗙洊鏈湴鍚?id锛屾湰鍦扮嫭鏈変繚鐣欙紱
+// 褰撲簯绔?瀵煎叆鏌愰儴鍒嗕负绌烘暟缁勬椂涓嶆竻闄ゆ湰鍦板搴旈儴鍒嗭紙闃叉绌烘暟鎹鐩栵級銆?
+// merge=false 鏃舵暣浣撴浛鎹紙鐢ㄤ簬鎵嬪姩瀵煎叆鍒嗕韩鏁版嵁锛夈€?
+function applyImportJson(json, merge){
+  var o=JSON.parse(json);
+  if(!o||(!o.nav&&!o.eng&&!o.wx&&!o.todo)) throw new Error('鏁版嵁鏍煎紡涓嶇');
+  var n=(o.nav||[]).length+(o.eng||[]).length+(o.wx||[]).length+(o.todo||[]).length;
+  if(merge){
+    DB = mergeDb(DB, o);
+  } else {
+    DB={v:o.v||3, nav:o.nav||[], eng:o.eng||[], wx:o.wx||[], todo:o.todo||[]};
+  }
+  migrate();
+  DB.nav.forEach(function(i){ if(!i.id) i.id=uid(); });
+  DB.eng.forEach(function(i){ if(!i.id) i.id=uid(); });
+  DB.wx.forEach(function(i){ if(!i.id) i.id=uid(); if(!i.checks) i.checks=[]; });
+  DB.todo.forEach(function(i){ if(!i.id) i.id=uid(); });
+  save(); renderAll();
+  return n;
+}
+function mergeDb(cur, o){
+  function union(local, incoming){
+    if(!incoming || !incoming.length) return local.slice(); // 浜戠/瀵煎叆涓虹┖锛屼繚鐣欐湰鍦?
+    var byId={}; local.forEach(function(i){ if(i.id) byId[i.id]=i; });
+    var out=[];
+    incoming.forEach(function(i){ if(i.id && byId[i.id]){ out.push(i); delete byId[i.id]; } else { out.push(i); } });
+    Object.keys(byId).forEach(function(k){ out.push(byId[k]); }); // 鏈湴鐙湁杩藉姞
+    return out;
+  }
+  return { v:3, nav:union(cur.nav||[], o.nav||[]), eng:union(cur.eng||[], o.eng||[]), wx:union(cur.wx||[], o.wx||[]), todo:union(cur.todo||[], o.todo||[]) };
+}
+function importFromWb(wb){
+  return new Promise(function(resolve, reject){
+    if(!wb) return reject(new Error('绌烘暟鎹?));
+    wb=wb.trim();
+    var p=wb.charAt(0), body=wb;
+    if(p==='g'||p==='u') body=wb.slice(1);
+    if(p==='g'){
+      gunzipBytes(base64ToBytes(body)).then(function(t){
+        try{ resolve(applyImportJson(t)); }catch(e){ reject(e); }
+      }).catch(reject);
+    } else {
+      try{ resolve(applyImportJson(utf8ToStr(base64ToBytes(body)))); }
+      catch(e){ reject(e); }
+    }
+  });
+}
+function shareImportManual(){
+  var t=$('shareImportText').value||'';
+  var m=t.match(/[#&]wb=([^&\s]+)/);
+  var wb=m?m[1]:t.trim();
+  if(!wb){ alert('璇风矘璐村甫 #wb= 鐨勫垎浜摼鎺ユ垨鏁版嵁鏂囨湰銆?); return; }
+  importFromWb(wb).then(function(n){
+    $('syncStatus').textContent='宸插鍏?'+n+' 鏉¤褰?鉁?;
+    alert('瀵煎叆鎴愬姛 鉁?宸插悓姝ュ埌鏈湴銆?);
+  }).catch(function(e){ $('syncStatus').textContent='瀵煎叆澶辫触锛?+e.message+'锛堣纭閾炬帴澶嶅埗瀹屾暣锛?; });
+}
+function checkShareOnLoad(){
+  var h=location.hash||'';
+  var m=h.match(/[#&]wb=([^&\s]+)/);
+  if(!m) return;
+  var wb=m[1];
+  if(!confirm('妫€娴嬪埌鍒嗕韩閾炬帴閲岀殑鏁版嵁锛屾槸鍚﹀鍏ュ埌鏈伐浣滃彴锛焅n锛堝鍏ュ皢瑕嗙洊鏈湴褰撳墠鏁版嵁锛?)){
+    history.replaceState(null,'',location.pathname+location.search);
+    return;
+  }
+  importFromWb(wb).then(function(n){
+    history.replaceState(null,'',location.pathname+location.search);
+    if(typeof n==='number') alert('宸蹭粠鍒嗕韩閾炬帴瀵煎叆 '+n+' 鏉¤褰?鉁?);
+  }).catch(function(e){
+    history.replaceState(null,'',location.pathname+location.search);
+    alert('瀵煎叆澶辫触锛?+e.message);
+  });
+}
+
+/* ================= 鑷缓鍚庣 路 鍚屾锛堜笅杞借鐩栨湰鍦?/ 涓婁紶瑕嗙洊浜戠锛?================= */
+// 璇存槑锛氭湰鍦颁笉淇濆瓨浠讳綍鍙拌处鏁版嵁銆傛墦寮€宸ヤ綔鍙?/ 鐐广€屼笅杞姐€? 浠庝簯绔媺鍙栧叏閮ㄦ暟鎹暣浣撹鐩栨湰鍦帮紱
+// 鐐广€屼笂浼犮€? 鎶婃湰鍦板唴瀛樻暟鎹暣浣撹鐩栦笂浼犲埌浜戠銆備袱鏉¤鍒欏潎涓ユ牸鏁翠綋瑕嗙洊锛屼笉鍋氬悎骞躲€?
+var SYNC_URL_KEY='wb_lhtn_sync_url', SYNC_AUTO_KEY='wb_lhtn_sync_auto', _pushTimer=null, _suppressPush=false, _syncInterval=null;
+var DEFAULT_SYNC_URL='https://lhtn-7gqinruodong-d7d175309c4161-1464685940.ap-shanghai.app.tcloudbase.com';
+function syncGetUrl(){ return (localStorage.getItem(SYNC_URL_KEY)||DEFAULT_SYNC_URL).trim().replace(/\/+$/,''); }
+function syncSetStatus(msg){ var el=$('syncStatus'); if(el) el.textContent=msg||''; }
+// 涓婁紶锛氭妸鏈湴鍐呭瓨涓殑瀹屾暣鏁版嵁鏁翠綋瑕嗙洊鍒颁簯绔紙涓ユ牸锛屾棤鍚堝苟锛夈€?
+function syncPushBackend(){
+  var url=syncGetUrl();
+  if(!url){ syncSetStatus('璇峰厛濉啓骞朵繚瀛樺悓姝ユ湇鍔″湴鍧€銆?); return Promise.reject(new Error('鏈厤缃湴鍧€')); }
+  var payload=sharePayload();
+  syncSetStatus('姝ｅ湪涓婁紶鈥?);
+  return fetch(url+'/api/sync', {method:'POST', headers:{'Content-Type':'application/json'}, body:payload})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
+    .then(function(){
+      var nav=(DB.nav||[]).length, eng=(DB.eng||[]).length, wx=(DB.wx||[]).length, todo=(DB.todo||[]).length;
+      var n=nav+eng+wx+todo;
+      var msg='宸蹭笂浼犲埌浜戠骞惰鐩栧師鏁版嵁 鉁?鍏?'+n+' 鏉★紙寰呭姙 '+todo+' / 閫氳埅 '+nav+' / 姘村伐 '+eng+' / 棰勮 '+wx+'锛夈€傚綋鏃ュ揩鐓у凡鐢熸垚銆?;
+      syncSetStatus(msg);
+      if(typeof alert==='function') alert(msg);
+      syncListSnaps(); // 鍒锋柊蹇収鍒楄〃
+      return true;
+    })
+    .catch(function(e){ syncSetStatus('涓婁紶澶辫触锛?+e.message+'锛堟鏌ュ湴鍧€/缃戠粶锛?); throw e; });
+}
+// 涓嬭浇锛氫粠浜戠鎷夊彇鍏ㄩ儴鏁版嵁锛屾暣浣撹鐩栨湰鍦板唴瀛橈紙涓ユ牸锛屾棤鍚堝苟锛夈€?
+// 浠呭綋浜戠杩斿洖绌?/ 鏃犳晥锛堜粠鏈笂浼犺繃锛夋椂淇濈暀鍐呯疆绉嶅瓙鍏滃簳锛岄伩鍏嶇櫧灞忥紱
+// 鍙浜戠杩斿洖浜嗘湁鏁堟暟鎹紙鍚?nav/eng/wx锛夛紝鏃犺鏄惁涓虹┖鏁扮粍閮芥暣浣撹鐩栥€?
+// snapDate 浼犲叆鏃惰鍙栨寚瀹氭棩鏈熷揩鐓у苟瑕嗙洊鏈湴銆?
+function syncPullBackend(snapDate){
+  var url=syncGetUrl();
+  if(!url){ syncSetStatus('璇峰厛濉啓骞朵繚瀛樺悓姝ユ湇鍔″湴鍧€銆?); return Promise.reject(new Error('鏈厤缃湴鍧€')); }
+  syncSetStatus(snapDate?'姝ｅ湪鍥炴粴鍒?'+snapDate+' 蹇収鈥?:'姝ｅ湪浠庝簯绔笅杞解€?);
+  var qs = snapDate ? ('?snap='+encodeURIComponent(snapDate)) : '';
+  return fetch(url+'/api/sync'+qs, {method:'GET', headers:{'Content-Type':'application/json'}})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
+    .then(function(t){
+      if(!t || t==='null' || t.trim()===''){
+        syncSetStatus(snapDate?'璇ュ揩鐓т笉瀛樺湪鎴栦负绌恒€?:'浜戠鏆傛棤鏁版嵁锛屽凡鏄剧ず鍐呯疆鍩虹鏁版嵁锛堢爜澶?鑸亾锛夈€傜偣銆屼笂浼犮€嶅嵆鍙妸鏈湴鎺ㄩ€佸埌浜戠銆?);
+        renderAll();
+        return 0;
+      }
+      var o; try{ o=JSON.parse(t); }catch(e){ throw new Error('鏁版嵁瑙ｆ瀽澶辫触'); }
+      var pulledNav = Array.isArray(o.nav) ? o.nav : [];
+      // 瀹夊叏缃戯細浜戠閫氳埅瑕佺礌涓虹┖銆佷絾鍐呯疆绉嶅瓙鍚爜澶?鑸亾鍩虹鏁版嵁鏃讹紝鏈湴鐢ㄧ瀛愬厹搴曪紝
+      // 閬垮厤銆屾墦寮€鍗充笅杞姐€嶆妸鍩虹嚎鏁版嵁鍐茬┖闄峰叆姝诲惊鐜紱鐐广€屼笂浼犮€嶅嵆鍙妸绉嶅瓙鍐欏洖浜戠銆?
+      if(!snapDate && pulledNav.length===0 && NAV_SEED.length>0){
+        var merged = { app:o.app, v:o.v||1, exportAt:o.exportAt,
+          nav: NAV_SEED.map(function(x){ return JSON.parse(JSON.stringify(x)); }),
+          eng: Array.isArray(o.eng)?o.eng:[], wx: Array.isArray(o.wx)?o.wx:[], todo: Array.isArray(o.todo)?o.todo:[] };
+        var n2 = applyImportJson(JSON.stringify(merged), false);
+        syncSetStatus('浜戠閫氳埅瑕佺礌涓虹┖锛屽凡鐢ㄥ唴缃熀纭€鏁版嵁锛堢爜澶?鑸亾锛夊厹搴曟樉绀猴紙鍏?'+n2+' 鏉★級銆傜偣銆屼笂浼犮€嶅嵆鍙啓鍏ヤ簯绔€?);
+        return n2;
+      }
+      var n=applyImportJson(t, false); // 涓ユ牸鏁翠綋瑕嗙洊鏈湴锛堜簯绔湁鏁版嵁鍗虫暣浣撴浛鎹紝鍖呮嫭绌烘暟缁勶級
+      syncSetStatus((snapDate?'宸插洖婊氬埌 '+snapDate+' 蹇収':'宸蹭粠浜戠涓嬭浇')+'骞惰鐩栨湰鍦帮紙鍏?'+n+' 鏉★級鉁?);
+      return n;
+    })
+    .catch(function(e){ syncSetStatus((snapDate?'鍥炴粴澶辫触':'涓嬭浇澶辫触')+'锛?+e.message+'锛堝凡淇濈暀褰撳墠鏄剧ず鏁版嵁锛屽彲閲嶈瘯锛?); throw e; });
+}
+// 鑾峰彇浜戠蹇収鍒楄〃骞跺～鍏呬笅鎷夋
+function syncListSnaps(){
+  var url=syncGetUrl();
+  if(!url) return;
+  var sel=$('snapSelect'); if(!sel) return;
+  fetch(url+'/api/sync?list=snaps', {method:'GET', headers:{'Content-Type':'application/json'}})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(o){
+      var snaps=(o&&o.snaps)||[];
+      if(!snaps.length){ sel.innerHTML='<option value="">鈥?鏆傛棤蹇収 鈥?/option>'; return; }
+      var h='';
+      snaps.forEach(function(s){ h+='<option value="'+esc(s.date)+'">'+esc(s.date)+'</option>'; });
+      sel.innerHTML=h;
+    })
+    .catch(function(e){ syncSetStatus('鍒锋柊蹇収鍒楄〃澶辫触锛?+e.message); });
+}
+// 鍥炴粴鍒伴€変腑鏃ユ湡鐨勫揩鐓?
+function syncRollbackSnap(){
+  var sel=$('snapSelect');
+  var date=sel?sel.value:'';
+  if(!date){ alert('璇峰厛鍦ㄣ€屼簯绔瘡鏃ュ揩鐓с€嶅尯鍩熷埛鏂板苟閫夋嫨瑕佸洖婊氱殑鏃ユ湡銆?); return; }
+  if(!confirm('纭畾鍥炴粴鍒?'+date+' 鐨勫揩鐓у悧锛焅n鍥炴粴浼氱敤璇ユ棩鏈熺殑浜戠蹇収鏁翠綋瑕嗙洊褰撳墠鏈湴鏁版嵁锛屼笖涓嶄細鑷姩涓婁紶銆?)) return;
+  syncPullBackend(date).catch(function(){});
+}
+// 椤堕儴 / 寮圭獥銆屼笂浼犮€嶆寜閽細涓婁紶瑕嗙洊浜戠銆?
+function syncNow(){ syncPushBackend().catch(function(){}); }
+// 椤堕儴 / 寮圭獥銆屼笅杞姐€嶆寜閽細涓嬭浇瑕嗙洊鏈湴銆?
+function syncDownloadNow(){ syncPullBackend().catch(function(){}); }
+// 鑷姩鍚屾宸插交搴曠Щ闄わ細鏈湴涓嶄繚瀛樻暟鎹紝鎵撳紑鍗充笅杞姐€佹墜鍔ㄧ偣銆屼笂浼犮€嶆墠涓婁紶銆?
+function schedulePush(){ /* no-op */ }
+function startAutoSync(){ /* disabled */ }
+
+/* ================= 浜嬩欢 ================= */
+document.addEventListener('click', function(e){
+  var t = e.target.closest ? e.target.closest('button,label') : null;
+  if(!t) return;
+  var a;
+  if((a=t.getAttribute('data-add'))){ openForm(a); return; }
+  if((a=t.getAttribute('data-edit'))){ openForm(a, t.getAttribute('data-id')); return; }
+  if((a=t.getAttribute('data-del'))){
+    if(confirm('纭畾鍒犻櫎杩欐潯璁板綍鍚楋紵鍒犻櫎鍚庝笉鍙仮澶嶃€?)){
+      DB[a] = DB[a].filter(function(x){ return x.id!==t.getAttribute('data-id'); });
+      save(); renderAll();
+    }
+    return;
+  }
+  if((a=t.getAttribute('data-quick'))){ quick(a, t.getAttribute('data-mod'), t.getAttribute('data-id')); return; }
+  if((a=t.getAttribute('data-tab'))){
+    switchTab(a);
+    var pane = $('pane-'+a);
+    if(pane){
+      var hdrH = document.querySelector('.hdr').offsetHeight + 8;
+      var y = pane.getBoundingClientRect().top + window.pageYOffset - hdrH;
+      window.scrollTo({top:Math.max(0,y), behavior:'smooth'});
+    }
+    return;
+  }
+});
+document.addEventListener('change', function(e){
+  var el = e.target;
+  if(el.getAttribute && el.getAttribute('data-chk')!==null && el.type==='checkbox'){
+    var it = find('wx', el.getAttribute('data-chk'));
+    if(!it) return;
+    if(!it.checks) it.checks=[];
+    it.checks[parseInt(el.getAttribute('data-idx'),10)] = el.checked;
+    it.updatedAt = Date.now(); it.updatedBy = getOperator();
+    save(); renderAll();
+  }
+});
+$('fabTop').addEventListener('click', function(){ switchTab('today'); window.scrollTo({top:0,behavior:'smooth'}); });
+$('wxRefresh').addEventListener('click', loadWxForecast);
+$('wxWarnGen').addEventListener('click', genWxFromWarn);
+$('wxWarnIgn').addEventListener('click', ignoreWxWarn);
+window.addEventListener('scroll', function(){
+  $('fabTop').classList.toggle('show', window.pageYOffset > 260);
+}, {passive:true});
+$('mdCancel').addEventListener('click', closeForm);
+$('mdSave').addEventListener('click', saveForm);
+$('mask').addEventListener('click', function(e){ if(e.target===$('mask')) closeForm(); });
+$('btnExport').addEventListener('click', doExport);
+$('btnCsv').addEventListener('click', doCsv);
+$('btnImport').addEventListener('click', function(){ $('fileInput').click(); });
+$('syncBtn').addEventListener('click', syncOpen);   // 璁剧疆榻胯疆锛氭墦寮€鍦板潃 / 鍒嗕韩寮圭獥
+$('syncClose').addEventListener('click', function(){ $('syncMask').classList.remove('on'); });
+$('syncMask').addEventListener('click', function(e){ if(e.target===$('syncMask')) $('syncMask').classList.remove('on'); });
+$('shareGen').addEventListener('click', shareGenLink);
+$('shareCopy').addEventListener('click', shareCopyLink);
+$('shareImport').addEventListener('click', shareImportManual);
+$('syncSaveUrl').addEventListener('click', function(){
+  var u=$('syncUrl').value.trim();
+  if(u){ localStorage.setItem(SYNC_URL_KEY, u); }
+  else { localStorage.removeItem(SYNC_URL_KEY); }
+  var op=$('syncOperator').value.trim();
+  if(op){ localStorage.setItem(OPERATOR_KEY, op); }
+  else { localStorage.removeItem(OPERATOR_KEY); }
+  syncSetStatus('鍦板潃涓庢搷浣滀汉宸蹭繚瀛?鉁?鍙洿鎺ョ偣銆屼笂浼?/ 涓嬭浇銆嶃€?);
+});
+$('snapRefresh').addEventListener('click', syncListSnaps);
+$('snapRollback').addEventListener('click', syncRollbackSnap);
+// 椤堕儴銆屼笂浼?/ 涓嬭浇銆嶇洿鎺ユ墽琛岋紱寮圭獥鍐呭悓鍚嶆寜閽蛋鍚屼竴閫昏緫
+$('btnUpload').addEventListener('click', function(){ $('syncMask').classList.remove('on'); syncPushBackend().catch(function(){}); });
+$('btnDownload').addEventListener('click', function(){ $('syncMask').classList.remove('on'); syncPullBackend().catch(function(){}); });
+$('syncUpload').addEventListener('click', function(){ syncPushBackend().catch(function(){}); });
+$('syncDownload').addEventListener('click', function(){ syncPullBackend().catch(function(){}); });
+$('expCopy').addEventListener('click', function(){
+  var ta = $('expText');
+  try{ ta.focus(); if(ta.setSelectionRange){ ta.setSelectionRange(0, ta.value.length); } else { ta.select(); } }catch(e){}
+  var done = false;
+  try{ done = document.execCommand('copy'); }catch(e){}
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(ta.value).catch(function(){}); done = true; }
+  alert(done ? '宸插鍒?鉁?鍘诲井淇″彂缁欒嚜宸憋紝鐢佃剳涓婃墦寮€宸ヤ綔鍙扮偣銆屽鍏ユ仮澶嶃€嶅嵆鍙€? : '澶嶅埗澶辫触锛岃闀挎寜鏂囨湰妗嗘墜鍔ㄩ€夋嫨澶嶅埗銆?);
+});
+$('expClose').addEventListener('click', function(){ $('expMask').classList.remove('on'); });
+$('expMask').addEventListener('click', function(e){ if(e.target===$('expMask')) $('expMask').classList.remove('on'); });
+$('fileInput').addEventListener('change', function(e){
+  if(e.target.files && e.target.files[0]) doImport(e.target.files[0]);
+  e.target.value='';
+});
+$('btnClear').addEventListener('click', function(){
+  if(!confirm('杩欏皢娓呯┖鏈伐浣滃彴褰撳墠鏄剧ず鐨勫叏閮ㄥ彴璐︼紙寰呭姙銆侀€氳埅鐜銆佹按宸ョ洃绠°€佹伓鍔ｅぉ姘旓級銆俓n鏈湴涓嶄繚瀛樻暟鎹紝鍒锋柊浼氫粠浜戠閲嶆柊涓嬭浇锛涘瑕佸悓姝ユ竻绌哄埌浜戠锛岃娓呯┖鍚庣偣銆屼笂浼犮€嶃€俓n\n纭畾娓呯┖鏈湴鏄剧ず鍚楋紵')) return;
+  DB = {v:3, nav:[], eng:[], wx:[], todo:[]};
+  renderAll();
+});
+$('tipClose').addEventListener('click', function(){
+  sessionStorage.setItem(TIPKEY,'1'); $('tipBackup').classList.remove('show');
+});
+$('fNavKw').addEventListener('input', renderNav);
+$('navSide').addEventListener('click', function(e){
+  var dropBtn = e.target.closest ? e.target.closest('#catDropBtn') : null;
+  if(dropBtn){
+    navDropdownOpen = !navDropdownOpen;
+    renderNav();
+    return;
+  }
+  var b = e.target.closest ? e.target.closest('[data-cat]') : null;
+  if(!b) return;
+  var c = b.getAttribute('data-cat')||'';
+  navSel = (navSel===c) ? '' : c;   /* 鍐嶆鐐瑰嚮褰撳墠绫诲彇娑堢瓫閫夊洖鍒板叏閮?*/
+  navDropdownOpen = false;
+  renderNav();
+});
+// 鐐瑰嚮椤甸潰鍏跺畠鍖哄煙鍏抽棴绫诲埆涓嬫媺
+document.addEventListener('click', function(e){
+  if(navDropdownOpen && !e.target.closest('#catDropdown')){
+    navDropdownOpen = false;
+    renderNav();
+  }
+});
+['fEngStatus','fEngKw'].forEach(function(id){
+  $(id).addEventListener('input', renderEng); $(id).addEventListener('change', renderEng);
+});
+['fWxStatus','fWxKw'].forEach(function(id){
+  $(id).addEventListener('input', renderWx); $(id).addEventListener('change', renderWx);
+});
+
+/* ================= 鍚姩 ================= */
+load();
+checkShareOnLoad();
+renderAll();
+updateLunarDate();
+setInterval(updateLunarDate, 60000);
+})();
+</script>
+</body>
+</html>
+
