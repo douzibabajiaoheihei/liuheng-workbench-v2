@@ -3309,6 +3309,7 @@ function initTideDatePicker() {
 
 /* 六横 S1 潮汐潮流预报：图表数据由 CloudBase 转发舟山海域潮汐潮流信息发布平台。 */
 var _s1Data = null;
+var _s1RequestSeq = 0;
 function fetchTide(date) {
   var d = date || tideToday();
   return fetch(syncGetUrl() + '/api/tide-v2?source=tsphp&view=liuheng-s1&date=' + encodeURIComponent(d), { method: 'GET', headers: { 'Content-Type': 'application/json' } })
@@ -3316,6 +3317,7 @@ function fetchTide(date) {
 }
 function s1Lunar(date){ try { return new Intl.DateTimeFormat('zh-CN-u-ca-chinese',{month:'long',day:'numeric'}).format(new Date(date+'T12:00:00')).replace('月','月'); } catch(e) { return ''; } }
 function s1ShiftDay(step){ var d=new Date((_tideSelectedDate||tideToday())+'T12:00:00'); d.setDate(d.getDate()+step); _tideSelectedDate=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); renderTide(true); }
+function s1GoToday(){ _tideSelectedDate=tideToday(); renderTide(true); }
 function s1FlowTip(event, index, includeHeight){
   if(!_s1Data || !_s1Data.minute || !_s1Data.minute[index]) return;
   var flow=_s1Data.minute[index], tip=$('s1Tip'), plot=$('s1Plot'); if(!tip||!plot) return;
@@ -3359,14 +3361,15 @@ function _paintTide() {
   ext.forEach(function(t){var parts=t.time.split('：'),pos=(Number(parts[0])+Number(parts[1])/60),tx=L+W*pos/23,ty=y(t.height),up=t.type==='高潮';marks+='<path d="M '+tx+' '+(ty+(up?10:-10))+' l -7 '+(up?11:-11)+' h 14 z" fill="#c71818"/><text x="'+tx+'" y="'+(ty+(up?-26:32))+'" text-anchor="middle" font-size="12">'+t.time.replace('：','：')+'<tspan x="'+tx+'" dy="14">'+Number(t.height).toFixed(2)+' m</tspan></text>';});
   var now = new Date(), nowHour = o.date === tideToday() ? now.getHours() + now.getMinutes()/60 : -1;
   var nowSvg=nowHour>=0&&nowHour<=23?'<line x1="'+(L+W*nowHour/23)+'" y1="'+T+'" x2="'+(L+W*nowHour/23)+'" y2="'+B+'" stroke="#d50000" stroke-dasharray="2 2"/>':'';
-  var h='<div class="s1-window"><div class="s1-titlebar"><span>六横S1潮汐与潮流预报</span><button type="button" title="关闭" onclick="document.getElementById(\'tideCard\').classList.toggle(\'collapsed\')">×</button></div><div class="s1-content"><div class="s1-controls"><a href="javascript:renderTide(true)">六横S1 24小时潮位预报</a><button onclick="s1ShiftDay(-1)">≪</button><input type="date" value="'+esc(o.date)+'" onchange="_tideSelectedDate=this.value;renderTide(true)"><button onclick="s1ShiftDay(1)">≫</button><select onchange="if(this.value){s1OpenTable(this.value);this.value=\'\';}"><option value="">查看数据表</option><option value="summary">潮汐潮流表</option><option value="hour">逐时潮高表</option><option value="flow">10分钟潮流表</option></select><span class="s1-lunar">[农历：'+esc(s1Lunar(o.date))+']</span></div><div class="s1-plot" id="s1Plot"><div class="s1-tip" id="s1Tip"></div><svg viewBox="0 0 990 310" role="img" aria-label="六横S1 24小时潮汐潮流预报">'+grid+'<path d="'+path+'" fill="none" stroke="#075ac0" stroke-width="1.1"/>'+arrows+nowSvg+marks+labels+a.map(function(p,i){return '<circle class="s1-point" cx="'+x(i)+'" cy="'+y(p.height)+'" r="2" fill="#fff" stroke="#075ac0" onmousemove="s1FlowTip(event,'+(i*6)+',true)" onmouseleave="s1HideTip()"/>';}).join('')+'<text x="5" y="14" font-size="12">潮高(m)</text><text x="74" y="37" fill="#d51515" font-size="12" text-decoration="underline">1.00 m/s</text><text x="960" y="267" text-anchor="end" font-size="12">时间(hh:mm)</text></svg></div><div class="s1-foot">数据来源：舟山海域潮汐潮流信息发布　更新时间：'+esc(o.fetchedAt?new Date(o.fetchedAt).toLocaleString('zh-CN',{hour12:false}):'--')+'</div></div></div>';
+  var h='<div class="s1-window"><div class="s1-titlebar"><span>六横S1潮汐与潮流预报</span><button type="button" title="关闭" onclick="document.getElementById(\'tideCard\').classList.toggle(\'collapsed\')">×</button></div><div class="s1-content"><div class="s1-controls"><a href="javascript:renderTide(true)">六横S1 24小时潮位预报</a><button title="前一天" onclick="s1ShiftDay(-1)">≪</button><input id="s1Date" type="date" value="'+esc(o.date)+'" onchange="if(this.value){_tideSelectedDate=this.value;renderTide(true)}"><button title="后一天" onclick="s1ShiftDay(1)">≫</button><button title="返回今天" onclick="s1GoToday()">今天</button><select onchange="if(this.value){s1OpenTable(this.value);this.value=\'\';}"><option value="">查看数据表</option><option value="summary">潮汐潮流表</option><option value="hour">逐时潮高表</option><option value="flow">10分钟潮流表</option></select><span class="s1-lunar">[农历：'+esc(s1Lunar(o.date))+']</span></div><div class="s1-plot" id="s1Plot"><div class="s1-tip" id="s1Tip"></div><svg viewBox="0 0 990 310" role="img" aria-label="六横S1 24小时潮汐潮流预报">'+grid+'<path d="'+path+'" fill="none" stroke="#075ac0" stroke-width="1.1"/>'+arrows+nowSvg+marks+labels+a.map(function(p,i){return '<circle class="s1-point" cx="'+x(i)+'" cy="'+y(p.height)+'" r="2" fill="#fff" stroke="#075ac0" onmousemove="s1FlowTip(event,'+(i*6)+',true)" onmouseleave="s1HideTip()"/>';}).join('')+'<text x="5" y="14" font-size="12">潮高(m)</text><text x="74" y="37" fill="#d51515" font-size="12" text-decoration="underline">1.00 m/s</text><text x="960" y="267" text-anchor="end" font-size="12">时间(hh:mm)</text></svg></div><div class="s1-foot">当前显示：'+esc(o.date)+'　·　数据来源：舟山海域潮汐潮流信息发布　·　更新时间：'+esc(o.fetchedAt?new Date(o.fetchedAt).toLocaleString('zh-CN',{hour12:false}):'--')+'</div></div></div>';
   tables.innerHTML = h;
 }
 function renderTide(force) {
   var t = _tideSelectedDate || tideToday();
   if (!force && _tideCache.date === t && _tideCache.data) { _paintTide(); return; }
-  var tables = $('tideTables'); if (tables) tables.innerHTML = '<div class="empty">正在获取六横 S1 24小时潮位数据…</div>';
-  fetchTide(t).then(function(o){ if(o && o.error) throw new Error(o.error); _tideCache.date=t; _tideCache.data=o; _paintTide(); }).catch(function(e){ if(tables) tables.innerHTML='<div class="empty">潮汐数据暂不可用（'+esc(e && e.message ? e.message : '网络错误')+'）。</div>'; });
+  var tables = $('tideTables'), seq=++_s1RequestSeq;
+  if (tables) tables.innerHTML = '<div class="empty">正在调取 '+esc(t)+' 的六横 S1 潮汐与潮流数据…</div>';
+  fetchTide(t).then(function(o){ if(seq!==_s1RequestSeq) return; if(o && o.error) throw new Error(o.error); if(o.date!==t) throw new Error('返回日期与请求日期不一致'); _tideCache.date=t; _tideCache.data=o; _paintTide(); }).catch(function(e){ if(seq===_s1RequestSeq&&tables) tables.innerHTML='<div class="empty">'+esc(t)+' 暂无可用潮汐数据（'+esc(e && e.message ? e.message : '网络错误')+'）。可切换其它日期或稍后重试。</div>'; });
 }
 function initTideDatePicker() {}
 
