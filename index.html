@@ -21,6 +21,11 @@ html,body{-webkit-text-size-adjust:100%}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;
   background:var(--bg);color:var(--text);font-size:15px;line-height:1.55;
   padding-bottom:calc(86px + env(safe-area-inset-bottom))}
+.app-loading{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--bg);transition:opacity .22s ease,visibility .22s ease}
+.app-loading.hide{opacity:0;visibility:hidden;pointer-events:none}
+.app-loading-box{display:flex;align-items:center;gap:11px;padding:15px 18px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(28,39,51,.10);color:#38536c;font-size:14px;font-weight:600}
+.app-loading-spin{width:19px;height:19px;border:3px solid #cfe2f3;border-top-color:var(--brand2);border-radius:50%;animation:appspin .7s linear infinite}
+@keyframes appspin{to{transform:rotate(360deg)}}
 svg{display:block}
 button{font-family:inherit;font-size:15px;cursor:pointer;border:0;background:none;color:inherit}
 input,select,textarea{font-family:inherit;font-size:16px;color:var(--text)}
@@ -309,6 +314,10 @@ main{max-width:1180px;margin:0 auto;padding:14px 16px 0}
 </style>
 </head>
 <body>
+
+<div class="app-loading" id="appLoading" role="status" aria-live="polite">
+  <div class="app-loading-box"><i class="app-loading-spin"></i><span>正在从云端加载台账…</span></div>
+</div>
 
 <header class="hdr">
   <div class="hdr-in">
@@ -2954,10 +2963,17 @@ function seed(){
 }
 
 // 本地不再持久化任何数据：每次打开都用内置种子初始化内存，再自动从云端下载整体覆盖。
+// 首次下载期间用加载层遮住内置种子，避免过期示例项目在页面上短暂闪现。
+function finishInitialLoad(){
+  var el=$('appLoading');
+  if(el) el.classList.add('hide');
+}
 function load(){
   DB = seed();                 // 内存初始值（仅用于云端下载完成前的兜底展示，非持久化）
   if(syncGetUrl()){
-    syncPullBackend().catch(function(){});  // 打开工作台即自动从云端下载全部数据，整体覆盖本地
+    syncPullBackend().catch(function(){}).then(finishInitialLoad);  // 下载完成后再显示页面
+  } else {
+    finishInitialLoad();
   }
 }
 // 本地不保存任何数据：数据以云端为准，刷新即重新下载覆盖。
