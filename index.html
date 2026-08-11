@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 50168)
-Total output lines: 4456
+Warning: truncated output (original token count: 51038)
+Total output lines: 4463
 
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -84,6 +84,7 @@ main{max-width:1180px;margin:0 auto;padding:14px 16px 0}
 .tide-tables .tide-base{text-align:center;color:#2a8fbf;font-weight:600;margin-bottom:4px;font-size:13px}
 .tide-tables .tide-base-note{text-align:center;color:#888;font-size:12px;margin-bottom:10px}
 .station-overview{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:12px 14px;margin-bottom:12px;border:1px solid #d5e9f3;border-radius:9px;background:#f3f9fc}.station-overview strong{display:block;color:#176d99;font-size:15px}.station-overview span{display:block;color:#607887;font-size:12px;margin-top:3px}.station-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}.station-card{padding:12px;border:1px solid #dbe8ef;border-radius:9px;background:#fff}.station-card h4{font-size:14px;line-height:1.45;color:#24455b}.station-value{font-size:23px;font-weight:700;color:#176d99;margin-top:8px}.station-meta{margin-top:4px;font-size:12px;color:#728694}.station-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.station-source{font-size:12px;color:#728694;margin-top:12px;text-align:center}@media(max-width:640px){.station-overview{flex-direction:column}.station-grid{grid-template-columns:1fr}}
+.s1-toolbar{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}.s1-toolbar strong{font-size:16px;color:#23689a}.s1-toolbar input{height:30px;padding:0 8px;border:1px solid #b9cfe0;border-radius:4px;color:#27485e}.s1-chart{position:relative;border:1px solid #b8c8d4;background:#fff;overflow:hidden}.s1-chart svg{display:block;width:100%;height:300px;min-width:680px}.s1-note{font-size:12px;color:#63798a;text-align:center;margin-top:7px}.s1-current{color:#b84a16;font-size:13px;font-weight:700;min-height:20px;text-align:center;margin-top:7px}.s1-source{font-size:12px;color:#728694;text-align:center;margin-top:6px}.s1-hit{cursor:pointer}.s1-hit:hover{stroke:#f37b16;stroke-width:3}@media(max-width:640px){.s1-chart{overflow-x:auto}.s1-chart svg{height:268px}.s1-toolbar strong{width:100%;text-align:center}}
 .tide-live{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 12px}.tide-live-item{background:#f3f9fc;border:1px solid #d5e9f3;border-radius:8px;padding:10px 12px}.tide-live-item .tl-label{display:block;color:#67808f;font-size:12px;margin-bottom:4px}.tide-live-item strong{font-size:20px;color:#176d99;letter-spacing:.2px}.tide-live-item .tl-sub{display:block;color:#607887;font-size:12px;margin-top:3px}.tide-chart{margin:0 0 12px;padding:12px;border:1px solid #d5e9f3;border-radius:8px;background:#fff}.tide-chart-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.tide-chart-hd strong{font-size:14px;color:#28566e}.tide-chart-hd span{font-size:12px;color:#78909d}.tide-chart svg{display:block;width:100%;height:178px}.tide-chart .grid{stroke:#e5eff4;stroke-width:1}.tide-chart .area{fill:rgba(42,143,191,.12)}.tide-chart .line{fill:none;stroke:#2a8fbf;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}.tide-chart .dot{fill:#f28a31;stroke:#fff;stroke-width:2}.tide-chart text{font-size:10px;fill:#78909d}@media(max-width:640px){.tide-live{grid-template-columns:1fr}.tide-chart svg{height:155px}}
 .tide-chart .now-guide{stroke:#f28a31;stroke-width:1;stroke-dasharray:3 3;opacity:.8}.tide-chart .now-ring{fill:#f28a31;stroke:#fff;stroke-width:3}.tide-chart .now-label{fill:#b55a14;font-size:11px;font-weight:600}.tide-chart .tide-hit{cursor:crosshair}.tide-chart .pick-guide{stroke:#246b97;stroke-width:1;stroke-dasharray:3 3}.tide-chart .pick-dot{fill:#246b97;stroke:#fff;stroke-width:2.5}.tide-chart .pick-label{fill:#173f58;font-size:11px;font-weight:600}
 .trow{display:flex;gap:10px;padding:10px;border-radius:11px;background:#f8fafc;border:1px solid var(--line);margin-bottom:8px;align-items:flex-start;flex-wrap:wrap}
@@ -400,8 +401,8 @@ main{max-width:1180px;margin:0 auto;padding:14px 16px 0}
   <section class="pane" id="pane-nav">
     <section class="card tide" id="tideCard">
       <div class="tide-hd">
-        <h2>六横周边海况监测</h2>
-        <div class="tide-date"><span class="tag">舟山海域潮汐潮流信息发布</span></div>
+        <h2>六横 S1 潮汐与潮流预报</h2>
+        <div class="tide-date"><span class="tag">24 小时预报</span></div>
       </div>
       <div id="tideTables" class="tide-tables"></div>
     </section>
@@ -1213,46 +1214,7 @@ var NAV_SEED = [
   "ton": "300",
   "aside": "",
   "use": "客运",
-  "dDesign": "3",
-  "dReal": "3",
-  "done": "2005年",
-  "status": "在册",
-  "waters": "六横",
-  "updated": "2026-08-08",
-  "id": "n-码头-022"
- },
- {
-  "type": "码头",
-  "name": "虾峙栅棚客运码头",
-  "berth": "",
-  "dtype": "浮码头",
-  "loc": "122°12′55″E ，29°46′42″N",
-  "scale": "50米",
-  "ton": "500",
-  "aside": "",
-  "use": "客运",
-  "dDesign": "10",
-  "dReal": "10",
-  "done": "不详",
-  "status": "在册",
-  "waters": "六横",
-  "updated": "2026-08-08",
-  "id": "n-码头-023"
- },
- {
-  "type": "码头",
-  "name": "湖泥客运码头",
-  "berth": "",
-  "dtype": "浮码头",
-  "loc": "122°10′47″E ，29°47′23″N",
-  "scale": "50米",
-  "ton": "500",
-  "aside": "",
-  "use": "客运",
-  "dDesign": "3.7",
-  "dReal": "3.7",
-  "done": "不详",
-  "status": "在册"…20168 tokens truncated….style.display = '';
+  "dDesign": "…21038 tokens truncated….style.display = '';
   $('navAddBtn').style.display = '';
   $('navMainT').textContent = cur+' 要素';
   $('navMainS').textContent = (counts[cur]||0)+' 条';
