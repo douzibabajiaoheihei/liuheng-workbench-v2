@@ -328,8 +328,7 @@ main{max-width:1320px;padding:20px}.card{border:1px solid rgba(185,216,228,.95);
 .tide{border-top:0;padding:0;overflow:hidden;background:#fff}.tide-hd{position:relative;padding:18px 20px 14px;margin:0;text-align:left;background:linear-gradient(100deg,#073e75,#087dc1);color:#fff;overflow:hidden}.tide-hd:after{content:"";position:absolute;inset:0;opacity:.30;background-image:repeating-linear-gradient(90deg,transparent 0 42px,rgba(255,255,255,.18) 43px 44px),repeating-linear-gradient(0deg,transparent 0 34px,rgba(255,255,255,.15) 35px 36px)}.tide-hd h2,.tide-hd .tide-date{position:relative;z-index:1}.tide-hd h2{font-size:20px;color:#fff;margin:0 0 6px;letter-spacing:.8px}.tide-hd h2:before{content:"⚓";display:inline-grid;place-items:center;margin-right:9px;width:27px;height:27px;border-radius:50%;background:rgba(93,221,211,.22);font-size:16px}.tide-date .tag{background:rgba(94,225,210,.25);border:1px solid rgba(179,255,246,.35);color:#eafffb}.tide-tables{padding:12px 16px 16px;margin-top:0}
 .s1-window{border:0!important;border-radius:12px!important;box-shadow:0 8px 20px rgba(8,65,104,.12)!important;background:linear-gradient(180deg,#f5fbfe,#fff)!important}.s1-titlebar{height:34px!important;background:linear-gradient(100deg,#063b73,#087dc1)!important;font-size:15px!important}.s1-content{padding:14px!important}.s1-controls a{color:#086da9!important;font-weight:700}.s1-controls button{border-color:#bad7e6!important;background:#f2fbff!important;color:#075c90!important}.s1-plot{border-radius:9px;border:1px solid #d6e8f1;background:linear-gradient(180deg,#fbfeff,#eff8fc)}.s1-foot{color:#56809a!important}.s1-tip{background:rgba(3,54,91,.86)!important;border:1px solid rgba(91,234,220,.45)}
 .nav{background:linear-gradient(100deg,#042e62,#075493);border-top:1px solid rgba(133,235,225,.32);box-shadow:0 -4px 16px rgba(4,46,98,.18)}.nav button{color:#d9eef9}.nav button.on{background:linear-gradient(135deg,#097fc1,#21aaa4);color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.22)}.nav button svg{filter:drop-shadow(0 1px rgba(0,0,0,.18))}
-/* V3 指挥台首页：左待办、中潮汐、右监管态势 */
-.v3-command{display:grid;grid-template-columns:minmax(255px,.82fr) minmax(420px,1.42fr) minmax(260px,.88fr);gap:16px;align-items:start}.v3-command .today{margin:0;min-height:462px}.v3-center,.v3-right{display:grid;gap:16px}.v3-tide-mini{overflow:hidden;min-height:290px}.v3-card-hd{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-bottom:1px solid #dfedf4;color:#07578b;font-weight:700}.v3-card-hd .more{color:#087dc1;font-size:12px;font-weight:600;cursor:pointer}.v3-tide-body{padding:13px 15px}.v3-tide-metrics{display:flex;justify-content:space-between;gap:8px;margin-top:10px}.v3-tide-metric{flex:1;padding:9px;border-radius:10px;background:#f0f8fc;border:1px solid #d8eaf3}.v3-tide-metric small{display:block;color:#638095;font-size:11px}.v3-tide-metric b{display:block;color:#07578b;font-size:17px;margin-top:2px}.v3-mini-svg{width:100%;height:156px;display:block;background:linear-gradient(180deg,#fbfeff,#f0f8fc);border:1px solid #d9eaf2;border-radius:10px}.v3-mini-svg .grid{stroke:#d9e9f0;stroke-dasharray:3 4}.v3-mini-svg .curve{fill:none;stroke:#087dc1;stroke-width:3}.v3-mini-svg .area{fill:url(#v3SeaArea)}.v3-mini-svg text{font-size:10px;fill:#5a7487}.v3-status{padding:14px 15px}.v3-status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:11px 0}.v3-status-num{text-align:center;border-right:1px solid #e1edf2}.v3-status-num:last-child{border:0}.v3-status-num b{display:block;font-size:25px;color:#087dc1;line-height:1}.v3-status-num small{font-size:11px;color:#637d8d;line-height:2}.v3-status.wx b{color:#078d80}.v3-status-links{display:flex;gap:12px;flex-wrap:wrap;border-top:1px solid #e4eef3;padding-top:10px;color:#087dc1;font-size:12px}.v3-status-links button{color:#087dc1;font-size:12px}.v3-quick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.v3-quick .card{padding:13px 15px;cursor:pointer;transition:.18s}.v3-quick .card:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(11,83,148,.13)}.v3-quick b{display:block;color:#07578b;font-size:14px}.v3-quick span{display:block;color:#6a8290;font-size:12px;margin-top:3px}.v3-quick i{display:inline-grid;place-items:center;width:30px;height:30px;margin-bottom:7px;border-radius:9px;background:#e8f5fa;color:#0780bb;font-style:normal;font-size:17px}.v3-command+.stats{display:none}@media(max-width:1080px){.v3-command{grid-template-columns:1fr 1fr}.v3-command .today{grid-row:span 2}.v3-right{grid-column:2}}@media(max-width:720px){.v3-command{display:grid;grid-template-columns:1fr}.v3-command .today,.v3-right{grid-column:auto;grid-row:auto}.v3-quick{grid-template-columns:1fr}.v3-tide-metrics{gap:5px}}
+@media(min-width:900px){.pane.on#pane-today{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr);gap:16px;align-items:start}.pane.on#pane-today .today{margin-bottom:0}.pane.on#pane-today .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;gap:14px}}
 </style>
 </head>
 <body>
@@ -403,7 +402,6 @@ setTimeout(function(){
 <main>
   <!-- 待办 -->
   <section class="pane on" id="pane-today">
-  <div class="v3-command">
   <section class="card today" id="todayCard">
     <div class="today-hd">
       <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0b5394" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="M12 14v4"/><path d="M10 16h4"/></svg>
@@ -416,22 +414,6 @@ setTimeout(function(){
     </div>
     <div id="todayList"></div>
   </section>
-  <section class="v3-center">
-    <section class="card v3-tide-mini">
-      <div class="v3-card-hd"><span>⌖ 六横S1 潮汐与潮流预报</span><button class="more" onclick="goV3Tab('nav')">进入详情 ›</button></div>
-      <div class="v3-tide-body"><div id="v3TideMini"><div class="empty">正在加载潮汐数据…</div></div></div>
-    </section>
-    <section class="v3-quick">
-      <article class="card" onclick="goV3Tab('nav')"><i>◉</i><b>通航环境监测</b><span id="v3NavSummary">航道、锚地及通航要素</span></article>
-      <article class="card" onclick="goV3Tab('eng')"><i>♜</i><b>水工现场监管</b><span id="v3EngSummary">许可、船舶及安全措施</span></article>
-      <article class="card" onclick="goV3Tab('wx')"><i>☁</i><b>恶劣天气响应</b><span id="v3WxSummary">预警、措施与防抗状态</span></article>
-    </section>
-  </section>
-  <aside class="v3-right">
-    <section class="card v3-status" id="v3EngCard"></section>
-    <section class="card v3-status wx" id="v3WxCard"></section>
-  </aside>
-  </div>
   <div class="stats" id="statsRow"></div>
   </section>
 
@@ -3146,35 +3128,6 @@ function renderStats(){
   $('statsRow').innerHTML = html;
 }
 
-/* ================= V3 首页指挥台摘要 ================= */
-function goV3Tab(tab){
-  var btn=document.querySelector('.mtab[data-tab="'+tab+'"]');
-  if(btn) btn.click();
-}
-function renderV3Command(){
-  var eng=(DB.eng||[]), wx=(DB.wx||[]), liveEng=eng.filter(function(i){return i.status==='施工中';}).length, processing=eng.filter(function(i){return i.status==='许可办理中';}).length, done=eng.filter(function(i){return i.status==='已完工';}).length, activeWx=wx.filter(function(i){return i.status==='生效中';}).length, closedWx=wx.filter(function(i){return i.status==='已解除';}).length;
-  var e=$('v3EngCard'), w=$('v3WxCard');
-  if(e) e.innerHTML='<div class="v3-card-hd"><span>♜ 水工监管</span><button class="more" onclick="goV3Tab(\'eng\')">查看更多 ›</button></div><div class="v3-status-grid"><div class="v3-status-num"><b>'+liveEng+'</b><small>施工中</small></div><div class="v3-status-num"><b>'+processing+'</b><small>办理中</small></div><div class="v3-status-num"><b>'+done+'</b><small>已完工</small></div></div><div class="v3-status-links"><button onclick="goV3Tab(\'eng\')">⌁ 水工作业</button><button onclick="goV3Tab(\'eng\')">▣ 施工许可</button><button onclick="goV3Tab(\'eng\')">□ 现场核查</button></div>';
-  if(w) w.innerHTML='<div class="v3-card-hd"><span>☁ 恶劣天气监管</span><button class="more" onclick="goV3Tab(\'wx\')">查看更多 ›</button></div><div class="v3-status-grid"><div class="v3-status-num"><b>'+wx.length+'</b><small>预警信息</small></div><div class="v3-status-num"><b>'+activeWx+'</b><small>响应中</small></div><div class="v3-status-num"><b>'+closedWx+'</b><small>已解除</small></div></div><div class="v3-status-links"><button onclick="goV3Tab(\'wx\')">☂ 气象预警</button><button onclick="goV3Tab(\'wx\')">♣ 防台响应</button><button onclick="goV3Tab(\'wx\')">▤ 复航评估</button></div>';
-  var se=$('v3EngSummary'), sw=$('v3WxSummary'), sn=$('v3NavSummary');
-  if(se) se.textContent='施工中 '+liveEng+' 项 · 办理中 '+processing+' 项';
-  if(sw) sw.textContent=activeWx?'当前 '+activeWx+' 项预警响应中':'当前无生效预警';
-  if(sn) sn.textContent='已建账 '+(DB.nav||[]).length+' 项环境要素';
-}
-function renderV3TideMini(){
-  var box=$('v3TideMini'), o=_tideCache.data;
-  if(!box) return;
-  if(!o || !Array.isArray(o.hourly) || !o.hourly.length){ box.innerHTML='<div class="empty">潮汐数据暂不可用</div>'; return; }
-  var a=o.hourly, min=Math.min.apply(null,a.map(function(p){return p.height;})), max=Math.max.apply(null,a.map(function(p){return p.height;})); min=Math.floor(min-.3); max=Math.ceil(max+.3); if(max-min<2){min-=.5;max+=.5;}
-  var L=28,R=620,T=16,B=130,W=R-L,H=B-T, path='', area='M '+L+' '+B, grids='', labels='';
-  function x(i){return L+W*i/23} function y(v){return B-(v-min)/(max-min)*H}
-  for(var g=0;g<4;g++){var gy=T+H*g/3;grids+='<line class="grid" x1="'+L+'" y1="'+gy+'" x2="'+R+'" y2="'+gy+'"/>';}
-  for(var i=0;i<24;i++){path+=(i?' L ':'M ')+x(i).toFixed(1)+' '+y(a[i].height).toFixed(1);area+=' L '+x(i).toFixed(1)+' '+y(a[i].height).toFixed(1);if(i%4===0)labels+='<text x="'+x(i)+'" y="150" text-anchor="middle">'+String(i).padStart(2,'0')+':00</text>';}
-  area+=' L '+R+' '+B+' Z';
-  var now=new Date(), h=o.date===tideToday()?now.getHours()+now.getMinutes()/60:-1, nx=L+W*Math.max(0,Math.min(23,h))/23, cur=a[Math.min(23,Math.max(0,Math.round(h)))];
-  box.innerHTML='<svg class="v3-mini-svg" viewBox="0 0 650 160"><defs><linearGradient id="v3SeaArea" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#1aa6d1" stop-opacity=".30"/><stop offset="1" stop-color="#1aa6d1" stop-opacity=".02"/></linearGradient></defs>'+grids+'<path class="area" d="'+area+'"/><path class="curve" d="'+path+'"/>'+(h>=0&&h<=23?'<line x1="'+nx+'" y1="'+T+'" x2="'+nx+'" y2="'+B+'" stroke="#ef6b35" stroke-dasharray="4 4"/><circle cx="'+nx+'" cy="'+y(cur.height)+'" r="4" fill="#ef6b35" stroke="#fff" stroke-width="2"/>':'')+labels+'<text x="31" y="13">潮位 (m)</text></svg><div class="v3-tide-metrics"><div class="v3-tide-metric"><small>当前潮位</small><b>'+Number(cur.height).toFixed(2)+' m</b></div><div class="v3-tide-metric"><small>当前潮流</small><b>'+Number(cur.speed||0).toFixed(2)+' m/s</b></div><div class="v3-tide-metric"><small>数据日期</small><b>'+esc(o.date)+'</b></div></div>';
-}
-
 /* ================= 六横潮汐卡片 ================= */
 var _tideCache = { date: '', data: null };
 var _tideSelectedDate = '';
@@ -3420,7 +3373,7 @@ function s1CloseTable(){ var el=$('s1Modal'); if(el) el.remove(); }
 function _paintTide() {
   var o = _tideCache.data, tables = $('tideTables');
   if (!tables) return;
-  if (!o || !Array.isArray(o.hourly) || !o.hourly.length) { tables.innerHTML = '<div class="empty">六横 S1 潮汐数据暂不可用。</div>'; renderV3TideMini(); return; }
+  if (!o || !Array.isArray(o.hourly) || !o.hourly.length) { tables.innerHTML = '<div class="empty">六横 S1 潮汐数据暂不可用。</div>'; return; }
   _s1Data = o;
   var a=o.hourly, min=0, max=Math.max(6,Math.ceil(Math.max.apply(null,a.map(function(p){return p.height;})))), L=38,R=965,T=24,B=282,W=R-L,H=B-T;
   function x(i){ return L + W * i / 23; }
@@ -3434,7 +3387,6 @@ function _paintTide() {
   var nowSvg=nowHour>=0&&nowHour<=23?'<line x1="'+(L+W*nowHour/23)+'" y1="'+T+'" x2="'+(L+W*nowHour/23)+'" y2="'+B+'" stroke="#d50000" stroke-dasharray="2 2"/>':'';
   var h='<div class="s1-window"><div class="s1-titlebar"><span>六横S1潮汐与潮流预报</span><button type="button" title="关闭" onclick="document.getElementById(\'tideCard\').classList.toggle(\'collapsed\')">×</button></div><div class="s1-content"><div class="s1-controls"><a href="javascript:renderTide(true)">六横S1 24小时潮位预报</a><button title="前一天" onclick="s1ShiftDay(-1)">≪</button><input id="s1Date" type="date" value="'+esc(o.date)+'" onchange="if(this.value){_tideSelectedDate=this.value;renderTide(true)}"><button title="后一天" onclick="s1ShiftDay(1)">≫</button><button title="返回今天" onclick="s1GoToday()">今天</button><select onchange="if(this.value){s1OpenTable(this.value);this.value=\'\';}"><option value="">查看数据表</option><option value="summary">潮汐潮流表</option><option value="hour">逐时潮高表</option><option value="flow">10分钟潮流表</option></select><span class="s1-lunar">[农历：'+esc(s1Lunar(o.date))+']</span></div><div class="s1-plot" id="s1Plot"><div class="s1-tip" id="s1Tip"></div><svg viewBox="0 0 990 310" role="img" aria-label="六横S1 24小时潮汐潮流预报">'+grid+'<path d="'+path+'" fill="none" stroke="#075ac0" stroke-width="1.1"/>'+arrows+nowSvg+marks+labels+a.map(function(p,i){return '<circle class="s1-point" cx="'+x(i)+'" cy="'+y(p.height)+'" r="2" fill="#fff" stroke="#075ac0" onmousemove="s1FlowTip(event,'+(i*6)+',true)" onmouseleave="s1HideTip()"/>';}).join('')+'<text x="5" y="14" font-size="12">潮高(m)</text><text x="74" y="37" fill="#d51515" font-size="12" text-decoration="underline">1.00 m/s</text><text x="960" y="267" text-anchor="end" font-size="12">时间(hh:mm)</text></svg></div><div class="s1-foot">当前显示：'+esc(o.date)+'　·　数据来源：舟山海域潮汐潮流信息发布　·　更新时间：'+esc(o.fetchedAt?new Date(o.fetchedAt).toLocaleString('zh-CN',{hour12:false}):'--')+'</div></div></div>';
   tables.innerHTML = h;
-  renderV3TideMini();
 }
 function renderTide(force) {
   var t = _tideSelectedDate || tideToday();
@@ -3686,7 +3638,7 @@ function renderWx(){
 
 function renderAll(){
   renderToday(); renderStats(); renderCharts();
-  renderNav(); renderEng(); renderWx(); renderDots(); backupTip(); renderTide(); renderV3Command(); initTideDatePicker();
+  renderNav(); renderEng(); renderWx(); renderDots(); backupTip(); renderTide(); initTideDatePicker();
 }
 
 /* 底部三模块导航上的待办角标 */
